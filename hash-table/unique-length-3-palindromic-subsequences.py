@@ -1,14 +1,16 @@
 class Solution:
     def countPalindromicSubsequence(self, s: str) -> int:
-        ans=0
-        for i in range(0,26):
-            c=chr(i+ord('a'))
-            if c in s:
-                first=s.index(c)
-                last=s.rindex(c)
-                if first!=last:
-                    u=set()
-                    for index in range(first+1,last):
-                        u.add(s[index])
-                    ans+=len(u)
-        return ans 
+        ans = 0
+        for i in range(26):
+            char = chr(i + ord("a"))
+            if char in s:
+                fi = s.index(char)
+                la = s.rindex(char)
+
+                if fi != la:
+                    rest = set()
+                    for x in list(s[fi + 1:la]):
+                        rest.add(x)
+                    ans += len(rest)
+
+        return ans
