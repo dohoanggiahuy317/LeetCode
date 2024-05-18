@@ -10,6 +10,7 @@ class Solution:
         def dfs(root, parent):
             if root == None: 
                 return 0
+            
             moves = dfs(root.left, root) + dfs(root.right, root)
             x = root.val - 1
             
