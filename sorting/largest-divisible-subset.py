@@ -12,9 +12,6 @@ class Solution:
                         ans[i] = ans[j] + [nums[i]]
                     dp[i] = max(dp[i], dp[j] + 1)
 
-                # else:
-                #     dp[i] = max(dp[i], dp[j])
-        # print(dp, ans)
         ans.sort(key = len)
 
         return ans[-1]
