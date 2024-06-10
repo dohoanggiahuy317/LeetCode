@@ -21,21 +21,14 @@ class Solution:
             return it == len(s1)
                 
 
-            
+
+                
         dp = [1] * len(words)
         words.sort(key = lambda x: len(x))
-        # print(words)
 
         for i in range(len(words)):
-            # print(i)
             for j in range(i):
-                # print(words[j], words[i])
                 if pred(words[j], words[i]):
                     dp[i] = max(dp[i], dp[j] + 1)
-        #             print(dp)
-
-        #     print()
-
-        # print(dp)
-
+                
         return max(dp)
