@@ -9,7 +9,7 @@ class Solution:
         temp = []
         i = 0
         holder = 2 ** 31 - 1
-        while i ** 2 <= holder:
+        while i ** 2 <= c:
             temp.append(i ** 2)
             i += 1
 
