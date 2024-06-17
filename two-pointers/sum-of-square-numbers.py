@@ -6,13 +6,7 @@ class Solution:
         if c % 4 == 3:
             return False
 
-        temp = []
-        i = 0
-        holder = 2 ** 31 - 1
-        while i ** 2 <= c:
-            temp.append(i ** 2)
-            i += 1
-
+        temp = [i ** 2 for i in range(int(math.sqrt(c) + 1))]
         s = 0
         e = len(temp) - 1
 
