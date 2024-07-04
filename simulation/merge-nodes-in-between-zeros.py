@@ -13,10 +13,6 @@ class Solution:
                 curr.next = curr.next.next
 
             while curr.next and curr.next.val == 0:
-                # if curr.next.next == None:
-                #     return
                 curr.next = curr.next.next
             curr = curr.next
-
-            # print(head)
         return head
