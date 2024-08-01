@@ -1,9 +1,7 @@
 class Solution:
     def countSeniors(self, details: List[str]) -> int:
-        return len(
-                    list(filter(
-                        lambda x: int(x[11:13]) > 60, 
-                        details
-                        ))
-                    )
-                    
+        count = 0
+        for x in details:
+            if int(x[11:13]) > 60:
+                count += 1
+        return count
