@@ -1,6 +1,9 @@
 
 class Solution:
     def stoneGameII(self, piles: List[int]) -> int:
+        if len(piles) <= 2:
+            return sum(piles)
+
         n = len(piles)
         dp = {}
 
