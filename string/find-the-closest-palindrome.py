@@ -18,10 +18,8 @@ class Solution:
             x = 0
         n11 = n[:l//2-1] + str(x) * 2 + n[:l//2-1][::-1] if l % 2 == 0 else n[:l//2] + str(x) + n[:l//2][::-1]
         n1s = n12 if abs(int(n12) - int(n)) <= abs(int(n) - int(n11)) else n11
-        print(n11, n12)
 
         n1x = n[:l//2] + n[:l//2][::-1] if l % 2 == 0 else n[:l//2] + n[l//2] + n[:l//2][::-1]
-        print(n1x)
 
         if abs(int(n1s) - int(n)) < abs(int(n) - int(n1x)):
             n1 = n1s
@@ -50,9 +48,9 @@ class Solution:
 
                 n1 = n12 if abs(int(n12) - int(n)) <= abs(int(n) - int(n11)) else n11
 
-        print(n1, n2, n3)
+        n4 = "8" + "9"* (l-2) + "8"
 
-        n4 = "8" + "9"* (l-1) + "8"
+        print(n1, n2, n3, n4)
 
         d1 = abs(int(n1)-int(n))
         d2 = abs(int(n2)-int(n))
