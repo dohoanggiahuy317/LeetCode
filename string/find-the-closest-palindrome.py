@@ -33,8 +33,12 @@ class Solution:
         n3 = "1" + "0"* (l-1) + "1"
 
         if n == n1:
-            if n == "11":
-                n1 = "22"
+            if n == "1" * l:
+                return n2
+            elif n == "9" * l:
+                return n3
+            elif l == 2:
+                return str(int(n[0]) - 1) * 2
             else:
                 x = int(n[l//2])-1 if l%2==1 else int(n[l//2-1])-1
                 if x + 1 == 0:
