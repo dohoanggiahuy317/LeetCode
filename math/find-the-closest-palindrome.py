@@ -9,12 +9,12 @@ class Solution:
 
 
         x = int(n[l//2])-1 if l%2==1 else int(n[l//2-1])-1
-        if n[l//2] == "0":
+        if x + 1 == 0:
             x = 1
         n12 = n[:l//2-1] + str(x) * 2 + n[:l//2-1][::-1] if l % 2 == 0 else n[:l//2] + str(x) + n[:l//2][::-1]
 
         x = int(n[l//2])+1 if l%2==1 else int(n[l//2-1])+1
-        if n[l//2] == "9":
+        if x - 1 == 9:
             x = 0
         n11 = n[:l//2-1] + str(x) * 2 + n[:l//2-1][::-1] if l % 2 == 0 else n[:l//2] + str(x) + n[:l//2][::-1]
         n1s = n12 if abs(int(n12) - int(n)) <= abs(int(n) - int(n11)) else n11
@@ -39,12 +39,12 @@ class Solution:
                 n1 = "22"
             else:
                 x = int(n[l//2])-1 if l%2==1 else int(n[l//2-1])-1
-                if n[l//2] == "0":
+                if x + 1 == 0:
                     x = 1
                 n12 = n[:l//2-1] + str(x) * 2 + n[:l//2-1][::-1] if l % 2 == 0 else n[:l//2] + str(x) + n[:l//2][::-1]
 
                 x = int(n[l//2])+1 if l%2==1 else int(n[l//2-1])+1
-                if n[l//2] == "9":
+                if x - 1 == 9:
                     x = 0
                 n11 = n[:l//2-1] + str(x) * 2 + n[:l//2-1][::-1] if l % 2 == 0 else n[:l//2] + str(x) + n[:l//2][::-1]
 
