@@ -7,19 +7,42 @@ class Solution:
         if l == 1:
             return str(int(n)-1)
 
-        n1 = n[:l//2] + n[:l//2][::-1] if l % 2 == 0 else n[:l//2] + n[l//2] + n[:l//2][::-1]
+
+        x = int(n[l//2-1])-1
+        if n[l//2] == "0":
+            x = 1
+        n12 = n[:l//2-1] + str(x) * 2 + n[:l//2-1][::-1] if l % 2 == 0 else n[:l//2] + str(x) + n[:l//2][::-1]
+
+        x = int(n[l//2-1])+1
+        if n[l//2] == "9":
+            x = 0
+        n11 = n[:l//2-1] + str(x) * 2 + n[:l//2-1][::-1] if l % 2 == 0 else n[:l//2] + str(x) + n[:l//2][::-1]
+        n1s = n12 if abs(int(n12) - int(n)) <= abs(int(n) - int(n11)) else n11
+        print(n1s)
+
+        n1x = n[:l//2] + n[:l//2][::-1] if l % 2 == 0 else n[:l//2] + n[l//2] + n[:l//2][::-1]
+        
+
+        n1 = n1s if abs(int(n1s) - int(n)) <= abs(int(n) - int(n1x)) else n1x
+
         n2 = "9" * (l-1)
         n3 = "1" + "0"* (l-1) + "1"
 
         if n == n1:
-
             if n == "11":
                 n1 = "22"
             else:
-                x = int(n1[l//2])-1
-                if n1[l//2] == "0":
+                x = int(n[l//2])-1
+                if n[l//2] == "0":
                     x = 1
-                n1 = n1[:l//2-1] + str(x) * 2 + n1[:l//2-1][::-1] if l % 2 == 0 else n1[:l//2] + str(x) + n1[:l//2][::-1]
+                n12 = n[:l//2-1] + str(x) * 2 + n[:l//2-1][::-1] if l % 2 == 0 else n[:l//2] + str(x) + n[:l//2][::-1]
+
+                x = int(n[l//2])+1
+                if n[l//2] == "9":
+                    x = 0
+                n11 = n[:l//2-1] + str(x) * 2 + n[:l//2-1][::-1] if l % 2 == 0 else n[:l//2] + str(x) + n[:l//2][::-1]
+
+                n1 = n12 if abs(int(n12) - int(n)) <= abs(int(n) - int(n11)) else n11
 
         print(n1, n2, n3)
 
