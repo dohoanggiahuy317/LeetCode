@@ -21,9 +21,15 @@ class Solution:
         print(n11, n12)
 
         n1x = n[:l//2] + n[:l//2][::-1] if l % 2 == 0 else n[:l//2] + n[l//2] + n[:l//2][::-1]
-        
+        print(n1x)
 
-        n1 = n1s if abs(int(n1s) - int(n)) <= abs(int(n) - int(n1x)) else n1x
+        if abs(int(n1s) - int(n)) < abs(int(n) - int(n1x)):
+            n1 = n1s
+        elif abs(int(n1s) - int(n)) > abs(int(n) - int(n1x)):
+            n1 = n1x
+        else:
+            n1 = str(min(int(n1s), int(n1x)))
+
 
         n2 = "9" * (l-1)
         n3 = "1" + "0"* (l-1) + "1"
