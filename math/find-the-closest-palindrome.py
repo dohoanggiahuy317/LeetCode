@@ -33,7 +33,7 @@ class Solution:
         n3 = "1" + "0"* (l-1) + "1"
 
         if n == n1:
-            if n == "1" * l:
+            if n == "11":
                 return n2
             elif n == "9" * l:
                 return n3
