@@ -52,11 +52,14 @@ class Solution:
 
         print(n1, n2, n3)
 
+        n4 = "8" + "9"* (l-1) + "8"
+
         d1 = abs(int(n1)-int(n))
         d2 = abs(int(n2)-int(n))
         d3 = abs(int(n3)-int(n))
+        d4 = abs(int(n4)-int(n))
 
-        l = [(d1, n1), (d2, n2), (d3, n3)]
+        l = [(d1, n1), (d2, n2), (d3, n3), (d4, n4)]
 
         l.sort(key = lambda x: (int(x[0]), int(x[1])))
 
