@@ -2,8 +2,10 @@ class Solution:
     def nearestPalindromic(self, n: str) -> str:
         l = len(n)
 
+        if n == "0":
+            return "1"
         if l == 1:
-            return n
+            return str(int(n)-1)
 
         n1 = n[:l//2] + n[:l//2][::-1] if l % 2 == 0 else n[:l//2] + n[l//2] + n[:l//2][::-1]
         n2 = "9" * (l-1)
