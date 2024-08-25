@@ -7,20 +7,7 @@
 class Solution:
     def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         
+        if root == None:
+            return []
 
-        def trans(root):
-            nonlocal ans
-
-            if root == None:
-                return
-
-            trans(root.left)
-            trans(root.right)
-
-            ans.append(root.val)
-
-        ans = []
-
-        trans(root)
-
-        return ans
+        return self.postorderTraversal(root.left) + self.postorderTraversal(root.right) + [root.val]
