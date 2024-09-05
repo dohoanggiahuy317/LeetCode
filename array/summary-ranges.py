@@ -1,6 +1,8 @@
 class Solution:
     def summaryRanges(self, nums: List[int]) -> List[str]:
         
+        if not nums:
+            return []
         s = 0
 
         ans = []
@@ -13,6 +15,7 @@ class Solution:
                     ans.append(str(nums[s]))
 
                 s = i
+
         if s < len(nums) - 1:
             ans.append(str(nums[s]) + "->" + str(nums[-1]) )
         else:
