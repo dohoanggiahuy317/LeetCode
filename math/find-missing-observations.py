@@ -8,11 +8,8 @@ class Solution:
 
         ave = n_sum // n
         left = n_sum - ave * n
-        ans = [ave] * n
+        ans = [ave + 1] * left + [ave] * (n-left)
 
-        for i in range(left):
-            ans[i] += 1
-            
         return ans
 
         
