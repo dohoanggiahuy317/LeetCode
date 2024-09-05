@@ -1,7 +1,7 @@
 class Solution:
     def wordPattern(self, pattern: str, s: str) -> bool:
         d = {}
-        d2 = {}
+        d1 = {}
 
         s = s.split(" ")
 
@@ -17,9 +17,9 @@ class Solution:
             
             
             if term not in d1:
-                d[term] = word
+                d1[term] = word
             else:
-                if d[term] != word:
+                if d1[term] != word:
                     return False
 
         return True
