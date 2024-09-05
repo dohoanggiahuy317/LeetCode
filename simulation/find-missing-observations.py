@@ -7,15 +7,15 @@ class Solution:
             return []
 
         ave = n_sum // n
-
+        left = n_sum - ave * n
         ans = []
 
-        for x in range(n-1):
+        for x in range(n):
             ans.append(ave)
-            n_sum -= ave
 
-        ans.append(n_sum)
-
+        for i in range(left):
+            ans[i] += 1
+        
         return ans
 
         
