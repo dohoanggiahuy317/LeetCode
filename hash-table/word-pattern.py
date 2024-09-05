@@ -5,6 +5,9 @@ class Solution:
 
         s = s.split(" ")
 
+        if len(s) != len(pattern):
+            return False
+
         for i in range(len(pattern)):
             word = pattern[i]
             term = s[i]
