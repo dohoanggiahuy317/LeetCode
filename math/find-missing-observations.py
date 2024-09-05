@@ -11,10 +11,11 @@ class Solution:
         ans = []
 
         for x in range(n):
-            ans.append(ave)
-
-        for i in range(left):
-            ans[i] += 1
+            if left > 0:
+                ans.append(ave + 1)
+                left -= 1
+            else:
+                ans.append(ave)
         
         return ans
 
