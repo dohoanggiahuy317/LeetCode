@@ -8,15 +8,11 @@ class Solution:
 
         ave = n_sum // n
         left = n_sum - ave * n
-        ans = []
+        ans = [ave] * n
 
-        for x in range(n):
-            if left > 0:
-                ans.append(ave + 1)
-                left -= 1
-            else:
-                ans.append(ave)
-        
+        for i in range(left):
+            ans[i] += 1
+            
         return ans
 
         
