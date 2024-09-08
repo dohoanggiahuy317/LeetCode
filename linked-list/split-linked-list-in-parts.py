@@ -34,7 +34,7 @@ class Solution:
             
             s = it.next
             it.next = None
-            print(it)
+            # print(it)
             it = s
 
             ans.append(curr.next)
