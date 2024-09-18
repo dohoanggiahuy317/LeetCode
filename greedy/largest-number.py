@@ -1,19 +1,16 @@
 class Solution:
     def largestNumber(self, nums: List[int]) -> str:
-        def permute(arr, l, r):
-            nonlocal ans
-            if l >= r:
-                # print(arr)
-                ans = max(ans, "".join(arr))
-                return 
-
-
-            for i in range(l, r):
-                arr[i], arr[l] = arr[l], arr[i]
-                permute(arr, l+1, r)
-                arr[i], arr[l] = arr[l], arr[i]
-
-        ans = "0"
-        permute(list(map(str, nums)), 0, len(nums))    
-
-        return ans
+        # Convert integers to strings
+        array = list(map(str, nums))
+        
+        # Custom sorting with a lambda function
+        array.sort(key=lambda x: x*10, reverse=True)
+        
+        # Handle the case where the largest number is "0"
+        if array[0] == "0":
+            return "0"
+        
+        # Build the largest number from the sorted array
+        largest = ''.join(array)
+        
+        return largest
