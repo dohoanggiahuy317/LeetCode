@@ -3,7 +3,7 @@ class Solution:
         def permute(arr, l, r):
             nonlocal ans
             if l >= r:
-                print(arr)
+                # print(arr)
                 ans = max(ans, "".join(arr))
                 return 
 
