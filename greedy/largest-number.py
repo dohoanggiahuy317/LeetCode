@@ -1,15 +1,19 @@
 class Solution:
     def largestNumber(self, nums: List[int]) -> str:
-
-        m = 0
-        for x in nums:
-            m = max(m, len(str(x)))
-        
-        nnums = list(map(lambda x: str(x) + str(x)[-1] * (m-len(str(x))), nums))
-
-        nnums = sorted(zip(nnums, list(map(str, nums))), reverse = True, key=lambda x: x[0])
-
-        nnums = list(map(lambda x: x[1], nnums))
+        def permute(arr, l, r):
+            nonlocal ans
+            if l >= r:
+                print(arr)
+                ans = max(ans, "".join(arr))
+                return 
 
 
-        return "".join(nnums)
+            for i in range(l, r):
+                arr[i], arr[l] = arr[l], arr[i]
+                permute(arr, l+1, r)
+                arr[i], arr[l] = arr[l], arr[i]
+
+        ans = "0"
+        permute(list(map(str, nums)), 0, len(nums))    
+
+        return ans
