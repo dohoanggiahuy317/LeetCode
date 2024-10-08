@@ -23,7 +23,5 @@ class Solution:
                 
                     close_brack -= 2
             
-            
-        
         return ans
         
