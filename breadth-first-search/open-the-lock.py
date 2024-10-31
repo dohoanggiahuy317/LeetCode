@@ -1,8 +1,9 @@
-from collections import Counter
-
 class Solution:
     def openLock(self, deadends: List[str], target: str) -> int:
         
+        if "0000" in deadends:
+            return -1
+
         d = defaultdict(lambda: -1)
         d["0000"] = 0
         visited = set(["0000"])
