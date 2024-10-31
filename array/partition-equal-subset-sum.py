@@ -7,20 +7,12 @@ class Solution:
         if s % 2 == 1:
             return False
 
-        d = Counter(nums)
-        nums = []
-        for u, v in d.items():
-            if v % 2 == 1:
-                nums.append(u)
-        if len(nums) == 0:
-            return True
-        
-
         target = s // 2
         nums.sort()
 
-        def addup(curr, i):
-            nonlocal ans, nums
+
+        def addup(curr, tu, i):
+            nonlocal ans, nums, visited
 
             if curr == target:
                 ans = True
@@ -31,10 +23,16 @@ class Solution:
 
             if i >= len(nums):
                 return
+            
+            if tu in visited:
+                return
 
-            addup(curr + nums[i], i + 1)
-            addup(curr, i + 1)
+            visited.add(tu)
+
+            addup(curr + nums[i], tuple(list(tu) + [nums[i]]), i + 1)
+            addup(curr, tu, i + 1)
         
         ans = False
-        addup(0, 0)
+        visited = set()
+        addup(0, tuple(), 0)
         return ans
