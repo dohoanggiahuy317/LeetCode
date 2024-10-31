@@ -23,7 +23,7 @@ class Solution:
                 heappush(h, prev)
                 prev = None
             if v != 0:
-                prev = [-v, u]
+                prev = (-v, u)
                 
 
 
