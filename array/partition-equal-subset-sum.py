@@ -1,3 +1,5 @@
+from collections import Counter
+
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
         s = sum(nums)
@@ -5,12 +7,19 @@ class Solution:
         if s % 2 == 1:
             return False
 
+        d = Counter(nums)
+        nums = []
+        for u, v in d.items():
+            if v % 2 == 1:
+                nums.append(u)
+        
+
         target = s // 2
 
         nums.sort()
 
         def addup(curr, i):
-            nonlocal ans
+            nonlocal ans, nums
 
             if curr == target:
                 ans = True
