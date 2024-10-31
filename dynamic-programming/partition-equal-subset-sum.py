@@ -14,6 +14,8 @@ class Solution:
         def addup(curr, tu, i):
             nonlocal ans, nums, visited
 
+            # print(curr, tu, i)
+
             if curr == target:
                 ans = True
                 return
@@ -27,10 +29,9 @@ class Solution:
             if tu in visited:
                 return
 
-            visited.add(tu)
-
             addup(curr + nums[i], tuple(list(tu) + [nums[i]]), i + 1)
             addup(curr, tu, i + 1)
+            visited.add(tu)
         
         ans = False
         visited = set()
