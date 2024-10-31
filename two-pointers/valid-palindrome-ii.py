@@ -1,20 +1,19 @@
 class Solution:
     def validPalindrome(self, s: str) -> bool:
-        def palin_check(s, l, r):
-            while l < r:
-                if s[l] != s[r]:
-                    return False
-                l += 1
-                r -= 1
-            return True
+        l, r = 0, len(s) - 1
 
-        l = 0
-        r = len(s) - 1
+        b = False
 
         while l < r:
-            if s[l] != s[r]:
-                break
-            l += 1
-            r -= 1
+            if s[l] == s[r]:
+                l += 1
+                r -= 1
+            else:
+                if not b:
+                    b = True
+                    # print(s[l:r], s[l + 1:r + 1])
+                    return s[l:r] == s[l:r][::-1] or s[l + 1:r + 1] == s[l + 1:r + 1][::-1] 
 
-        return palin_check(s, l, r - 1) or palin_check(s, l + 1, r)
+                return False
+
+        return True
