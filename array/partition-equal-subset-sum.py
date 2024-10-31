@@ -12,10 +12,11 @@ class Solution:
         for u, v in d.items():
             if v % 2 == 1:
                 nums.append(u)
+        if len(nums) == 0:
+            return True
         
 
         target = s // 2
-
         nums.sort()
 
         def addup(curr, i):
