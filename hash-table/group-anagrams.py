@@ -1,12 +1,11 @@
+from collections import defaultdict
+
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        d = {}
+        d = defaultdict(list)
 
-        for x in strs:
-            t = "".join(sorted(list(x)))
-            if t in d:
-               d[t].append(x)
-            else:
-                d[t] = [x]
-        
+        for s in strs:
+            k = tuple(sorted(list(s)))
+            d[k].append(s)
+
         return list(d.values())
