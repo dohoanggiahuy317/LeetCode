@@ -17,6 +17,4 @@ class Solution:
                 if 0 <= i-x < target:
                     dp[i] = dp[i-x] or dp[i]
                 
-            print(x, dp)
-
         return dp[-1]
