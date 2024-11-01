@@ -1,37 +1,43 @@
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.parent = []
+
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        graph = [[] for _ in range(numCourses)]
-        head = [0] * numCourses
-
-        for prereq in prerequisites:
-            start = prereq[1]
-            end = prereq[0]
-
-            graph[start].append(end)
-            head[end] += 1
-
         
-        queue = deque()
+        nodes = {}
         for i in range(numCourses):
-            if head[i] == 0:
-                queue.append(i)
-        
+            nodes[i] = Node(i)
 
-        pre_queue = deque()
-        while queue:
-            node = queue.popleft()
-            pre_queue.append(node)
+        for high, pre in prerequisites:
+            nodes[pre].parent.append(nodes[high])
 
-            for neighbor in graph[node]:
-                head[neighbor] -= 1
-                if head[neighbor] == 0:
-                    queue.append(neighbor)
+        sta = []
+        visited = [False] * numCourses
 
-        if len(pre_queue) < numCourses:
-            return []
+        def addSta(curr):
+            nonlocal visited
+
+            if visited[curr.val]:
+                return
+            
+            visited[curr.val] = True
+            if curr.parent:
+                for par in curr.parent:
+                    addSta(par)
+
+            sta.append(curr.val)
 
         ans = []
-        while pre_queue:
-            ans.append(pre_queue.popleft())
+
+        for i in range(numCourses):
+            if not visited[i]:
+                addSta(nodes[i])
+                while sta:
+                    ans.append(sta.pop(-1))
 
         return ans
+
+
+        
