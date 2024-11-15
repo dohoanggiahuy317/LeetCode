@@ -1,5 +1,8 @@
 class Solution:
     def findLengthOfShortestSubarray(self, arr: List[int]) -> int:
+        if len(arr) <= 1:
+            return 0
+            
         dp = [1] * len(arr)
         ans = float("INF")
 
