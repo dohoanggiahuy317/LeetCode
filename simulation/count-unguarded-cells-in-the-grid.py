@@ -1,42 +1,19 @@
 class Solution:
-    from collections import namedtuple
-    from typing import List
-
-    Directions = namedtuple('Directions', ['x', 'y'])
-    up = Directions(-1, 0)
-    down = Directions(1, 0)
-    left = Directions(0, -1)
-    right = Directions(0, 1)
-
-
-    def countUnguarded(m: int, n: int, guards: List[List[int]], walls: List[List[int]]) -> int:
-        matrix = [[0 for _ in range(n)] for _ in range(m)]
+    def countUnguarded(self, m: int, n: int, guards: List[List[int]], walls: List[List[int]]) -> int:
+        dp = [[0] * n for _ in range(m)]
+        for x, y in guards+walls:
+            dp[x][y] = 1
+               
+        directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]
+        
         for x, y in guards:
-            matrix[x][y] = 'G'
-        for x, y in walls:
-            matrix[x][y] = 'W'
-
-        def dfs(row, col, direction):
-            if row < 0 or row >= m or col < 0 or col >= n or matrix[row][col] == 'W' or matrix[row][col] == 'G':
-                return
-
-            matrix[row][col] = 'X'
-            dfs(row + direction.x, col + direction.y, direction)
-
-        for x in range(m):
-            for y in range(n):
-                if matrix[x][y] == 'G':
-                    dfs(x + 1, y, down)
-                    dfs(x - 1, y, up)
-                    dfs(x, y + 1, right)
-                    dfs(x, y - 1, left)
-
-        counter = 0
-        for x in range(m):
-            for y in range(n):
-                if matrix[x][y] == 0:
-                    counter += 1
-
-        return counter
-
-            
+            for dx, dy in directions:
+                curr_x = x
+                curr_y = y
+                
+                while 0 <= curr_x+dx < m and 0 <= curr_y+dy < n and dp[curr_x+dx][curr_y+dy] != 1:
+                    curr_x += dx
+                    curr_y += dy
+                    dp[curr_x][curr_y] = 2
+                    
+        return sum(1 for i in range(m) for j in range(n) if dp[i][j] == 0)                    
