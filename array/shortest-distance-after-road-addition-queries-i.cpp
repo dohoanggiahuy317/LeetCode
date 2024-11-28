@@ -1,56 +1,47 @@
-using int2 = pair<int, int>; // (dist, idx(i,j))
-const static int d[5] = {0, 1, 0, -1, 0};
 class Solution {
 public:
-    inline static bool isOutside(int i, int j, int n, int m) {
-        return i < 0 || i >= n || j < 0 || j >= m;
-    }
-    inline static int idx(int i, int j, int m){
-        return i*m+j;
-    }
+    vector<int> shortestDistanceAfterQueries(int n,
+                                             vector<vector<int>>& queries) {
 
-    static int minimumObstacles(vector<vector<int>>& grid) {
-        int n = grid.size(), m = grid[0].size();
-        unsigned dist[100000];
-        fill(dist, dist+n*m, INT_MAX);
-        priority_queue<int2, vector<int2>, greater<int2>> pq;
+        vector<int> ans;
+        vector<vector<int>> adj(n);
+        vector<int> dist(n);
 
-        pq.emplace(0, 0);
-        dist[0] = 0;
+        iota(dist.begin(), dist.end(), 0); //fills the array with 0,1,2,3...
+        for (int i = 0; i < n - 1; i++) {
+            adj[i].push_back(i + 1);
+        }
 
-        while (!pq.empty()) {
-            auto [currD, ij] = pq.top();
-            auto [i, j]=div(ij, m);
-            pq.pop();
+        
+        for (auto it : queries) {
 
-            // reach the target
-            if (i == n - 1 && j == m - 1)
-                return currD;
+            int src = it[0], des = it[1];
+            adj[src].push_back(des);
 
-            // Traverse all four directions
-            for (int a = 0; a < 4; a++) {
-                int r = i + d[a], s = j + d[a + 1];
-                if (isOutside(r, s, n, m))
-                    continue;
+            if (dist[src] + 1 < dist[des]) {
+                //BFS
+                queue<int> q;
+                q.push(des);
+                dist[des] = dist[src] + 1;
 
-                // minimum distance to reach (r, s)
-                int nextD = grid[r][s] + currD;
+                while (q.size()) {
 
-                int rs=idx(r, s, m);
-                // update if this path having shorter distance
-                if (nextD < dist[rs]) {
-                    dist[rs] = nextD;
-                    pq.emplace(nextD, rs);
+                    int idx = q.front();
+                    q.pop();
+
+                    for (auto e : adj[idx]) {
+
+                        if (dist[idx] + 1 < dist[e]) {
+                            dist[e] = dist[idx] + 1;
+                            q.push(e);
+                        }
+
+                    }
                 }
             }
+
+            ans.emplace_back(dist.back());
         }
-        return -1; // never reach
+        return ans;
     }
 };
-
-auto init = []() {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    return 'c';
-}();
