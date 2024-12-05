@@ -1,32 +1,23 @@
 class Solution:
     def canChange(self, start: str, target: str) -> bool:
-        l_check = []
-        r_check = []
-
-        for i in range(len(target)):
-            if target[i] == "L":
-                l_check.append(i)
-            if target[i] == "R":
-                r_check.append(i)
+        i, j, n = 0, 0, len(start)
         
-        # print(l_check)
-        # print(r_check)
-
-        for i in range(len(start)):
-            if start[i] == "L":
-                if not l_check or i < l_check[0]:
-                    return False
-                for j in range(l_check[0], i+1):
-                    if start[j] == "R":
-                        return False
-                l_check.pop(0)
-            if start[i] == "R":
-                if not r_check or i > r_check[0]:
-                    return False
-                for j in range(i, r_check[0] + 1):
-                    if start[j] == "L":
-                        return False
-                r_check.pop(0)
-
-        return True
-                
+        while i < n or j < n:
+            while i < n and start[i] == '_':
+                i += 1
+            while j < n and target[j] == '_':
+                j += 1
+            
+            if i == n or j == n:
+                break
+            if start[i] != target[j]:
+                return False
+            if start[i] == 'L' and i < j:
+                return False
+            if start[i] == 'R' and i > j:
+                return False
+            
+            i += 1
+            j += 1
+        
+        return i == n and j == n
