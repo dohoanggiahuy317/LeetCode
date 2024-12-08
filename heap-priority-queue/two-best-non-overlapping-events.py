@@ -8,18 +8,13 @@ class Solution:
         cst, cen, cval = -1, -1, -1
 
         for st, en, val in events:
-
-            if not (cst <= st <= cen or cst <= en <= cen):
+            if not (cst <= st <= cen or cst <= en <= cen or st <= cst <= en or st <= cst <= en):
                 if count == 0:
-                    cst = st
-                    cen = en
-                    cval = val
+                    cst, cen, cval = st, en, val
                     ans = max(ans, cval)
                 count += 1
             else:
-                cst = st
-                cen = en
-                cval = val
+                cst, cen, cval = st, en, val
                 ans = max(ans, cval)
 
             if count == 2:
