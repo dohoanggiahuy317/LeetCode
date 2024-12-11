@@ -1,32 +1,36 @@
+from collections import Counter, defaultdict
+
 class Solution:
     def restoreArray(self, adjacentPairs: List[List[int]]) -> List[int]:
-        d = {}
+        appeared = set()
+        freq = Counter()
+        neigh = defaultdict(list)
+
+        for u, v in adjacentPairs:
+            neigh[u].append(v)
+            neigh[v].append(u)
+            freq[u] += 1
+            freq[v] += 1
+
+        start = -1
         ans = []
-
-        for x, y in adjacentPairs:
-            if x not in d:
-                d[x] = [y]
-            else:
-                d[x].append(y)
-            if y not in d:
-                d[y] = [x]
-            else:
-                d[y].append(x)
-
-        def add(ans, prev, k):
-            ans.append(k)
-            t = None
-            for x in d[k]:
-                if x != prev:
-                    t = x
-            if t != None:
-                add(ans, k, t)
-
-        for u, v in d.items():
-            if len(v) == 1:
-                add(ans, None, u)
+        for k, v in freq.items():
+            if v == 1:
+                start = k
                 break
+
+        ans.append(start)
+        appeared.add(start)
+
+        for i in range(len(adjacentPairs)):
+            if len(neigh[start]) == 1:
+                ne = neigh[start][0]
+            else:
+                ne = neigh[start][0] if neigh[start][0] not in appeared else neigh[start][1]
+            
+            ans.append(ne)
+            appeared.add(ne)
+            start = ne
 
         return ans
 
-          
