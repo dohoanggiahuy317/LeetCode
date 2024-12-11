@@ -8,6 +8,7 @@ class Solution:
 
         i = 1
         while i < len(nums):
+            # print(curr, i, temp, ans)
             if curr == i:
                 i += 1
                 continue
@@ -15,10 +16,11 @@ class Solution:
                 temp += 1
                 i += 1
                 continue
-            else:
-                ans = max(ans, temp)
-                temp = 1
-                curr += 1
+        
+            ans = max(ans, temp)
+            temp -= 1
+            curr += 1
 
+        # print(curr, i, temp, ans)
 
         return max(ans, temp)
