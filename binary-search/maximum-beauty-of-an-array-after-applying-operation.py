@@ -8,16 +8,17 @@ class Solution:
 
         i = 1
         while i < len(nums):
+            if curr == i:
+                i += 1
+                continue
             if nums[i] - nums[curr] <= 2 * k:
                 temp += 1
                 i += 1
                 continue
             else:
-                if curr == i:
-                    i += 1
-                else:
-                    ans = max(ans, temp)
-                    temp = 1
-                    curr += 1
+                ans = max(ans, temp)
+                temp = 1
+                curr += 1
+
 
         return max(ans, temp)
