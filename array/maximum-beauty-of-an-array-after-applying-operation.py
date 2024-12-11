@@ -11,6 +11,7 @@ class Solution:
             # print(curr, i, temp, ans)
             if curr == i:
                 i += 1
+                temp = 1
                 continue
             if nums[i] - nums[curr] <= 2 * k:
                 temp += 1
