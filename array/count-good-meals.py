@@ -15,6 +15,7 @@ class Solution:
         ans = 0
 
         # print(max_base, freq)
+        MOD = 10 ** 9 + 7
 
         for i in range(max_base + 1):
             curr_sum = 2 ** i
@@ -24,8 +25,9 @@ class Solution:
                 if target in freq:
                     if target == k:
                         ans += v * (v-1) //2
+                        ans %= MOD
                     else:
                         ans += v * freq[target] / 2
 
-        return int(ans)
+        return int(ans) % MOD
         
