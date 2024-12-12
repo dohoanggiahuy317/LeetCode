@@ -10,13 +10,14 @@ class Solution:
         def cyc(i):
             nonlocal rec_visit
             rec_visit.add(i)
+            b = True
             for ne in m[i]:
                 if ne in rec_visit:
                     return False
-                return cyc(ne)
+                b = b and cyc(ne)
                 
             rec_visit.remove(i)
-            return True
+            return b
 
         for i in range(numCourses):
             rec_visit = set()
