@@ -1,14 +1,12 @@
 class Solution:
-    def maxProfit(prices):
-        min_price, max_profit = float('inf'), 0
-        for p in prices:
-            if p < min_price:
-                min_price = p
-            elif p - min_price > max_profit:
-                max_profit = p - min_price
-        return max_profit
+    def maxProfit(self, prices: List[int]) -> int:
+        buy = float("INF")
+        ans = 0
 
-    with open('user.out', 'w') as f:
-        for case in map(loads, stdin):
-            f.write(f"{maxProfit(case)}\n")
-    exit(0)  
+        for price in prices:
+            if price < buy:
+                buy = price
+            else:
+                ans = max(ans, price - buy)
+
+        return ans
