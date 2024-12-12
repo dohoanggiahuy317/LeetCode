@@ -9,9 +9,12 @@ class Solution:
             prevx, prevy = -1, -1
 
             while True:
-                # print(x, y, visited)
+                # print(x, y, visited) 
                 if x == m-1 and y == n-1:
                     break
+
+                if (x, y) in visited:
+                    return False
 
                 prevx, prevy = x, y
                 visited.add((x, y))
