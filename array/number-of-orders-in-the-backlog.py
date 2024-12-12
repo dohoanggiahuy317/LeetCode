@@ -36,8 +36,5 @@ class Solution:
                 if amount > 0:
                     heapq.heappush(sell_backlog, [price, amount])
 
-        print(buy_backlog)
-        print(sell_backlog)
-
         MOD = 10 ** 9 + 7
         return (sum(list(map(lambda x: x[1], buy_backlog)))%MOD + sum(list(map(lambda x: x[1], sell_backlog)))%MOD) % MOD 
