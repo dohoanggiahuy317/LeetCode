@@ -11,8 +11,8 @@ class Solution:
 
         ans = 0
         for i in range(n):
-            k1 = bisect_left(prefix, 2 * prefix[i])
-            k2 = bisect_right(prefix, (prefix[i] + prefix[-1]) // 2)
+            k1 = bisect_left(prefix, 2 * prefix[i], lo=i+1)
+            k2 = bisect_right(prefix, (prefix[i] + prefix[-1]) // 2, hi=n-1)
 
             if k1 >= k2:
                 continue
