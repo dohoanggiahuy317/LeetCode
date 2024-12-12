@@ -1,45 +1,26 @@
-class Node:
-    def __init__(self, val):
-        self.val = val
-        self.parent = []
-        self.child = None
+from collections import defaultdict
 
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         
-        nodes = {}
-        for i in range(numCourses):
-            nodes[i] = Node(i)
-
-        for high, pre in prerequisites:
-            nodes[pre].parent.append(nodes[high])
-            nodes[high].child = nodes[pre]
-
-        sta = []
-        visited = [False] * numCourses
-
-        def addSta(curr):
-            nonlocal visited
-
-            if visited[curr.val]:
-                return
-            
-            visited[curr.val] = True
-            if curr.parent:
-                for par in curr.parent:
-                    addSta(par)
-
-            sta.append(curr.val)
-
-        ans = []
-
-        for i in range(numCourses):
-            if not visited[i] and not nodes[i].child:
-                addSta(nodes[i])
-                while sta:
-                    ans.append(sta.pop(-1))
-
-        return ans
-
-
+        m = defaultdict(list)
+        for a, b in prerequisites:
+            m[b].append(a)
         
+        def dfs(i):
+            nonlocal visited, stack, m
+            visited.add(i)
+
+            for ne in m[i]:
+                if ne not in visited:
+                    dfs(ne)
+
+            stack.append(i)
+
+        visited = set()
+        stack = []
+        for i in range(numCourses):
+            if i not in visited:
+                dfs(i)
+
+        return stack[::-1]
