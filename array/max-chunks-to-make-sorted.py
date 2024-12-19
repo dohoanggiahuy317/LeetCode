@@ -20,4 +20,6 @@ class Solution:
             ans += 1
             i = j
 
-        return ans + 1 if arr[-2] < arr[-1] else ans
+        # print(i)
+
+        return ans + 1 if i == len(arr) - 1 else ans
