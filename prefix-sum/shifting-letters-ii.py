@@ -1,12 +1,12 @@
+import numpy as np
+
 class Solution:
     def shiftingLetters(self, s: str, shifts: List[List[int]]) -> str:
         
-        dp = [0] * len(s)
+        dp = np.array([0] * len(s))
 
         for st, en, di in shifts:
-        
-            for i in range(st, en + 1):
-                dp[i] += (di*2 - 1)
+                dp[st:en+1] += (di*2 - 1)
 
         ans = ""
         for i in range(len(s)):
