@@ -10,4 +10,7 @@ class Solution:
             if v % 2 == 1:
                 ans += 1
 
+        if len(d) < k:
+            return False
+
         return True if ans <= k else False
