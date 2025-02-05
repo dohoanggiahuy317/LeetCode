@@ -16,6 +16,6 @@ class Solution:
                     if s1[prev] != s2[i] or s1[i] != s2[prev]:
                         return False
 
-        return True
+        return c % 2 == 0
 
         
