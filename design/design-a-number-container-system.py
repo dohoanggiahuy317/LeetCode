@@ -1,19 +1,23 @@
 class NumberContainers:
 
     def __init__(self):
-        self.d = {}
+        self.ind2val = {}
+        self.val2ind = {}
         self.max = 0
 
     def change(self, index: int, number: int) -> None:
-        self.d[index] = number
-        self.max = max(self.max, index)
+        if index in self.ind2val:
+            val = self.ind2val[index]
+            self.val2ind[val].remove(index)
+
+        if number not in self.val2ind:
+            self.val2ind[number] = set()
+        self.val2ind[number].add(index)
+        self.ind2val[index] = number
 
     def find(self, number: int) -> int:
-        i = 0
-        while i < self.max:
-            if i in self.d and self.d[i] == number:
-                return i
-            i+=1
+        if number in self.val2ind and len(self.val2ind[number]) > 0:
+            return min(self.val2ind[number])
         return -1
 
 
