@@ -1,12 +1,16 @@
 class Solution:
     def clearDigits(self, s: str) -> str:
-        st = []
+        ans = ""
+        temp = 0
 
-        for char in s:
-            if char.isdigit() and len(st) > 0:
-                st.pop(-1)
+        for i in range(len(s)-1, -1, -1):
+            if s[i].isdigit():
+                temp += 1
+            
             else:
-                st.append(char)
-                
-        return "".join(st)
-        
+                if temp > 0:
+                    temp -= 1
+                else:
+                    ans += s[i]
+
+        return ans[::-1]
