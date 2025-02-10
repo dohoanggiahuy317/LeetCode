@@ -1,43 +1,23 @@
 class Solution:
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        visited = []
-        for i in grid:
-            visited.append([0] * len(i))
-        max_area = 0
+        visited = [[False] * len(grid[0]) for _ in range(len(grid))]
+        ans = 0
 
-
-        def bfs(i, j):
-            nonlocal visited, grid, area
-            # print(i, j)
-            if (i < 0 or j < 0 or i > len(grid)-1 or j > len(grid[0])-1):
-                return
-             
-            if visited[i][j] == 1:
-                return 
-
-            if grid[i][j] == 0:
-                return
-
-            if grid[i][j] == 1:
-                visited[i][j] = 1
-                area += 1
-
+        def dfs(i, j):
+            nonlocal grid, visited
+            if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]):
+                return 0
             
-            bfs(i-1, j)
-            bfs(i+1, j)
-            bfs(i, j-1)
-            bfs(i, j+1)
+            if visited[i][j] or grid[i][j] == 0:
+                return 0
 
+            visited[i][j] = True
+
+            return 1 + dfs(i-1, j) + dfs(i+1, j) + dfs(i, j+1) + dfs(i, j-1)
 
         for i in range(len(grid)):
             for j in range(len(grid[0])):
-                if visited[i][j] == 0 and grid[i][j] == 1:
-                    area = 0
-                    bfs(i, j)
-                    max_area = max(area, max_area)
-        # print()
-        return max_area
+                if not visited[i][j] and grid[i][j] == 1:
+                    ans = max(ans, dfs(i, j))
 
-
-
-            
+        return ans
