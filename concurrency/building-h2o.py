@@ -10,8 +10,12 @@ class H2O:
         self.h_sem.acquire()
         # releaseHydrogen() outputs "H". Do not change or remove this line.
         releaseHydrogen()
-        self.o_sem.release()
-
+        if self.can_release_o:
+            # release one oxygen atom every 2 hydrogen atoms.
+            self.can_release_o = False
+            self.o_sem.release()
+        else:
+            self.can_release_o = True
 
     def oxygen(self, releaseOxygen: 'Callable[[], None]') -> None: 
         self.o_sem.acquire()
