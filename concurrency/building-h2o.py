@@ -1,3 +1,4 @@
+from threading import Semaphore
 
 class H2O:
     def __init__(self):
