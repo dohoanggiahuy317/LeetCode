@@ -22,15 +22,21 @@ class Solution:
                     dp[i] = dp[i+1]
             
             elif s[i] == "1":
-                if i + 2 < len(s) and s[i+2] == "0":
+                if s[i+1] in "123456789":
+                    if i + 2 < len(s) and s[i+2] == "0":
                         dp[i] = dp[i+1]
+                    else:
+                        dp[i] = dp[i+1] + 1
                 else:
-                    dp[i] = dp[i+1] + 1
+                    dp[i] = dp[i+1]
             
+            elif s[i] == "0":
+                dp[i] = dp[i+1]
+
             else:
                 if s[i+1] == "0":
                     return 0
                 dp[i] = dp[i+1]
 
-        # print(dp)
+        print(dp)
         return dp[0]
