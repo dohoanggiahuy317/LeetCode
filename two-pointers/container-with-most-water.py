@@ -1,21 +1,28 @@
 class Solution:
     def maxArea(self, height: List[int]) -> int:
-        s = 0
-        e = len(height) - 1
 
-        curr = min(height[s], height[e]) * (e - s)
+        sort_height = []
+        for i in range(1, len(height) + 1):
+            sort_height.append((i, height[i-1]))
+        
+        sort_height = sorted(sort_height, key=lambda x: x[1], reverse=True)
+        maxx, maxy = sort_height.pop(0)
 
-        while s < e:
-            if height[s] < height[e]:
-                s += 1
-            elif height[e] < height[s]:
-                e -= 1
-            elif height[s] == height[e]:
-                s += 1
-                # e -= 1
+        lx, ly = maxx, maxy
+        rx, ry = maxx, maxy
 
-            # print(s, e, min(height[s], height[e]) * (e - s))
+        ans = 0
 
-            curr = max(curr, min(height[s], height[e]) * (e - s))
+        while sort_height:
+            curx, cury = sort_height.pop(0)
 
-        return curr
+            if curx < lx:
+                ans = max(ans, (rx - curx) * cury )
+                lx = curx
+                ly = cury
+            elif curx > rx:
+                ans = max(ans, (curx - lx) * cury )
+                rx = curx
+                ry = cury
+
+        return ans
