@@ -1,6 +1,4 @@
 class MyQueue:
-    s1 = []
-    s2 = []
 
     def __init__(self):
         self.s1 = []
@@ -10,33 +8,24 @@ class MyQueue:
         self.s1.append(x)
 
     def pop(self) -> int:
-        while len(self.s1) > 0:
-            x = self.s1.pop(len(self.s1) - 1)
-            self.s2.append(x)
+        if self.empty():
+            return 0
+        
+        while len(self.s1) > 1:
+            self.s2.append(self.s1.pop(-1))
 
-        a = self.s2.pop(len(self.s2) - 1)
-        while len(self.s2) > 0:
-            x = self.s2.pop(len(self.s2) - 1)
-            self.s1.append(x)
+        temp = self.s1.pop(-1)
 
-        return a
+        while self.s2:
+            self.s1.append(self.s2.pop(-1))
+        
+        return temp
 
     def peek(self) -> int:
-        while len(self.s1) > 0:
-            x = self.s1.pop(len(self.s1) - 1)
-            self.s2.append(x)
-
-        a = self.s2.pop(len(self.s2) - 1)
-        self.s1.append(a)
-
-        while len(self.s2) > 0:
-            x = self.s2.pop(len(self.s2) - 1)
-            self.s1.append(x)
-
-        return a
+        return self.s1[0]
 
     def empty(self) -> bool:
-        return len(self.s1) == 0
+        return not self.s1
 
 
 # Your MyQueue object will be instantiated and called as such:
