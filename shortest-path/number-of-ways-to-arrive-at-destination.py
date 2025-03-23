@@ -13,7 +13,7 @@ class Solution:
         ans = 0
         nodes = [float("INF")] * n
         tonodes = [1] * n
-        tonodes[0] = 0
+        tonodes[0] = 1
         nodes[0] = 1
         q = [(0, 0)]
 
@@ -25,7 +25,7 @@ class Solution:
                     tonodes[neigh] = (tonodes[neigh] + tonodes[curr]) % MOD
 
                 if nodes[neigh] > nodes[curr] + val:
-                    tonodes[neigh] = 1
+                    tonodes[neigh] = tonodes[curr] % MOD
                     nodes[neigh] = nodes[curr] + val
                     heapq.heappush(q, (nodes[neigh], neigh))
 
