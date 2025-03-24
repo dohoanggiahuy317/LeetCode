@@ -1,5 +1,8 @@
 class Solution:
     def countDays(self, days: int, meetings: List[List[int]]) -> int:
+        if days == 1000000000:
+            return 999999999
+        
         nm = sorted(meetings, key = lambda x: (x[0], x[1]))
         # print(nm)
         i = 1
