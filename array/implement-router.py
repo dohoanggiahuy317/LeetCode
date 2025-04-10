@@ -7,22 +7,25 @@ class Router:
         
 
     def addPacket(self, source: int, destination: int, timestamp: int) -> bool:
-        if (source, destination) in self.holder and self.holder[(source, destination)] == timestamp:
+        if (source, destination) in self.holder and timestamp in self.holder[(source, destination)]:
             return False
 
         while len(self.queue) >= self.limit:
             ps, pd, pt = self.queue.pop(0)
-            del self.holder[(ps, pd)]
+            self.holder[(ps, pd)].remove(pt)
 
-        self.holder[(source, destination)] = timestamp
+        if (source, destination) not in self.holder:
+             self.holder[(source, destination)] = set()
+
+        self.holder[(source, destination)].add(timestamp)
         self.queue.append((source, destination, timestamp))
         return True
 
 
     def forwardPacket(self) -> List[int]:
-        if self.holder:
+        if self.queue:
             ps, pd, pt = self.queue.pop(0)
-            del self.holder[(ps, pd)]
+            self.holder[(ps, pd)].remove(pt)
             return [ps, pd, pt]
         return []
 
