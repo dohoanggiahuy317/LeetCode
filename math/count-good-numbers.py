@@ -1,7 +1,15 @@
 class Solution:
     def countGoodNumbers(self, n: int) -> int:
-        even = (n+1)//2
-        odd = n // 2
-        MOD = 10**9 + 7
+        mod = 10**9 + 7
 
-        return (((5 ** (even)) % MOD) * ((4 ** (odd)) % MOD)) % MOD
+        # use fast exponentiation to calculate x^y % mod
+        def quickmul(x: int, y: int) -> int:
+            ret, mul = 1, x
+            while y > 0:
+                if y % 2 == 1:
+                    ret = ret * mul % mod
+                mul = mul * mul % mod
+                y //= 2
+            return ret
+
+        return quickmul(5, (n + 1) // 2) * quickmul(4, n // 2) % mod
