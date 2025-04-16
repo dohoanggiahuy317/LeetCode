@@ -27,9 +27,9 @@ class Solution:
 
         for i in range(len(li_track) - 2):
             # print(i)
-            if li_track[i][0] + li_track[i+1][0] + li_track[i+2][0] > curr_max and li_track[i][1] == "0":
+            if li_track[i][0] - li_track[i+1][0] + li_track[i+2][0] > curr_max and li_track[i][1] == "0":
                 start = i
-                curr_max = li_track[i][0] + li_track[i+1][0] + li_track[i+2][0]
+                curr_max = li_track[i][0] - li_track[i+1][0] + li_track[i+2][0]
 
         # print(start)
         if start == -1:
