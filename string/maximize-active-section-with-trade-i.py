@@ -18,8 +18,8 @@ class Solution:
                 li_track.append((track, curr_char))
         
         
-        if len(li_track) == 1:
-            return li_track[0][0]
+        # if len(li_track) == 1:
+        #     return li_track[0][0]
         
         start = -1
         curr_max = -float("INF")
