@@ -1,10 +1,10 @@
 class Solution:
     def maxActiveSectionsAfterTrade(self, s: str) -> int:
-        temp = "1" + s + "1"
+        temp = s[::]
         li_track = []
 
 
-        curr_char = "1"
+        curr_char = temp[0]
         track = 1
         for i in range(1, len(temp)):
             if temp[i] == curr_char:
@@ -19,7 +19,7 @@ class Solution:
         
         
         if len(li_track) == 1:
-            return li_track[0][0] - 2
+            return li_track[0][0]
         
         start = -1
         curr_max = -float("INF")
@@ -27,9 +27,9 @@ class Solution:
 
         for i in range(len(li_track) - 2):
             # print(i)
-            if li_track[i][0] - li_track[i+1][0] + li_track[i+2][0] > curr_max and li_track[i][1] == "0":
+            if li_track[i][0] + li_track[i+2][0] > curr_max and li_track[i][1] == "0":
                 start = i
-                curr_max = li_track[i][0] - li_track[i+1][0] + li_track[i+2][0]
+                curr_max = li_track[i][0] + li_track[i+2][0]
 
         # print(start)
         if start == -1:
@@ -44,4 +44,4 @@ class Solution:
             if y == "1":
                 ans += x
 
-        return ans - 2
+        return ans
