@@ -1,22 +1,17 @@
 class Solution:
     def simplifyPath(self, path: str) -> str:
         
-        subs = path.split("/")
-        subs = list(filter(lambda x: x != "", subs))
-        # print(subs)
-
+        path_li = path.split("/")
         ans = []
 
-        for fol in subs:
-            if fol == ".":
+        for element in path_li:
+            if element == "." or element == "":
                 continue
-            
-            elif fol == "..":
+            elif element == "..":
                 if ans:
                     ans.pop(-1)
-            
             else:
-                ans.append(fol)
+                ans.append(element)
 
-        return '/' + "/".join(ans)
-
+        # print(ans)
+        return "/" + "/".join(ans)
