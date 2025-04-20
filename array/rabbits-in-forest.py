@@ -1,4 +1,5 @@
 from collections import Counter
+from math import ceil
 
 class Solution:
     def numRabbits(self, answers: List[int]) -> int:
@@ -9,6 +10,6 @@ class Solution:
             if u == 0:
                 ans += v
             else:
-                ans += u + 1
+                ans += ceil(v/(u + 1)) * (u+1)
 
         return ans
