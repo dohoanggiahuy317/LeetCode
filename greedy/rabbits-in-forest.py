@@ -5,7 +5,10 @@ class Solution:
         d = Counter(answers)
 
         ans = 0
-        for u, _ in d.items():
-            ans += u + 1
+        for u, v in d.items():
+            if u == 0:
+                ans += v
+            else:
+                ans += u + 1
 
         return ans
