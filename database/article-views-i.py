@@ -1,9 +1,11 @@
 import pandas as pd
 
 def article_views(views: pd.DataFrame) -> pd.DataFrame:
-    same_views = views[views["author_id"] == views["viewer_id"]][["author_id"]]
-    same_views.rename(columns={"author_id": "id"}, inplace = True)
-    same_views.drop_duplicates(inplace=True)
-    same_views.sort_values(by="id", inplace = True)
+    views = views[views["author_id"] == views["viewer_id"]][["author_id"]]
+    views = views.drop_duplicates(subset="author_id")
+    views = views.sort_values(by="author_id")
+    views = views.rename(columns={
+        "author_id": "id"
+    })
 
-    return same_views
+    return views
