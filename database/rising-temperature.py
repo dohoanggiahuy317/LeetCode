@@ -11,5 +11,9 @@ def rising_temperature(weather: pd.DataFrame) -> pd.DataFrame:
             })
 
         prev = row["temperature"]
-
-    return pd.DataFrame(date)
+    if date:
+        return pd.DataFrame(date)
+    else:
+        df = pd.DataFrame()
+        df["id"] = ""
+        return df
