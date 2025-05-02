@@ -5,7 +5,7 @@ class Solution(object):
 
         # Populate forces going from left to right
         f = 0
-        for i in xrange(N):
+        for i in range(N):
             if dominoes[i] == 'R': f = N
             elif dominoes[i] == 'L': f = 0
             else: f = max(f-1, 0)
