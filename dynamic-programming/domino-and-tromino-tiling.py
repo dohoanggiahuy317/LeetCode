@@ -7,4 +7,4 @@ class Solution:
         if n == 3:
             return 5
 
-        return self.numTilings(n-1) + 2 * self.numTilings(n-2) + 5 * self.self.numTilings(n-3)
+        return self.numTilings(n-1) + 2 * self.numTilings(n-2) + 5 * self.numTilings(n-3)
