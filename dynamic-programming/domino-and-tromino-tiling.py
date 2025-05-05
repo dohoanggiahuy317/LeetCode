@@ -1,10 +1,22 @@
 class Solution:
     def numTilings(self, n: int) -> int:
-        if n == 1:
-            return 1
-        if n == 2:
-            return 2
-        if n == 3:
-            return 5
+        MOD = 10 ** 9 + 7
+        dp = {
+            1: 1, 
+            2: 2, 
+            3: 5, 
+            4: 11,
+            5: 24}
 
-        return self.numTilings(n-1) + 2 * self.numTilings(n-2) + 5 * self.numTilings(n-3)
+        def find(n):
+            nonlocal dp
+
+            if n in dp:
+                return dp[n]
+
+            dp[n] = (2*find(n-1) % MOD + find(n-3)% MOD)% MOD
+            return dp[n]% MOD
+
+        find(n)
+        return dp[n]% MOD
+        
