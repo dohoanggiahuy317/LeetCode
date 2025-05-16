@@ -7,7 +7,7 @@ class Solution:
             for j in range(i-1, -1, -1):
                 if groups[i] != groups[j] and len(words[i]) == len(words[j]):
 
-                    if sum([ abs(ord(words[i][t]) - ord(words[j][t])) for t in range(len(words[i])) ]) == 1:
+                    if sum([ 1 if words[i][t] != words[j][t] else 0 for t in range(len(words[i])) ]) == 1:
                         if dp[i] < dp[j] + 1:
                             dp[i] = dp[j] + 1
                             prev[i] = j
