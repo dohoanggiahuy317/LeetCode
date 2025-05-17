@@ -1,12 +1,12 @@
 class Solution:
     def findRadius(self, houses: List[int], heaters: List[int]) -> int:
-        arr = []
+        arr = -float("INF")
 
         for house in houses:
-            dist = []
+            dist = float("INF")
             for heater in heaters:
-                dist.append(abs(house - heater))
+                dist = min(dist, abs(house - heater))
 
-            arr.append(dist)
+            arr = max(arr, dist)
 
-        return max(list(map(lambda x: min(x), arr)))
+        return arr
