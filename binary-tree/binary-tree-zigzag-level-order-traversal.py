@@ -22,7 +22,7 @@ class Solution:
                     if node.right:
                         next_arr.append(node.right)
             else:
-                for node in temp[-1]:
+                for node in temp[-1][::-1]:
                     if node.right:
                         next_arr.append(node.right)
                     if node.left:
