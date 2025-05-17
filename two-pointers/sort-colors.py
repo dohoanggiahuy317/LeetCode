@@ -3,14 +3,10 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
+        
+        for i in range(len(nums)):
+            for j in range(len(nums)):
+                if nums[j] > nums[i]:
+                    nums[j], nums[i] = nums[i], nums[j]
 
-        freq = [0] * 3
-
-        for n in nums:
-            freq[n] += 1
-
-        idx = 0
-        for i in range(len(freq)):
-            for _ in range(freq[i]):
-                nums[idx] = i
-                idx += 1       
+        return nums
