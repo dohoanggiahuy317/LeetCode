@@ -16,22 +16,19 @@ class Solution:
             # print(temp)
             next_arr = []
             if left:
-                for node in temp[-1]:
-                    if node.left:
-                        next_arr.append(node.left)
-                    if node.right:
-                        next_arr.append(node.right)
-
-                left = not left
-            else:
-
                 for node in temp[-1][::-1]:
+                    if node.left:
+                        next_arr.append(node.left)
+                    if node.right:
+                        next_arr.append(node.right)
+            else:
+                for node in temp[-1]:
                     if node.right:
                         next_arr.append(node.right)
                     if node.left:
                         next_arr.append(node.left)
 
-                left = not left
+            left = not left
             temp.append(next_arr)
 
         ans = []
