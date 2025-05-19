@@ -1,7 +1,7 @@
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        d = Counter()
-        d[0] = 1
+        dp = Counter()
+        dp[0] = 1
         curr_sum = 0
         ans = 0
 
@@ -9,10 +9,10 @@ class Solution:
             curr_sum += nums[i]
 
             diff = curr_sum - k
-            if diff in d:
-                ans += d[diff]
+            if diff in dp:
+                ans += dp[diff]
             
-            d[curr_sum] += 1
+            dp[curr_sum] += 1
 
         return ans
 
