@@ -3,7 +3,7 @@ class Solution:
         s = s.strip()
         neg = -1 if s.startswith("-") else 1
 
-        if not neg:
+        if neg != -1:
             s = s.strip("+")
         else:
             s = s.strip("-")
