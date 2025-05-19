@@ -21,10 +21,17 @@ class Solution:
         ans = 0
         # print(dp)
         # print(freq)
-        for i in range(len(freq)):
-            for j in range(i+1, len(freq)):
-                if freq[j][0] - freq[i][0] == k:
-                    # print(i, j)
-                    ans += freq[j][1] * freq[i][1]
+        if k == 0:
+            for i in range(len(freq)):
+                if freq[i][0] == 0 and i != 0:
+                    ans += freq[i][1] * (freq[i][1] - 1) // 2
+                for j in range(i+1, len(freq)):
+                    if freq[j][0] - freq[i][0] == 0:
+                        ans += freq[j][1] * freq[i][1]
+        else:
+            for i in range(len(freq)):
+                for j in range(i+1, len(freq)):
+                    if freq[j][0] - freq[i][0] == k:
+                        ans += freq[j][1] * freq[i][1]
                 
         return ans
