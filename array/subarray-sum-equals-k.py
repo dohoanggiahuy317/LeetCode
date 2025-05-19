@@ -1,18 +1,20 @@
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        d = Counter()
-        d[0] = 1
-        curr_sum = 0
+        left = 0
+        curr = 0
         ans = 0
 
         for i in range(len(nums)):
-            curr_sum += nums[i]
+            curr += nums[i]
+            # print(left, i, curr, ans)
 
-            diff = curr_sum - k
-            if diff in d:
-                ans += d[diff]
-            
-            d[curr_sum] += 1
+            while curr >= k and left <= i:
+                if curr == k:
+                    ans += 1
+                curr -= nums[left]
+                left += 1
+
+            # print(left, i, curr, ans)
+            # print()
 
         return ans
-
