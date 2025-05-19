@@ -5,25 +5,26 @@ class Solution:
         for i in range(len(nums)):
             dp[i + 1] = dp[i] + nums[i]
 
-        freq = Counter(dp[1:])
-        print(dp, freq)
-        ans = 0
+        freq = []
+        curr = 0
+        cnt = 1
 
-        for u, v in freq.items():
-            if k != 0:
-                if u + k in freq and k != 0:
-                    ans += freq[u+k] * freq[u]
-                if u == k:
-                    ans += freq[u]
+        for i in range(1, len(dp)):
+            if dp[i] != curr:
+                freq.append((curr, cnt))
+                cnt = 1
+                curr = dp[i]
             else:
-                if u == 0:
-                    ans += freq[u]
-                else:
-                    ans += freq[u] * (freq[u] - 1) // 2
-            # else:
-            #     if -u in freq and u != 0:
-            #         ans += freq[u+k] * freq[u]
-            #     elif u == 0:
-            #         ans += freq[u+k] * freq[u]
+                cnt += 1
+        freq.append((curr, cnt))
+
+        ans = 0
+        # print(dp)
+        # print(freq)
+        for i in range(len(freq)):
+            for j in range(i+1, len(freq)):
+                if freq[j][0] - freq[i][0] == k:
+                    # print(i, j)
+                    ans += freq[j][1] * freq[i][1]
                 
         return ans
