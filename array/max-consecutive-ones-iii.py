@@ -16,19 +16,20 @@ class Solution:
                 if num0 > 0:
                     curr += 1
                     num0 -= 1
+                    ans = max(ans, curr)
                     # print(trail, i, curr)
                     continue
                 else:
                     while nums[trail] == 1:
                         trail += 1
                         curr -= 1
-                    trail += 1
-                    
+                    trail += 1         
                     num0 += 1
                     curr -= 1
                     
                     curr += 1
                     num0 -= 1
+                    ans = max(ans, curr)
                     # print(trail, i, curr)
 
         return ans
