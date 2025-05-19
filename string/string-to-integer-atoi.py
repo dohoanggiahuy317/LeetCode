@@ -1,24 +1,24 @@
 class Solution:
     def myAtoi(self, s: str) -> int:
-        s = s.lstrip()
-        ns = ""
-        for i in range(len(s)):
-            if i == 0 and s[i] in "+-":
-                ns += s[i]
-            elif s[i].isdigit():
-                ns += s[i]
-            else:
-                break
+        s = s.strip()
+        neg = -1 if s.startswith("-") else 1
 
-        if not ns or ns in "+-":
-            return 0
+        s = s.strip("+")
+        s = s.strip("-")
 
-        ans = int(ns)
+        temp = ""
+        i = 0
+        while i < len(s) and s[i].isdigit():
+            temp += s[i]
+            i += 1
         
+        if not temp:
+            return 0
+        
+        if int(temp) * neg > 2**31-1:
+            return 2**31-1
+        elif int(temp) * neg < -2**31:
+            return -2**31
 
-        if ans > 2 ** 31 - 1:
-            ans = 2 ** 31 - 1
-        if ans < - 2 ** 31:
-            ans = - 2 ** 31
-
-        return ans
+        return int(temp) * neg
+        
