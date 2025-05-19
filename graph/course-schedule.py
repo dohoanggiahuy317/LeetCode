@@ -7,8 +7,8 @@ class Solution:
         for preq in prerequisites:
             graph[preq[1]].append(preq[0])
 
-        for u, v in graph.items():
-            print(u, v)
+        # for u, v in graph.items():
+        #     print(u, v)
 
         def dfs(curr_node, visited):
             nonlocal graph, cyc
