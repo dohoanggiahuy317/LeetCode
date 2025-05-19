@@ -3,8 +3,10 @@ class Solution:
         s = s.strip()
         neg = -1 if s.startswith("-") else 1
 
-        s = s.strip("+")
-        s = s.strip("-")
+        if not neg:
+            s = s.strip("+")
+        else:
+            s = s.strip("-")
 
         temp = ""
         i = 0
