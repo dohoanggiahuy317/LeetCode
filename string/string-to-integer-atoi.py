@@ -4,9 +4,9 @@ class Solution:
         neg = -1 if s.startswith("-") else 1
 
         if neg != -1:
-            s = s.strip("+")
+            s = s[1:] if s.startswith("+") else s
         else:
-            s = s.strip("-")
+            s = s[1:] if s.startswith("-") else s
 
         temp = ""
         i = 0
