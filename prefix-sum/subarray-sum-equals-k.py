@@ -1,6 +1,11 @@
 from collections import Counter
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
+        if len(nums) == 1:
+            if nums[0] == k:
+                return 1
+            return 0
+
         n = len(nums)
         pref_sum = [0] * (n+1)
         freq = Counter()
