@@ -8,16 +8,17 @@ class Solution:
 
         n = len(nums)
         pref_sum = [0] * (n+1)
-        freq = Counter()
+        freq = Counter({0:1})
+        ans = 0
 
         # loop through the nums arr
         for i in range(n):
             pref_sum[i+1] = pref_sum[i] + nums[i]
+            
+            if pref_sum[i+1] - k in freq:
+                ans += freq[pref_sum[i+1] - k]
+
             freq[pref_sum[i+1]] += 1
 
-        ans = 0
-        for s in pref_sum:
-            if s + k in freq:
-                ans += freq[s+k]
-
+            # print(freq, pref_sum, ans)
         return ans
