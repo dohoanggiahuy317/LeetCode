@@ -1,21 +1,11 @@
 class Solution:
     def findMaxLength(self, nums: List[int]) -> int:
-        dp = {0: -1}
-        count = 0
-        ans = 0
+        freq = defaultdict(lambda: inf, {0:-1})
+        pref, ans = 0, 0
 
-        for i in range(len(nums)):
-            if nums[i] == 1:
-                count += 1
-            else:
-                count -= 1
-
-            if count not in dp:
-                dp[count] = i
-            else:
-                ans = max(ans, i - dp[count]) 
+        for j, num in enumerate(nums):
+            pref += 1 if num == 1 else -1
+            ans = max(ans, j - freq[pref])
+            freq[pref] = min(j, freq[pref])
 
         return ans
-
-
-        
