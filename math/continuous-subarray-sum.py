@@ -6,6 +6,7 @@ class Solution:
             pref = (pref + num) % k
             if (pref - k) % k in freq:
                 return True
+            freq[pref] += 1
         
         return False
             
