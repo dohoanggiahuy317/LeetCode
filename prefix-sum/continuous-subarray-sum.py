@@ -2,9 +2,11 @@ class Solution:
     def checkSubarraySum(self, nums: List[int], k: int) -> bool:
         freq = defaultdict(int, {0:0})
         pref = 0
+        prev = -nums[0]
         for num in nums:
+            prev = pref
             pref = (pref + num) % k
-            if (pref - k) % k in freq:
+            if (pref - k) % k in freq and pref - k != prev:
                 return True
             freq[pref] += 1
         
