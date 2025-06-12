@@ -5,7 +5,6 @@ class Solution:
         pref = 0
 
         for i, num in enumerate(nums):
-            print(freq)
             pref = (pref + num) % k
             if pref in freq and i - freq[pref] > 1:
                 return True
