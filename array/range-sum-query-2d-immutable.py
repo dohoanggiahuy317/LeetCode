@@ -7,9 +7,7 @@ class NumMatrix:
             for j in range(len(matrix[0])):
                 pref_row += matrix[i][j]
                 self.temp[i+1][j+1] = pref_row + self.temp[i][j+1]
-
-        print(self.temp)
-
+                
     def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
         rowl = min(row1, row2) + 1
         coll = min(col1, col2) + 1
