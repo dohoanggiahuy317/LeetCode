@@ -2,7 +2,7 @@ class Solution:
     def numSubarraysWithSum(self, nums: List[int], goal: int) -> int:
         pref = 0
         nums += [1]
-        freq = defaultdict(int)
+        freq = defaultdict(int, {0:-1})
         ans = 0
 
         for i, num in enumerate(nums):
