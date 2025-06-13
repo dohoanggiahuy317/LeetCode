@@ -6,7 +6,6 @@ class Solution:
         ans = 0
 
         for i, num in enumerate(nums):
-            # print(freq)
             if num == 1:
                 pref += 1
                 freq[pref] = i
@@ -16,10 +15,6 @@ class Solution:
                     right = freq[pref-1]
                     left = freq[pref-goal]
                     left_pad = freq[pref-1-goal]
-                    # print("yp")
-                    # print(pref, dict(freq))
-                    # print(left_pad, left, right, right_pad)
-                    # print()
 
                     if left > right:
                         ans += (right_pad-right) * (right_pad-right - 1) // 2
