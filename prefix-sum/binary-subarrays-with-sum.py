@@ -6,7 +6,7 @@ class Solution:
         ans = 0
 
         for i, num in enumerate(nums):
-            print(freq)
+            # print(freq)
             if num == 1:
                 pref += 1
                 freq[pref] = i
@@ -22,7 +22,7 @@ class Solution:
                     # print()
 
                     if left > right:
-                        ans += right_pad * (right_pad + 1) // 2
+                        ans += (right_pad-right) * (right_pad-right - 1) // 2
                     else:
                         ans += (right_pad - right) * ((left - left_pad) * int(left != left_pad) + 1 * int(left == left_pad))
 
