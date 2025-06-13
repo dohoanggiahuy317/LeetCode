@@ -1,12 +1,17 @@
 class Solution:
     def countSubarrays(self, nums: List[int], k: int) -> int:
-        n = len(nums)
-        res, total = 0, 0
-        i = 0
-        for j in range(n):
-            total += nums[j]
-            while i <= j and total * (j - i + 1) >= k:
-                total -= nums[i]
-                i += 1
-            res += j - i + 1
-        return res
+        pref = [0] * (len(nums) + 1)
+        ans = 0
+
+        for i, num in enumerate(nums):
+            pref[i+1] = pref[i] + num
+            l = 1
+
+            while i+1-l >= 0 and k > l * (pref[i+1]-pref[i+1-l]):
+                # print(l, pref[i+1-l], pref[i+1])
+                ans += 1
+                l += 1
+            # print(pref)
+            # print()
+            
+        return ans
