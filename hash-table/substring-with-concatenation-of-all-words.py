@@ -2,17 +2,14 @@ class Solution:
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
         k = len(words[0])
         n = k * len(words)
-        wf = Counter(words)
-        sf = Counter([s[i:i+k] for i in range(0, n, k)])
+        wfreq = Counter(words)
         ans = []
-
-        for i in range(0, len(s), k):
-            if wf == sf:
-                ans.append(i)
+        
+        for i in range(len(s) - n + 1):
+            ns = s[i: i + n]
             
-            sf[s[i+n : i+n+k]] += 1
-            sf[s[i: i+k]] -= 1
-            if sf[s[i: i+k]] <= 0:
-                del sf[s[i: i+k]]
+            nsfreq = Counter( [ns[j:j+k] for j in range(0, len(ns), k)] )
+            if wfreq == nsfreq:
+                ans.append(i)
 
         return ans
