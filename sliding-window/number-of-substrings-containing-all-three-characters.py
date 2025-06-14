@@ -9,4 +9,4 @@ class Solution:
                 ans += min(map(lambda x: x[1] , filter(lambda x: x[0] != char, ap.items())))
                 # print(ans)
             ap[char] = i
-        return ans + 1
+        return ans + int(len(ap) == 4)
