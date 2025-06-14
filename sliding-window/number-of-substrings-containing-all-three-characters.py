@@ -1,16 +1,12 @@
 class Solution:
     def numberOfSubstrings(self, s: str) -> int:
-        # Track last position of a, b, c
-        last_pos = [-1] * 3
-        total = 0
-
-        for pos in range(len(s)):
-            # Update last position of current character
-            last_pos[ord(s[pos]) - ord("a")] = pos
-
-            # Add count of valid substrings ending at current position
-            # If any character is missing, min will be -1
-            # Else min gives leftmost required character position
-            total += 1 + min(last_pos)
-
-        return total
+        s += " "
+        ap = defaultdict(int)
+        ans = 0
+        for i, char in enumerate(s):
+            if len(ap) == 3:
+                # print(i, char, ap)
+                ans += min(map(lambda x: x[1] , filter(lambda x: x[0] != char, ap.items())))
+                # print(ans)
+            ap[char] = i
+        return ans + 1
