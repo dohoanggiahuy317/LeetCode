@@ -9,7 +9,7 @@ class Solution:
                 pref += 1
                 freq[pref] = i
             
-            ans += freq[pref-k+1] - freq[pref-k]
+            ans += freq[pref-goal+1] - freq[pref-goal]
 
         return ans
 
