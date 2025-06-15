@@ -11,7 +11,7 @@ class Solution:
                     temp += 1
                 if temp < len(lnum):
                     y = lnum[temp]
-                    lb = [c1 if x == y else x for x in lnum]
+                    lb = [c2 if x == y else x for x in lnum]
                     b = int("".join(lb))
                 else:
                     b = num
@@ -22,7 +22,7 @@ class Solution:
 
             return b
 
-        b = rep("0", "1", "1")
+        b = rep("1", "0", "1")
         a = rep("9", "9", "9")
     
         return a - b
