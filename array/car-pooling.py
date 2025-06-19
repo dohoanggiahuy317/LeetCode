@@ -7,11 +7,12 @@ class Solution:
         curr_cap = 0
         queue = []
 
-        for i in range(end_time):
-            while queue and i >= queue[0][2]:
+        for i in range(1, end_time+1):
+            # print(i, queue, trips)
+            while queue and i >= queue[0][0]:
                 curr_cap -= heapq.heappop(queue)[2]
 
-            while trips and i <= trips[0][1]:
+            while trips and i >= trips[0][1]:
                 curr_cap += trips[0][0]
                 heapq.heappush(queue, (trips[0][2], trips[0][1], trips[0][0]))
                 trips.pop(0)
