@@ -1,15 +1,22 @@
-import numpy as np
-
 class Solution:
     def shiftingLetters(self, s: str, shifts: List[List[int]]) -> str:
-        
-        dp = np.array([0] * len(s))
+        trackUp, trackDown = [0] * len(s), [0] * len(s)
 
-        for st, en, di in shifts:
-                dp[st:en+1] += (di*2 - 1)
+        for st, e, d in shifts:
+            trackUp[e] += 2*d - 1
+            trackDown[st] += 2*d - 1
 
-        ans = ""
+        prefDown, prefUp = [0], [0]
         for i in range(len(s)):
-            ans += chr((ord(s[i]) - ord("a") + dp[i] + 26) % 26 + ord("a"))
+            prefDown.append(prefDown[-1] + trackDown[len(trackDown)-1 - i])
+            prefUp.append(prefUp[-1] + trackUp[len(trackUp)-1 - i])
+        prefDown = prefDown[::-1]
+        prefUp = prefUp[::-1]
+
+        ans = ''
+
+        for i in range(len(s)):
+            char_shift = prefUp[i] - prefDown[i+1]
+            ans +=  chr((ord(s[i]) - ord("a") + char_shift) % 26 + ord("a"))
 
         return ans
