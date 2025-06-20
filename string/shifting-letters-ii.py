@@ -10,13 +10,10 @@ class Solution:
         for i in range(len(s)):
             prefDown.append(prefDown[-1] + trackDown[len(trackDown)-1 - i])
             prefUp.append(prefUp[-1] + trackUp[len(trackUp)-1 - i])
-        prefDown = prefDown[::-1]
-        prefUp = prefUp[::-1]
 
         ans = ''
-
         for i in range(len(s)):
-            char_shift = prefUp[i] - prefDown[i+1]
+            char_shift = prefUp[len(s) - i] - prefDown[len(s) - (i+1)]
             ans +=  chr((ord(s[i]) - ord("a") + char_shift) % 26 + ord("a"))
 
         return ans
