@@ -7,8 +7,7 @@ class Solution:
             if num == 0:
                 c += 1
                 while c > k:
-                    if nums[left] == 0:
-                        c -= 1
+                    c -= 1 ^ nums[left]
                     left += 1
             
             ans = max(ans, right - left + 1)
