@@ -1,6 +1,6 @@
 class Solution:
     def maximumSubarraySum(self, nums: List[int], k: int) -> int:
-        ans = -float("INF")
+        ans = float("-INF")
         freq = defaultdict(lambda: inf)
         pref = 0
         for num in nums:
