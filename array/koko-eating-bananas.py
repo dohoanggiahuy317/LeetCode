@@ -3,10 +3,11 @@ class Solution:
         
         def canEat(m):
             nonlocal piles, h
-            time_require = list(map(lambda x: ceil(x / m), piles))
+            time_require = [ceil(num / m) for num in piles]
+            # list(map(lambda x: ceil(x / m), piles))
             return sum(time_require) <= h
 
-        l, r = 0, max(piles)
+        l, r = 1, max(piles)
         ans = 0
 
         while l <= r:
