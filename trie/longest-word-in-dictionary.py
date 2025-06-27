@@ -13,6 +13,8 @@ class Solution:
                 ans = min(ans, word)
             if l < track[word]:
                 ans = word
+                l = track[word]
+            # print(l, ans)
             
         return ans
             
