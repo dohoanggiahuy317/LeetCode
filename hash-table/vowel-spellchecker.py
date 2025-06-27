@@ -13,7 +13,6 @@ class Solution:
             
             wordset.add(word)
 
-        print(unvowell, uncasel, wordset)
         ans = []
         for query in queries:
             f = re.sub(r"[ueoaiUEOAI]", "*", query)
@@ -21,8 +20,8 @@ class Solution:
                 ans.append(query)
             elif query.lower() in uncasel:
                 ans.append(uncasel[query.lower()])
-            elif f in unvowell:
-                ans.append(unvowell[f])
+            elif f.lower() in unvowell:
+                ans.append(unvowell[f.lower()])
             else:
                 ans.append("")
 
