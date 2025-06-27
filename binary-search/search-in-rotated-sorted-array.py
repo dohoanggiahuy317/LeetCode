@@ -3,24 +3,16 @@ class Solution:
         
         l, r = 0, len(nums) - 1
         p = 0
-        while l <= r:
+        while l < r:
             m = (l + r) // 2
-            print(l, r, m)
-            if nums[m] > nums[l]:
-                if nums[m+1] < nums[m]:
-                    p = m+1
-                    break
+            p = m
+            if nums[m] > nums[r]:
                 l = m + 1
-            elif nums[m] < nums[l]:
-                if nums[m-1] > nums[m]:
-                    p = m
-                    break
-                r = m - 1
             else:
-                p = m
-                break
-            
+                r = m
+        p = l
         nnums = nums[p:] + nums[:p]
+        # print(nums)
         l, r = 0, len(nnums) - 1
         while l <= r:
             m = (l + r) // 2
