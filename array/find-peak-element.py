@@ -3,7 +3,7 @@ class Solution:
         nums = [-inf] + nums + [-inf]
         l, r = 0, len(nums) - 1
 
-        while l < r:
+        while l <= r:
             m = (l+r) // 2
 
             if nums[m - 1] < nums[m] > nums[m + 1]:
@@ -15,9 +15,9 @@ class Solution:
                 l = m + 1
             else:
                 if nums[m] < nums[r]:
-                    l = m
+                    l = m+1
                 else:
-                    r = m
+                    r = m-1
 
             # print(l, r, m)
         
