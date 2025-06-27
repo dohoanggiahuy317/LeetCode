@@ -1,11 +1,10 @@
-import re
 class Solution:
     def spellchecker(self, wordlist: List[str], queries: List[str]) -> List[str]:
         unvowell = defaultdict(str)
         uncasel = defaultdict(str)
         wordset = set()
         for word in wordlist:
-            formatword = re.sub(r"[ueoai]", "*", word)
+            formatword = re.sub(r"[ueoaiUEOAI]", "*", word)
             if formatword.lower() not in unvowell:
                 unvowell[formatword.lower()] = word
 
@@ -14,6 +13,7 @@ class Solution:
             
             wordset.add(word)
 
+        print(unvowell, uncasel, wordset)
         ans = []
         for query in queries:
             f = re.sub(r"[ueoai]", "*", query)
