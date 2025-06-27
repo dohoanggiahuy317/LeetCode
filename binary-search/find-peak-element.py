@@ -18,7 +18,5 @@ class Solution:
                     l = m+1
                 else:
                     r = m-1
-
-            # print(l, r, m)
         
         return l - 1
