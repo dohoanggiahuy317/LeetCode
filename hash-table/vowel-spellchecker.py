@@ -16,7 +16,7 @@ class Solution:
         print(unvowell, uncasel, wordset)
         ans = []
         for query in queries:
-            f = re.sub(r"[ueoai]", "*", query)
+            f = re.sub(r"[ueoaiUEOAI]", "*", query)
             if query in wordset:
                 ans.append(query)
             elif query.lower() in uncasel:
