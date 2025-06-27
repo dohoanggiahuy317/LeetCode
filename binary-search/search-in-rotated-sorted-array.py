@@ -21,6 +21,6 @@ class Solution:
             elif nnums[m] > target:
                 r = m - 1
             else:
-                return m + p
+                return (m + p) % len(nnums)
 
         return -1
