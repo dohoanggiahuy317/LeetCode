@@ -1,22 +1,30 @@
-import heapq
 class Solution:
     def maxProfitAssignment(self, difficulty: List[int], profit: List[int], worker: List[int]) -> int:
-        worker.sort(reverse = True)
-
-        heap = []
-
-        for i in range(len(profit)):
-            heapq.heappush(heap, [-profit[i], difficulty[i]])
+        diff_prof = zip(difficulty, profit)
+        diff_prof = sorted(diff_prof, key=lambda x: (x[0], x[1]))
+        print(diff_prof)
 
         ans = 0
-        diff = [0, 999999]
+        for wor in worker:
+            if wor < diff_prof[0][0]:
+                continue
 
-        for i in range(len(worker)):
-            while heap and diff[1] > worker[i]:
-                diff = heapq.heappop(heap)
-            if diff[1] <= worker[i]:
-                ans -= diff[0]
+            l, r = 0, len(diff_prof) - 1
+            print(wor)
 
-        return ans
+            while l <= r:
+                m = (l + r) // 2
+                print(l, r, m)
 
+                if wor < diff_prof[m][0]:
+                    r = m-1
+                else:
+                    l = m + 1
+                
+            ans += diff_prof[r][1]
+            print(diff_prof[r])
+            print()
         
+        return ans
+                
+                
