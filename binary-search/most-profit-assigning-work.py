@@ -15,8 +15,9 @@ class Solution:
                     r = m - 1
                 else:
                     l = m + 1
-                
-            ans += max([x[1] for x in dif_prof[:ind]])
+            # print(w, ind)
+            if dif_prof[:ind]:
+                ans += max([x[1] for x in dif_prof[:ind]])
         
         return ans
                 
