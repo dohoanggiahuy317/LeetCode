@@ -1,5 +1,7 @@
 class Solution:
     def shiftingLetters(self, s: str, shifts: List[List[int]]) -> str:
+        MAP_DIRECTION = {0: -1, 1: 1}
+
         N = len(s)
         changes = [0] * (N+1)
         a = ord('a')
