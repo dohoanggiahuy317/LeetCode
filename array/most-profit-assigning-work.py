@@ -5,6 +5,12 @@ class Solution:
         ans = 0
 
         for w in worker:
+            if w < dif_prof[0][0]:
+                continue
+            if w >= dif_prof[-1][0]:
+                ans += dif_prof[-1][1]
+                continue
+                
             l, r = 0, len(dif_prof)
             ind = -1
             
