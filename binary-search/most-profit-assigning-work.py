@@ -3,14 +3,17 @@ class Solution:
         dif_prof = zip(difficulty, profit)
         dif_prof = sorted(dif_prof, key=lambda x: (x[0], x[1]))
         ans = 0
+        # print(dif_prof)
+        mi, ma = min(difficulty), max(difficulty)
+        maprof = max(profit)
 
         for w in worker:
-            if w < dif_prof[0][0]:
+            if w <mi:
                 continue
-            if w >= dif_prof[-1][0]:
-                ans += dif_prof[-1][1]
+            if w >= ma:
+                ans += maprof
                 continue
-                
+
             l, r = 0, len(dif_prof)
             ind = -1
             
