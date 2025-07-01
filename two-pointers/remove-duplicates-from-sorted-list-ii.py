@@ -16,7 +16,7 @@ class Solution:
         temp = ans
 
         while curr:
-            # print(ans)
+            # print(temp.val, prev.val, curr.val, nex)
             if prev.val != curr.val and (not nex or curr.val != nex.val):
                 temp.next = curr
                 temp = temp.next
@@ -25,4 +25,5 @@ class Solution:
             curr = curr.next
             if nex:
                 nex = nex.next
+        temp.next = None
         return ans.next
