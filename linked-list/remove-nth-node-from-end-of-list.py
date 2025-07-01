@@ -15,5 +15,6 @@ class Solution:
         while cur:
             cur = cur.next
             prev = prev.next
+            
         prev.next = prev.next.next
         return mask.next
