@@ -6,6 +6,9 @@
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
+        if not head:
+            return False
+            
         l, r = head, head.next
 
         while (l and r) and (l != r):
