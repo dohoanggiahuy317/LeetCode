@@ -18,7 +18,7 @@ class Solution:
                 if items[m][0] > que:
                     r = m - 1
                 else:
-                    ind = l
+                    ind = m
                     l = m + 1
             # print(que, ind)
             ans.append(prefMax[ind+1])
