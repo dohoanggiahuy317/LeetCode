@@ -30,6 +30,8 @@ class Solution:
                 l1.next = merge(l1.next, l2)
                 return l1
         
+        if not head or not head.next:
+            return head
 
         half = split(head)
         head = self.sortList(head)
