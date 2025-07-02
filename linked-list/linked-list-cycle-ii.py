@@ -16,7 +16,7 @@ class Solution:
             if r.next:
                 r = r.next.next
             else:
-                return False
+                return None
             count += 1
             l = l.next
 
