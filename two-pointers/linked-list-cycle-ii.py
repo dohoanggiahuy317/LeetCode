@@ -10,12 +10,23 @@ class Solution:
             return False
             
         l, r = head, head.next
+        count = 0
 
         while (l and r) and (l != r):
             if r.next:
                 r = r.next.next
             else:
                 return False
+            count += 1
             l = l.next
 
-        return r == l
+        if r == l:
+            t = head
+
+            while t != l:
+                t = t.next.next
+                l = l.next
+
+            return l
+
+        return None
