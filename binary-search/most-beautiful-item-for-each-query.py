@@ -1,9 +1,30 @@
 class Solution:
     def maximumBeauty(self, items: List[List[int]], queries: List[int]) -> List[int]:
-        items.sort(key = lambda n: -n[0])
-        ans, max_beauty = [0] * len(queries), 0
-        for i in sorted(range(len(queries)), key = lambda i: queries[i]):
-            while items and items[-1][0] <= queries[i]:
-                max_beauty = max(max_beauty, items.pop()[1])
-            ans[i] = max_beauty
+        items = sorted(items, key=lambda x: (x[0], x[1]))
+        prefMax = [0] * (len(items) + 1)
+        # print(items)
+
+        for i, it in enumerate(items):
+            prefMax[i+1] = max(items[i][1], prefMax[i])
+        # print(prefMax)
+
+        ans = []
+
+        for que in queries:
+            l, r = 0, len(items) - 1
+            ind = -1
+            while l <= r:
+                m = (l + r) // 2
+                if items[m][0] > que:
+                    r = m - 1
+                else:
+                    ind = l
+                    l = m + 1
+            # print(que, ind)
+            ans.append(prefMax[ind+1])
+            # print()
+
         return ans
+
+            
+            
