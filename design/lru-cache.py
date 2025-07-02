@@ -2,9 +2,9 @@ class LRUCache:
 
     def __init__(self, capacity: int):
         self.cap = capacity
-        self.dict = {}
-        self.key_order = {}
-        self.key_freq = defaultdict(int)
+        self.dict = {} # The actual cache to store key-val
+        self.key_order = {} # tracking the order of the key is use, keep adding new key use here
+        self.key_freq = defaultdict(int) # we gonna remove key with smallest order 
         self.count = 0
         self.curr_min = 0
         pass
