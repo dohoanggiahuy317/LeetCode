@@ -9,22 +9,28 @@ class Solution:
         if not head:
             return head
             
-        l, r = head, head.next
-        count = 0
+        l, r = head, head
+        b = True
 
-        while (l and r) and (l != r):
+        while (l and r) and (l != r or b):
+            b = False
             if r.next:
                 r = r.next.next
             else:
                 return None
-            count += 1
             l = l.next
+
+# t+1 = nonloop + stloop
+# 2t+1 = nonloop + 2stloop + edloop
+
+# -> t = stloop + edloop
+# nonloop = edloop - 1
 
         if r == l:
             t = head
 
             while t != l:
-                t = t.next.next
+                t = t.next
                 l = l.next
 
             return l
