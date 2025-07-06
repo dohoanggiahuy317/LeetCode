@@ -6,7 +6,7 @@ class Solution:
         curr_max = -inf
         for d, p in jobs:
             curr_max = max(curr_max, p)
-            pref_max.append(p)
+            pref_max.append(curr_max)
         
         ans = 0
         for w in worker:
