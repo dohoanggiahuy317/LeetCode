@@ -2,10 +2,9 @@ class Solution:
 
     def __init__(self, w: List[int]):
         self.pref = list(accumulate(w))
-        self.s = self.pref[-1]
 
     def pickIndex(self) -> int:
-        target = random.randint(1, self.s)
+        target = random.randint(1, self.pref[-1])
         return bisect_left(self.pref, target)
         # l, r = 0, len(self.pref) - 1
 
