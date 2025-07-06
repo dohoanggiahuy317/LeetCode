@@ -10,11 +10,13 @@ class Solution:
             return temp <= 0
 
         l, r = 1, min(ranks) * (cars ** 2)
+        ans = -1
         while l <= r:
             m = (l + r) // 2
             if check(m):
+                ans = m
                 r = m - 1
             else:
                 l = m + 1
         
-        return l
+        return ans
