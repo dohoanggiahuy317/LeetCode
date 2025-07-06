@@ -1,27 +1,18 @@
 class Solution:
     def maxProfitAssignment(self, difficulty: List[int], profit: List[int], worker: List[int]) -> int:
-        dif_prof = zip(difficulty, profit)
-        dif_prof = sorted(dif_prof, key=lambda x: (x[0], x[1]))
-        dif_prof = [(0, 0)] + dif_prof + [(inf, 0)]
+        jobs = sorted(zip(difficulty, profit))
         
-        pref_max = defaultdict(int, {0:0})
-        for i in range(1, len(dif_prof)):
-            pref_max[i] = max(pref_max[i-1], dif_prof[i][1])
+        pref_max = []
+        curr_max = -inf
+        for d, p in jobs:
+            curr_max = max(curr_max, p)
+            pref_max.append(p)
         
         ans = 0
         for w in worker:
-            l, r = 0, len(dif_prof)
-            ind = -1
-            
-            while l < r:
-                m = (l + r) // 2
-                if dif_prof[m][0] > w:   
-                    ind = m
-                    r = m
-                else:
-                    l = m + 1
-
-            ans += pref_max[ind-1]
+            ind = bisect_right(jobs, (w, inf))
+            if ind:
+                ans += pref_max[ind-1]
         
         return ans
                 
