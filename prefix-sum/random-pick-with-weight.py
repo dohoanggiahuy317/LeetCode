@@ -1,11 +1,8 @@
 class Solution:
 
     def __init__(self, w: List[int]):
-        self.pref = [0] * (len(w) + 1)
-        for i, num in enumerate(w):
-            self.pref[i + 1] = self.pref[i] + num
-        self.pref = self.pref[1:]
-        self.s = sum(w)
+        self.pref = list(accumulate(w))
+        self.s = self.pref[-1]
 
     def pickIndex(self) -> int:
         tar = random.randint(1, self.s)
