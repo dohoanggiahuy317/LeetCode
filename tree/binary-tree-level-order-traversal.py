@@ -20,7 +20,7 @@ class Solution:
             if curr_node.left:
                 q.append((curr_node.left, level + 1))
                 ans[-1].append(curr_node.left.val)
-            if curr_node.left:
+            if curr_node.right:
                 q.append((curr_node.right, level + 1))
                 ans[-1].append(curr_node.right.val)
 
