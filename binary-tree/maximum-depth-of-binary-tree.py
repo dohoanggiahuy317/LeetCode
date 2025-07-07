@@ -7,18 +7,7 @@
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         
-        ans = 0
+        if not root:
+            return 0
 
-        def findHeight(root, curr):
-            nonlocal ans
-            if not root:
-                return
-
-            ans = max(ans, curr)
-
-            findHeight(root.left, curr + 1)
-            findHeight(root.right, curr + 1)
-        
-        findHeight(root, 1)
-
-        return ans
+        return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
