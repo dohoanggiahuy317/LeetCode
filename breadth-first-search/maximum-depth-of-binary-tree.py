@@ -6,18 +6,19 @@
 #         self.right = right
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-
+        
         ans = 0
 
-        def dfs(root, i):
+        def findHeight(root, curr):
             nonlocal ans
-            if root == None:
-                ans = max(ans, i)
+            if not root:
                 return
 
-            dfs(root.left, i+1)
-            dfs(root.right, i+1)
+            ans = max(ans, curr)
 
-        dfs(root, 0)
+            findHeight(root.left, curr + 1)
+            findHeight(root.right, curr + 1)
+        
+        findHeight(root, 1)
 
         return ans
