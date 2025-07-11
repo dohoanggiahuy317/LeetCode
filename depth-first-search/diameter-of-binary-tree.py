@@ -10,18 +10,18 @@ class Solution:
         def find_max(root):
             nonlocal ans
             if not root:
-                return 0, 0
+                return 0
             if root.left:
-                radius_left = find_max(root.left)[0] + 1
+                radius_left = find_max(root.left) + 1
             else:
                 radius_left = 0
             if root.right:
-                radius_right = find_max(root.right)[1] + 1
+                radius_right = find_max(root.right) + 1
             else:
                 radius_right = 0
             # print(root.val, radius_left, radius_right)
             ans = max(ans, radius_left + radius_right)
-            return radius_left, radius_right
+            return max(radius_left, radius_right)
 
         if not root:
             return 0
