@@ -21,5 +21,7 @@ class Solution:
             # print(root.val, found_left, found_right)
             return root.val == 1 or (found_left or found_right)
 
-        found(root)
-        return root
+        dummy = TreeNode()
+        dummy.left = root
+        found(dummy)
+        return dummy.left
