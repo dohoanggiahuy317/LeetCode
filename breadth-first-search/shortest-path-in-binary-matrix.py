@@ -3,7 +3,7 @@ class Solution:
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
         start_x, start_y, init_dist = 0, 0, 1
         directions = [  (-1, -1), (-1, 0), (-1, 1), 
-                        (0, -1), (0, 1), 
+                        (0, -1), (0, 1), (0, 0),
                         (1, -1), (1, 0), (1, 1)]
 
         if grid[start_x][start_y] == 1:
@@ -19,7 +19,7 @@ class Solution:
             for dx, dy in directions:
                 nx, ny = x + dx, y + dy
                 if nx == m - 1 and ny == n - 1 and grid[nx][ny] == 0:
-                    return dist + 1
+                    return dist + (dx or dy)
 
                 if ( 
                     0 <= nx < m and
