@@ -10,25 +10,26 @@ class Solution:
             return -1
 
         m, n = len(grid), len(grid[0])
-        visited = [[(False, inf)] * n for _ in range(m)]
         queue = deque([(start_x, start_y, init_dist)])
-
+        visited = set((start_x, start_y))
+        
         while queue:
             x, y, dist = queue.popleft()
-            visited[x][y] = True, min(visited[x][y][1], dist)
 
             for dx, dy in directions:
                 nx, ny = x + dx, y + dy
+                if nx == m - 1 and ny == n - 1 and grid[nx][ny] == 0:
+                    return dist + 1
+
                 if ( 
                     0 <= nx < m and
                     0 <= ny < n and
                     grid[nx][ny] == 0 and 
-                    not visited[nx][ny][0]
+                    (nx, ny) not in visited
                 ):
                     queue.append((nx, ny, dist + 1))
-        
-        if visited[-1][-1][1] != inf:
-            return visited[-1][-1][1]
+                    visited.add((nx, ny))
+    
 
         return -1
 
