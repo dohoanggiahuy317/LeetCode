@@ -14,7 +14,6 @@ class Solution:
         queue = deque([(start_x, start_y, init_dist)])
 
         while queue:
-            print(queue)
             x, y, dist = queue.popleft()
             visited[x][y] = True, min(visited[x][y][1], dist)
 
