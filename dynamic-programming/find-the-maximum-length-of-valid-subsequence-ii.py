@@ -1,13 +1,12 @@
 class Solution:
     def maximumLength(self, nums: List[int], k: int) -> int:
         dp = defaultdict(int)
-        ans = 0
+        rem_to_dp = defaultdict(int)
 
-        for num in nums:
-            remainder = num % k
+        for i, num in enumerate(nums):
+            for rem in range(k):
+                other_num = (rem - num) % k
+                dp[i] = max(dp[i], rem_to_dp[(other_num, rem)] + 1)
+                value_track[(num % k, rem)] = dp[i]
 
-            for prev in range(k):
-                dp[(remainder, prev)] = dp[(prev, remainder)] + 1
-                ans = max(ans, dp[(remainder, prev)])
-        
-        return ans
+        return dp[len(nums) - 1]
