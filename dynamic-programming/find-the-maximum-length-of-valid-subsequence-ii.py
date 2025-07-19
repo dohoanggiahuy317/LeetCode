@@ -2,6 +2,7 @@ class Solution:
     def maximumLength(self, nums: List[int], k: int) -> int:
         dp = defaultdict(int)
         rem_to_dp = defaultdict(int)
+        ans = 0
 
         for i, num in enumerate(nums):
             rem_holder = [0] * k
@@ -13,5 +14,7 @@ class Solution:
                 
                 rem_holder[rem] = max(rem_holder[rem], past_best)
                 rem_to_dp[(num % k, rem)] = rem_holder[rem]
-            print(dp)
-        return dp[len(nums) - 1]
+
+                ans = max(ans, dp[i])
+
+        return ans
