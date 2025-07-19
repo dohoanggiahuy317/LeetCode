@@ -1,6 +1,6 @@
 class Solution:
     def numSubarraysWithSum(self, nums: List[int], goal: int) -> int:
-        dp = defaultdict(int)
+        dp = defaultdict(int, {0: 1})
         curr_sum = 0
         ans = 0
 
