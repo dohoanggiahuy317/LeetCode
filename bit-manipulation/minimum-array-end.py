@@ -12,6 +12,8 @@ class Solution:
                     ans += binn1[-1]
                     binn1 = binn1[:-1]
 
+        # print(binn1, ans)
         ans = binn1 + ans
+        
 
-        return int(ans, 2)
+        return int(ans[::-1], 2)
