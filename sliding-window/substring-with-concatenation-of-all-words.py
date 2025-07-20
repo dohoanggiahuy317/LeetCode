@@ -1,15 +1,14 @@
 class Solution:
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
-        k = len(words[0])
-        n = k * len(words)
-        wfreq = Counter(words)
+        n, m = len(words) * len(words[0]), len(words[0])
+        cw = Counter(words)
         ans = []
-        
-        for i in range(len(s) - n + 1):
-            ns = s[i: i + n]
-            
-            nsfreq = Counter( [ns[j:j+k] for j in range(0, len(ns), k)] )
-            if wfreq == nsfreq:
-                ans.append(i)
 
+        for i in range(len(s) - n + 1):
+            chunk = s[i: i + n]
+            l = len(chunk)
+            # print(list(chunk[j:j + m] for j in range(0, l, m)))
+            if cw == Counter( list(chunk[j:j + m] for j in range(0, l, m)) ):
+                ans.append(i)
+        
         return ans
