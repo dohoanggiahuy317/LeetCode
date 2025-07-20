@@ -1,11 +1,17 @@
 class Solution:
     def minEnd(self, n: int, x: int) -> int:
-        n_1, ans, j=n-1, 0, 0
-        for i in range(56):
-            if (x>>i)&1: 
-                ans|=(1<<i)
+        binx = bin(x)[2:]
+        binn1 = bin(n-1)[2:]
+        ans = ""
+
+        for i, bit in enumerate(binx[::-1]):
+            if bit == "1":
+                ans += "1"
             else:
-                if (n_1>>j)&1: ans|=(1<<i)
-                j+=1
-        return ans
-        
+                if binn1:
+                    ans += binn1[-1]
+                    binn1 = binn1[:-1]
+
+        ans = binn1 + ans
+
+        return int(ans, 2)
