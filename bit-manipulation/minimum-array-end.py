@@ -13,7 +13,7 @@ class Solution:
                     binn1 = binn1[:-1]
 
         # print(binn1, ans)
+        ans = ans[::-1]
         ans = binn1 + ans
         
-
-        return int(ans[::-1], 2)
+        return int(ans, 2)
