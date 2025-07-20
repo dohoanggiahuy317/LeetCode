@@ -31,7 +31,7 @@ class Solution:
             return l1
 
         if not head or not head.next:
-            return None
+            return head
 
         half = split(head)
         l1 = self.sortList(half)
