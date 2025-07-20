@@ -1,5 +1,8 @@
 class Solution:
     def minEnd(self, n: int, x: int) -> int:
+        if n == 1:
+            return x
+            
         binx = bin(x)[2:]
         binn1 = bin(n-1)[2:]
         ans = ""
@@ -11,8 +14,8 @@ class Solution:
                 if binn1:
                     ans += binn1[-1]
                     binn1 = binn1[:-1]
-
-        # print(binn1, ans)
+        
+        print(binn1, ans)
         ans = ans[::-1]
         ans = binn1 + ans
         
