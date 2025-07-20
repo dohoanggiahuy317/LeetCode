@@ -13,7 +13,7 @@ class Solution:
         m = 0
         
         while l <= r:
-            m = l + (r - l) // 2
+            m = (l + r) // 2
             if nums[m] > m:
                 l = m + 1
             elif nums[m] < m:
