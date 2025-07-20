@@ -14,11 +14,13 @@ class Solution:
                 num_guest, _ = cur_guest.popleft()
                 cur_cap -= num_guest
 
-            while cur_checkpoint < len(trips) and trips[cur_checkpoint][1] >= cur_time:
+            while cur_checkpoint < len(trips) and trips[cur_checkpoint][1] <= cur_time:
                 num_guest, st, en = trips[cur_checkpoint]
                 cur_guest.append((num_guest, en))
                 cur_cap += num_guest
                 cur_checkpoint += 1
+
+            # print(cur_time, cur_cap)
 
             if cur_cap > capacity:
                 return False
