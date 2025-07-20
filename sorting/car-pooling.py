@@ -1,8 +1,26 @@
 class Solution:
-   def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
-        destination = max(x[2] for x in trips)
-        pax_count = [0] * (destination + 1)
-        for num_passenger, from_km, to_km in trips:
-            for i in range(from_km, to_km):
-                pax_count[i] += num_passenger
-        return all(x <= capacity for x in pax_count)
+    def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
+        trips = sorted(trips, key = lambda x: x[1])
+
+        timestart = min([trip[1] for trip in trips])
+        timeend = max([trip[2] for trip in trips])
+
+        cur_guest = deque()
+        cur_cap = 0
+        cur_checkpoint = 0
+
+        for cur_time in range(timestart, timeend + 1):
+            while cur_guest and cur_guest[0][1] <= cur_time:
+                num_guest, _ = cur_guest.popleft()
+                cur_cap -= num_guest
+
+            while cur_checkpoint < len(trips) and trips[cur_checkpoint][1] >= cur_time:
+                num_guest, st, en = trips[cur_checkpoint]
+                cur_guest.append((num_guest, en))
+                cur_cap += num_guest
+                cur_checkpoint += 1
+
+            if cur_cap > capacity:
+                return False
+        
+        return True
