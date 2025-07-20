@@ -6,7 +6,8 @@ class Solution:
         prefMax = [0] * len(diff_prof)
         for i, (diff, prof) in enumerate(diff_prof):
             prefMax[i] = max(prefMax[i - 1] if i > 0 else 0, diff_prof[i][1])
-
+        print(diff_prof)
+        print(prefMax)
         ans = 0
         for w in worker:
             l, r = 0, len(worker) - 1
@@ -20,6 +21,7 @@ class Solution:
                 else:
                     best = m
                     l = m + 1
+                
         
             ans += prefMax[best] if best != -1 else 0
 
