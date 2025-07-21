@@ -25,7 +25,7 @@ class Solution:
         dfs(root, 0, 0)
         ans = [[] for _ in range(right - left + 1)]
 
-        for coor, subrow in sorted(list(tree_map.items())):
+        for coor, subrow in list(tree_map.items()):
             x, y = coor
             pos = y - left
             ans[pos] += sorted(subrow)
