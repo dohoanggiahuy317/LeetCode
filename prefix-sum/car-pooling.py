@@ -1,10 +1,10 @@
 class Solution:
     def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
-        max_destination = max([tr[2] for tr in trips])
-        pad_count = [0] * (max_destination + 1)
+        largest_end = max([x[2] for x in trips])
+        track = [0] * (largest_end + 1)
 
-        for num, st, en in trips:
-            for i in range(st, en):
-                pad_count[i] += num
+        for num, f, t in trips:
+            for i in range(f, t):
+                track[i] += num
 
-        return all(co <= capacity for co in pad_count)
+        return all(x <= capacity for x in track)
