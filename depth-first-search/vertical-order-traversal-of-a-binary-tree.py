@@ -9,7 +9,7 @@ class Solution:
         tree_map = defaultdict(list)
         left, right = 0, 0
 
-        def dfs(root, y):
+        def dfs(root, x, y):
             nonlocal tree_map, left, right
             if not root:
                 return
@@ -17,18 +17,20 @@ class Solution:
             left = min(left, y)
             right = max(right, y)
 
-            tree_map[y].append(root.val)
-            dfs(root.left, y-1)
-            dfs(root.right, y+1)
+            tree_map[y].append((x, root.val))
+            dfs(root.left, x + 1, y-1)
+            dfs(root.right, x + 1, y+1)
 
         
-        dfs(root, 0)
+        dfs(root, 0, 0)
         ans = [[] for _ in range(right - left + 1)]
+
+        # print(tree_map)
 
         for coor, subrow in list(tree_map.items()):
             y = coor
             pos = y - left
-            ans[pos] += sorted(subrow)
+            ans[pos] += [x[1] for x in sorted(subrow)]
             # print(subrow)
 
         return ans
