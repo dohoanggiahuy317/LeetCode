@@ -1,15 +1,18 @@
 class Solution:
     def makeFancyString(self, s: str) -> str:
-        st, en = 0, 0
-        temp, ans = 0, ""
+        ans = ""
+        curr, count = "", 0
+        for ch in s:
+            if ch == curr and count == 2:
+                continue
 
-        while en < len(s):
-            while en < len(s) and s[st] == s[en]:
-                temp += 1
-                en += 1
-            ans += min(2, temp) * s[st]
-            temp = 0
-            st = en
-
+            ans += ch
+            
+            if ch == curr:
+                count += 1
+            else:
+                curr = ch
+                count = 1
 
         return ans
+            
