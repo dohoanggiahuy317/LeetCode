@@ -14,8 +14,8 @@ class Solution:
             if not root:
                 return
             
-            # left = min(left, y)
-            # right = max(right, y)
+            left = min(left, y)
+            right = max(right, y)
 
             dfs(root.left, x + 1, y-1)
             tree_map[y].append((x, root.val))
@@ -26,10 +26,8 @@ class Solution:
 
         # print(tree_map)
 
-        for coor, subrow in list(tree_map.items()):
-            y = coor
-            ans.append([x[1] for x in sorted(subrow)])
-            # print(subrow)
+        for i in range(left, right + 1):
+            ans.append([x[1] for x in sorted(tree_map[i]) ])
 
         return ans
 
