@@ -19,12 +19,10 @@ class Solution:
                 radius_right = find_max(root.right) + 1
             else:
                 radius_right = 0
-            # print(root.val, radius_left, radius_right)
+
             ans = max(ans, radius_left + radius_right)
             return max(radius_left, radius_right)
 
-        if not root:
-            return 0
         
         ans = 0
         find_max(root)
