@@ -23,11 +23,11 @@ class Solution:
         
         dfs(root, 0, 0)
         ans = []
-
         # print(tree_map)
 
         for i in range(left, right + 1):
-            ans.append([x[1] for x in sorted(tree_map[i]) ])
+            row = [ x[1] for x in sorted(tree_map[i]) ]
+            ans.append(row)
 
         return ans
 
