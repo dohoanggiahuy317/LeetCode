@@ -11,19 +11,12 @@ class Solution:
             nonlocal ans
             if not root:
                 return 0
-            if root.left:
-                radius_left = find_max(root.left) + 1
-            else:
-                radius_left = 0
-            if root.right:
-                radius_right = find_max(root.right) + 1
-            else:
-                radius_right = 0
+            radius_left = find_max(root.left)
+            radius_right = find_max(root.right)
 
             ans = max(ans, radius_left + radius_right)
-            return max(radius_left, radius_right)
+            return max(radius_left, radius_right) + 1
 
-        
         ans = 0
         find_max(root)
         return ans
