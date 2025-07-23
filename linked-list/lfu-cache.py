@@ -110,4 +110,6 @@ class LFUCache:
         if not self.freq_head or self.freq_head.freq != 1:
             self.add_bucket(None, FreqVal(1))
         self.add_node(self.freq_head, node)
+
+        print("put", key, value)
         
