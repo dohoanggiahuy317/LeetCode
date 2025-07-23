@@ -35,7 +35,7 @@ class LRUCache:
             self.tail = node
 
     def helper(self, key: int, node: NodeVal) -> int:
-        cur = self.MAP.get(key)
+        cur = self.MAP[key]
         if cur:
             self.remove(cur)
         self.add_to_front(node)
@@ -43,14 +43,22 @@ class LRUCache:
         return node.val
         
     def get(self, key: int) -> int:
-        if key not in self.MAP:
+        node = self.MAP[key]
+        if not node:
             return -1
-        return self.helper(key, self.MAP[key])
+        self.remove(node)
+        self.add_to_front(node)
+        return node.val
 
     def put(self, key: int, value: int) -> None:
-        if key not in self.MAP:
+        node = self.MAP[key]
+        if not node:
             self.length += 1
-        self.helper(key, NodeVal(key, value))
+        self.remove(node)
+
+        new_node = NodeVal(key, value)
+        self.MAP[key] = new_node
+        self.add_to_front(new_node)
         
         while self.length > self.capacity:
             temp = self.tail.pre
