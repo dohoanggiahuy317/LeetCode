@@ -35,7 +35,7 @@ class LFUCache:
 
         node.pre = node.nex = None
 
-        if bucket.head is None:
+        if not bucket.head:
             self.remove_bucket(bucket)
 
     def add_node(self, bucket, node):
@@ -87,6 +87,8 @@ class LFUCache:
             self.add_bucket(bucket, bucket_nex)
 
         self.add_node(bucket_nex, node)
+        if not self.freq_head:
+            self.freq_head = bucket_nex
         return node.val
 
     def put(self, key: int, value: int) -> None:
@@ -97,6 +99,9 @@ class LFUCache:
             return
 
         if self.length >= self.capacity:
+            print(self.length)
+            print(self.freq_head)
+
             last_node = self.freq_head.tail
             self.remove_node(self.freq_head, last_node)
             del self.MAP[last_node.key]
@@ -111,5 +116,5 @@ class LFUCache:
             self.add_bucket(None, FreqVal(1))
         self.add_node(self.freq_head, node)
 
-        print("put", key, value)
+        # print("put", key, value, self.length)
         
