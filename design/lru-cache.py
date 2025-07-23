@@ -1,44 +1,58 @@
+class NodeVal:
+    def __init__(self, key, val):
+        self.val = val
+        self.key = key
+        self.nex, self.pre = None, None
+
+
 class LRUCache:
-
     def __init__(self, capacity: int):
-        self.cap = capacity
-        self.dict = {} # The actual cache to store key-val
-        self.key_order = {} # tracking the order of the key is use, keep adding new key use here
-        self.key_freq = defaultdict(int) # we gonna remove key with smallest order 
-        self.count = 0
-        self.curr_min = 0
-        pass
+        self.MAP = defaultdict(lambda: None)
+        self.length = 0
+        self.head, self.tail = None, None
+        self.capacity = capacity
 
-    def get(self, key: int) -> int:
+    def helper(self, key: int, node: NodeVal) -> int:        
+        cur = self.MAP[key]
+        if cur:
+            pre, nex = cur.pre, cur.nex
+            if pre:
+                pre.nex = nex
+            if nex:
+                nex.pre = pre
+            else:
+                self.tail = pre
+
+        self.MAP[key] = node
+        node.nex = self.head
+        if self.length == 1:
+            self.head = node
+            self.tail = node
+            return node.val
+        self.head.pre = node
+        self.head = node
+        return node.val
         
-        if key in self.dict:
-            self.key_order[self.count] = key
-            self.key_freq[key] += 1
-            self.count += 1
-            return self.dict[key]
-        return -1
+    def get(self, key: int) -> int:
+        if key not in self.MAP:
+            return -1
+        return self.helper(key, self.MAP[key])
 
     def put(self, key: int, value: int) -> None:
-        self.key_freq[key] += 1
-        self.key_order[self.count] = key
-        self.count += 1
-        self.dict[key] = value
-
-        while len(self.key_freq) > self.cap:
-            least_key = self.key_order[self.curr_min]
-            self.key_freq[least_key] -= 1
-
-            if self.key_freq[least_key] == 0:
-                del self.key_freq[least_key]
-                del self.dict[least_key]
-
-            self.curr_min += 1
+        if key not in self.MAP:
+            self.length += 1
+        self.helper(key, NodeVal(key, value))
         
-        # print(self.dict, self.key_order, self.key_freq)
+        while self.length > self.capacity:
+            temp = self.tail.pre
+
+            temp.nex = None
+            del self.MAP[self.tail.key]
+            self.tail = temp
+
+            self.length -= 1
+        
+        self.pr()
 
 
-
-# Your LRUCache object will be instantiated and called as such:
-# obj = LRUCache(capacity)
-# param_1 = obj.get(key)
-# obj.put(key,value)
+        
