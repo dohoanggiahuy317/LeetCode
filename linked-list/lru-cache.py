@@ -52,7 +52,5 @@ class LRUCache:
 
             self.length -= 1
         
-        self.pr()
-
 
         
