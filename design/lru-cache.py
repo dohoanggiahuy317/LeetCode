@@ -31,7 +31,7 @@ class LRUCache:
         if self.head:
             self.head.pre = node
         self.head  = node
-        if self.tail is None:
+        if not self.tail:
             self.tail = node
         
     def get(self, key: int) -> int:
