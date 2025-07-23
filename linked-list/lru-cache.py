@@ -12,25 +12,34 @@ class LRUCache:
         self.head, self.tail = None, None
         self.capacity = capacity
 
-    def helper(self, key: int, node: NodeVal) -> int:        
-        cur = self.MAP[key]
-        if cur:
-            pre, nex = cur.pre, cur.nex
-            if pre:
-                pre.nex = nex
-            if nex:
-                nex.pre = pre
-            else:
-                self.tail = pre
+    def remove(self, node):
+        if node.pre:
+            node.pre.nex = node.nex
+        else:
+            self.head = node.nex
 
-        self.MAP[key] = node
-        node.nex = self.head
-        if self.length == 1:
-            self.head = node
+        if node.nex:
+            node.nex.pre = node.pre
+        else:
+            self.tail = node.pre
+
+        node.pre = node.nex = None
+
+    def add_to_front(self, node):
+        node.pre  = None
+        node.nex  = self.head
+        if self.head:
+            self.head.pre = node
+        self.head  = node
+        if self.tail is None:
             self.tail = node
-            return node.val
-        self.head.pre = node
-        self.head = node
+
+    def helper(self, key: int, node: NodeVal) -> int:
+        cur = self.MAP.get(key)
+        if cur:
+            self.remove(cur)
+        self.add_to_front(node)
+        self.MAP[key] = node
         return node.val
         
     def get(self, key: int) -> int:
@@ -51,6 +60,7 @@ class LRUCache:
             self.tail = temp
 
             self.length -= 1
-        
+
+
 
         
