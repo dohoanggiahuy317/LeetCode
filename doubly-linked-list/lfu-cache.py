@@ -102,7 +102,7 @@ class LFUCache:
         if not self.freq_head or self.freq_head.freq_val != 1: # if no bucket
             new_bucket = Node(1)
             new_bucket.set_bucket()
-            self.add_bucket(self.freq_head, new_bucket)
+            self.add_bucket(None, new_bucket)
 
         node.set_items(key, value, self.freq_head)  
         self.MAP[key] = node
