@@ -3,12 +3,12 @@ class Node:
         self.pre = self.nex = None
         self.freq_val = freq_val
     
-        # item for key-value pair
+    def set_items(self, key, val, freq_node):
         self.key = key
         self.val = val
         self.freq_node = freq_node
-
-        # Item for frequency node
+    
+    def set_bucket(self):
         self.head = self.tail = None
 
 class LFUCache:
@@ -77,6 +77,7 @@ class LFUCache:
         
         if not next_bucket or next_bucket.freq_val != node.freq_val:
             next_bucket = Node(node.freq_val)
+            next_bucket.set_bucket()
             self.add_bucket(bucket, next_bucket)
         
         self.remove_item(bucket, node)
@@ -100,8 +101,10 @@ class LFUCache:
         node = Node(1) # new key that not in cache
         if not self.freq_head or self.freq_head.freq_val != 1: # if no bucket
             new_bucket = Node(1)
+            new_bucket.set_bucket()
             self.add_bucket(None, new_bucket)
 
+        node.set_items(key, value, self.freq_head)  
         self.MAP[key] = node
         self.length += 1
         self.add_item(node.freq_node, node) # add node to head of 1st bucket
