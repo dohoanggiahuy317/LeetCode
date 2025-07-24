@@ -75,21 +75,14 @@ class LFUCache:
         next_bucket = bucket.nex
         node.freq_val += 1
         
-
         if not next_bucket or next_bucket.freq_val != node.freq_val:
-            new_bucket = Node(node.freq_val)
-            new_bucket.set_bucket()
-            self.add_bucket(bucket, new_bucket)
-            self.remove_item(bucket, node)
-            self.add_item(new_bucket, node)
-            if not self.freq_head:
-                self.freq_head = new_bucket
-        else:
-            self.remove_item(bucket, node)
-            self.add_item(next_bucket, node)            
-            if not self.freq_head:
-                self.freq_head = next_bucket
-    
+            next_bucket = Node(node.freq_val)
+            next_bucket.set_bucket()
+            self.add_bucket(bucket, next_bucket)
+        
+        self.remove_item(bucket, node)
+        self.add_item(next_bucket, node)
+
         return node.val
 
     def put(self, key: int, value: int) -> None:
