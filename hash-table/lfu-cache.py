@@ -32,6 +32,16 @@ class LFUCache:
         if not bucket.head:
             self.remove_bucket(bucket)
 
+    def remove_bucket(self, bucket):
+        if bucket.pre:
+            bucket.pre.nex = bucket.nex
+        else:
+            self.freq_head = bucket.nex
+
+        if bucket.nex:
+            bucket.nex.pre = bucket.pre
+        bucket.pre = bucket.nex = None
+
     def add_item(self, bucket, node):
         node.pre = None
         node.nex = bucket.head # always add node to top of list
@@ -41,16 +51,6 @@ class LFUCache:
         if not bucket.tail:
             bucket.tail = node
         node.freq_node = bucket
-
-    def remove_bucket(self, bucket):
-        if bucket.pre:
-            bucket.pre.nex = bucket.nex
-        else:
-            self.freq_head = bucket.nex
-
-        if bucket.nex:
-            bucket.nex.pre = bucket.pre
-        # bucket.pre = bucket.nex = None
 
     def add_bucket(self, prevb, newb):
         if prevb:
@@ -72,17 +72,22 @@ class LFUCache:
 
         node = self.MAP[key]
         bucket = node.freq_node # get bucket info to jump to next bucket
+        next_bucket = bucket.nex
         node.freq_val += 1
         self.remove_item(bucket, node)
 
-        if not bucket.nex or bucket.nex.freq_val != node.freq_val:
+        if not next_bucket or next_bucket.freq_val != node.freq_val:
             new_bucket = Node(node.freq_val)
             new_bucket.set_bucket()
             self.add_bucket(bucket, new_bucket)
-        
-        self.add_item(bucket.nex, node) 
-        if not self.freq_head:
-            self.freq_head = bucket.nex       
+            self.add_item(new_bucket, node)
+            if not self.freq_head:
+                self.freq_head = new_bucket
+        else:
+            self.add_item(next_bucket, node)            
+            if not self.freq_head:
+                self.freq_head = next_bucket
+    
         return node.val
 
     def put(self, key: int, value: int) -> None:
