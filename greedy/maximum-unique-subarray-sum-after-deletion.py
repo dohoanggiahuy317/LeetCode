@@ -1,3 +1,7 @@
 class Solution:
     def maxSum(self, nums: List[int]) -> int:
-        return sum(filter(lambda x: x > 0, list(set(nums))))
+        t = sorted(list(set(nums)), reverse = True)
+        ans = float("-inf")
+        for x in accumulate(t):
+            ans = max(ans, x)
+        return ans
