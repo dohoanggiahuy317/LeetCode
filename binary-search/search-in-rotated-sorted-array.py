@@ -3,38 +3,23 @@ class Solution:
         l, r = 0, len(nums) - 1
         pivot = 0
 
-        while l < r:
+        while l <= r:
             m = (l + r) // 2
+
+            if nums[m] == target:
+                return m
 
             if nums[m] > nums[r]:
-                l = m + 1
-                pivot = l
+                if nums[m] > target and nums[r] < target:
+                    r = m - 1
+                else:
+                    l = m + 1
+            
             else:
-                r = m
-
-        l, r = 0, pivot
-        while l <= r:
-            m = (l + r) // 2
-
-            if nums[m] == target:
-                return m
-            elif nums[m] > target:
-                r = m - 1
-            else:
-                l = m + 1
-
-        l, r = pivot, len(nums) - 1
-        ans = 0
-        while l <= r:
-            m = (l + r) // 2
-
-            if nums[m] == target:
-                return m
-            elif nums[m] > target:
-                r = m - 1
-            else:
-                l = m + 1
-
+                if nums[m] < target and nums[r] > target:
+                    l = m + 1
+                else:
+                    r = m - 1
+            
         return -1
 
-        
