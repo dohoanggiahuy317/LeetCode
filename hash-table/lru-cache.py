@@ -48,7 +48,7 @@ class LRUCache:
                 prev_node = last_node.prev
                 if prev_node:
                     prev_node.next = None
-                del self.MAP[last_node.val]
+                del self.MAP[last_node.key]
                 self.tail = prev_node
                 self.length -= 1
                 
