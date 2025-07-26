@@ -6,32 +6,23 @@
 #         self.right = right
 class Solution:
     def verticalTraversal(self, root: Optional[TreeNode]) -> List[List[int]]:
+        
         tree_map = defaultdict(list)
-        left, right = 0, 0
 
-        def dfs(root, x, y):
-            nonlocal tree_map, left, right
+        def dfs(x, y, root):
+            nonlocal tree_map
             if not root:
                 return
-            
-            left = min(left, y)
-            right = max(right, y)
 
-            dfs(root.left, x + 1, y-1)
             tree_map[y].append((x, root.val))
-            dfs(root.right, x + 1, y+1)
-        
-        dfs(root, 0, 0)
-        ans = []
-        # print(tree_map)
+            dfs(x+1, y-1, root.left)
+            dfs(x+1, y+1, root.right)
 
-        for i in range(left, right + 1):
-            row = [ x[1] for x in sorted(tree_map[i]) ]
-            ans.append(row)
+        dfs(0, 0, root)
+        ans = []
+        for k, it in sorted(list(tree_map.items())):
+            ans.append([x[1] for x in sorted(it)])
 
         return ans
-
-
-        
 
             
