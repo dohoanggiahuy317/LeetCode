@@ -29,6 +29,8 @@ class LRUCache:
         if self.head:
             self.head.prev = node
         self.head = node
+        if not self.tail:
+            self.tail = node
 
     def get(self, key: int) -> int:
         node = self.MAP[key]
@@ -55,8 +57,6 @@ class LRUCache:
             new_node = Node(value, key)
             self.helper(new_node)
             self.MAP[key] = new_node
-            if self.length == 0:
-                self.tail = new_node
             self.length += 1
 
 
