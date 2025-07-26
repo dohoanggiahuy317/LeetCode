@@ -49,7 +49,7 @@ class LRUCache:
         node = self.MAP[key]
         if node:
             node.val = value
-            self.get(node)
+            self.get(key)
         else:
             while self.length >= self.capacity:
                 last_node = self.tail
