@@ -7,21 +7,15 @@
 class Solution:
     def pruneTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         
-        def found(root):
-            if not root:
-                return False
+        if not root:
+            return None
 
-            found_left = found(root.left)
-            found_right = found(root.right)
-            if not found_left:
-                root.left = None
-            if not found_right:
-                root.right = None
-            
-            # print(root.val, found_left, found_right)
-            return root.val == 1 or (found_left or found_right)
+        if not self.pruneTree(root.left):
+            root.left = None
+        if not self.pruneTree(root.right):
+            root.right = None
+        
+        if root.val != 1 and not root.left and not root.right:
+            root = None
 
-        dummy = TreeNode()
-        dummy.left = root
-        found(dummy)
-        return dummy.left
+        return root
