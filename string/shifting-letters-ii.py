@@ -5,7 +5,6 @@ class Solution:
         MAP = {0: -1, 1: 1}
 
         for st, en, di in shifts:
-            print(track)
             track[st] += MAP[di]
             track[en+1] -= MAP[di]
 
