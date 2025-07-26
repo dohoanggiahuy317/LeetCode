@@ -1,26 +1,41 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        
         l, r = 0, len(nums) - 1
-        p = 0
+        pivot = -1
+
         while l < r:
             m = (l + r) // 2
-            p = m
-            if nums[m] > nums[r]:
-                l = m + 1
+
+            if nums[m] > nums[l]:
+                l = m
             else:
-                r = m
-        p = l
-        nnums = nums[p:] + nums[:p]
-        # print(nums)
-        l, r = 0, len(nnums) - 1
+                pivot = m
+                r = m - 1
+
+        l, r = 0, pivot
         while l <= r:
             m = (l + r) // 2
-            if nnums[m] < target:
-                l = m + 1
-            elif nnums[m] > target:
+
+            if nums[m] == target:
+                return m
+            elif nums[m] > target:
                 r = m - 1
             else:
-                return (m + p) % len(nnums)
+                l = m + 1
+
+                l, r = 0, pivot
+        l, r = pivot, len(nums) - 1
+        ans = 0
+        while l <= r:
+            m = (l + r) // 2
+
+            if nums[m] == target:
+                return m
+            elif nums[m] > target:
+                r = m - 1
+            else:
+                l = m + 1
 
         return -1
+
+        
