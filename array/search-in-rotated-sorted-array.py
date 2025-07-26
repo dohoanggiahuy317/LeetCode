@@ -6,11 +6,11 @@ class Solution:
         while l < r:
             m = (l + r) // 2
 
-            if nums[m] > nums[l]:
-                l = m
+            if nums[m] > nums[r]:
+                l = m + 1
+                pivot = l
             else:
-                pivot = m
-                r = m - 1
+                r = m
 
         l, r = 0, pivot
         while l <= r:
@@ -23,7 +23,6 @@ class Solution:
             else:
                 l = m + 1
 
-        l, r = 0, pivot
         l, r = pivot, len(nums) - 1
         ans = 0
         while l <= r:
