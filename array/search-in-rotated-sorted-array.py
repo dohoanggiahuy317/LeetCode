@@ -21,7 +21,7 @@ class Solution:
                 else:
                     r = m - 1
 
-            # print(m, l, r)
+            print(m, l, r)
             
         return -1
 
