@@ -23,7 +23,7 @@ class Solution:
             else:
                 l = m + 1
 
-                l, r = 0, pivot
+        l, r = 0, pivot
         l, r = pivot, len(nums) - 1
         ans = 0
         while l <= r:
