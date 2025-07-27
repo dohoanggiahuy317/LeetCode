@@ -44,7 +44,6 @@ class Solution:
         while queue:
             for _ in range(len(queue)):
                 x, y, key = queue.popleft()
-                visited.add((x, y, key))
                 # print(x, y, bin(key))
 
                 # check co full key
@@ -76,6 +75,7 @@ class Solution:
                     
 
                     queue.append( (nx, ny, new_key) )
+                    visited.add((nx, ny, new_key))
 
             step += 1
 
