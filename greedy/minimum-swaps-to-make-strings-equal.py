@@ -1,9 +1,5 @@
 class Solution:
     def minimumSwap(self, s1: str, s2: str) -> int:
-        temp = Counter(s1 + s2)
-        if not all(x % 2 == 0 for _, x in temp.items()):
-            return -1
-
         x, y = 0, 0
         for i in range(len(s1)):
             if s1[i] != s2[i]:
@@ -16,5 +12,5 @@ class Solution:
             return -1
         max_pair = x // 2 + y // 2
         rest = (x + y - 2 * max_pair) // 2
-        # xxxxyyy yyyxxxx
+
         return max_pair + 2 * rest
