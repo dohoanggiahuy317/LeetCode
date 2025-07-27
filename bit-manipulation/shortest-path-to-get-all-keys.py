@@ -63,15 +63,18 @@ class Solution:
 
                     if grid[nx][ny] == "#":
                         continue
-                    if (nx, ny, key) in visited:
+                        
+                    new_key = key
+                    if grid[nx][ny].islower():
+                        new_key = key | (1 << KEY_DICT[grid[nx][ny]])
+                    
+                    if (nx, ny, new_key) in visited:
                         continue
                     if grid[nx][ny].isupper():
                         if not key >> KEY_DICT[grid[nx][ny].lower()] & 1:
                             continue
                     
-                    new_key = key
-                    if grid[nx][ny].islower():
-                        new_key = key | (1 << KEY_DICT[grid[nx][ny]])
+
                     queue.append( (nx, ny, new_key) )
 
             step += 1
