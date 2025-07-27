@@ -50,17 +50,18 @@ class LRUCache:
         if node:
             node.val = value
             self.get(key)
-        else:
-            while self.length >= self.capacity:
-                last_node = self.tail
-                self.remove_node(last_node)
-                del self.MAP[last_node.key]
-                self.length -= 1
-            
-            new_node = Node(value, key)
-            self.add_node(new_node)
-            self.MAP[key] = new_node
-            self.length += 1
+            return
+        
+        if self.length >= self.capacity:
+            last_node = self.tail
+            self.remove_node(last_node)
+            del self.MAP[last_node.key]
+            self.length -= 1
+        
+        new_node = Node(value, key)
+        self.add_node(new_node)
+        self.MAP[key] = new_node
+        self.length += 1
 
             
         
