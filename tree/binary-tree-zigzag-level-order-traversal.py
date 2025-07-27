@@ -15,18 +15,18 @@ class Solution:
         flow = 1
 
         while queue:
-            temp = []
+            level = []
 
             for _ in range(len(queue)):
                 node = queue.popleft()
-                temp.append(node.val)
+                level.append(node.val)
 
                 if node.left:
                     queue.append(node.left)
                 if node.right:
                     queue.append(node.right)
                 
-            ans.append(temp[::flow])
+            ans.append(level[::flow])
             flow = -flow
         
         return ans
