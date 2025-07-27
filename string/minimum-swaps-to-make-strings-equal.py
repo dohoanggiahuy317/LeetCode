@@ -12,7 +12,9 @@ class Solution:
                 else:
                     y += 1
         
-        max_pair = max(x, y) // 2
-        rest = max(x, y) - 2 * max_pair
-        
+        if (x + y) % 2 == 1:
+            return -1
+        max_pair = x // 2 + y // 2
+        rest = (x + y - 2 * max_pair) // 2
+        # xxxxyyy yyyxxxx
         return max_pair + 2 * rest
