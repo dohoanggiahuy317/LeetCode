@@ -10,7 +10,8 @@ class Solution:
         
         if (x + y) % 2 == 1:
             return -1
-        max_pair = x // 2 + y // 2
-        rest = (x + y - 2 * max_pair) // 2
+        
+        type1_pair = x // 2 + y // 2
+        other_pair = (x + y - 2 * type1_pair) // 2
 
-        return max_pair + 2 * rest
+        return type1_pair + 2 * other_pair
