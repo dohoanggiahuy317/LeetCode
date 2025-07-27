@@ -12,7 +12,7 @@ class Solution:
             
         queue = collections.deque([root])
         ans = []
-        flow = -1
+        flow = 1
 
         while queue:
             temp = []
@@ -26,7 +26,7 @@ class Solution:
                 if node.right:
                     queue.append(node.right)
                 
-            ans.append(temp[::(-1) * flow])
+            ans.append(temp[::flow])
             flow = -flow
         
         return ans
