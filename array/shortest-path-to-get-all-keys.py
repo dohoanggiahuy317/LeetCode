@@ -44,7 +44,7 @@ class Solution:
         while queue:
             for _ in range(len(queue)):
                 x, y, key = queue.popleft()
-                visited.add((x, y))
+                visited.add((x, y, key))
                 # print(x, y, bin(key))
 
                 # check co full key
@@ -63,19 +63,20 @@ class Solution:
 
                     if grid[nx][ny] == "#":
                         continue
-                    if (nx, ny) in visited:
+                    if (nx, ny, key) in visited:
                         continue
                     if grid[nx][ny].isupper():
                         if not key >> KEY_DICT[grid[nx][ny].lower()] & 1:
                             continue
                     
+                    new_key = key
                     if grid[nx][ny].islower():
-                        key = key | (1 << KEY_DICT[grid[nx][ny]])
-                    queue.append( (nx, ny, key) )
+                        new_key = key | (1 << KEY_DICT[grid[nx][ny]])
+                    queue.append( (nx, ny, new_key) )
 
             step += 1
 
         return -1
-
-
-
+# @...a
+# .###A
+# b.BCc
