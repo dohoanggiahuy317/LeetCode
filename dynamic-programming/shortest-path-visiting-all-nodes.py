@@ -14,7 +14,7 @@ class Solution:
             reachable = set(queue)
             s = 0
             found_all = False
-            print("start", start)
+            # print("start", start)
             
 
             while queue and not found_all:
@@ -42,6 +42,6 @@ class Solution:
 
                 s += 1
 
-        return ans
+        return 0 if ans == inf else ans
 
 
