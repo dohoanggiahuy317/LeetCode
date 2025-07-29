@@ -4,31 +4,29 @@ class Solution:
         n = len(graph)
         ans = inf
 
-        map_dict = {}
-        for i, neigh in enumerate(graph):
-            map_dict[i] = neigh
-
         for start in range(n):
 
-            queue = deque([(start, 0)])
+            queue = deque([(start, 1)])
             reachable = set(queue)
-            s = 0
             found_all = False
-            # print("start", start)
+            step = 0
+            
+            print("start", start)
             
 
             while queue and not found_all:
                 # print(queue)
                 # print(reachable)
+                # print(step)
                 for _ in range(len(queue)):
                     node, count = queue.popleft()
+                    
+                    if count == n:
+                        ans = min(ans, step)
+                        found_all = True
+                        break
 
-                    for neigh in map_dict[node]:
-                        
-                        if count + 1 == n:
-                            ans = min(ans, s)
-                            found_all = True
-                            break
+                    for neigh in graph[node]:
                         
                         new_count = count
                         if all((neigh, i) not in reachable for i in range(count)):
@@ -40,7 +38,7 @@ class Solution:
                         queue.append((neigh, new_count))
                         reachable.add((neigh, new_count))
 
-                s += 1
+                step += 1
 
         return 0 if ans == inf else ans
 
