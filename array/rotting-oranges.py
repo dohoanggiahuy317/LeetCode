@@ -1,60 +1,47 @@
+DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        m = len(grid)
-        n = len(grid[0])
-        rotten = []
+        m, n = len(grid), len(grid[0])
+        good_orange = 0
+        queue = deque()
 
         for i in range(m):
             for j in range(n):
+                if grid[i][j] == 1:
+                    good_orange += 1
                 if grid[i][j] == 2:
-                    rotten.append((i, j))
+                    queue.append((i, j))
 
-        if len(rotten) == 0:
-            for x in grid:
-                if 1 in x:
-                    return -1
-            return 0
+        reachable = set(queue)
+        time = 0
 
-        ans = 0
+        while queue:
+            for _ in range(len(queue)):
+                i, j = queue.popleft()
 
-        def bfs(curr_rotten):
-            nonlocal ans
+                if good_orange == 0:
+                    return time
 
-            ans += 1
-            if curr_rotten == []:
-                return 
+                for x, y in DIRECTIONS:
+                    ni, nj = i + x, j + y
 
-            next_rotten = []
-            for orange in curr_rotten:
-                o_i, o_j = orange
+                    if not ( 0 <= ni < m and 0 <= nj < n):
+                        continue
+                    if grid[ni][nj] == 0:
+                        continue
+                    if grid[ni][nj] == 2:
+                        continue
 
-                if o_i > 0 and grid[o_i - 1][o_j] == 1:
-                    grid[o_i - 1][o_j] = 2
-                    next_rotten.append((o_i - 1, o_j))
+                    grid[ni][nj] = 2
+                    good_orange -= 1
 
-                if o_j > 0 and grid[o_i][o_j - 1] == 1:
-                    grid[o_i][o_j - 1] = 2
-                    next_rotten.append((o_i, o_j - 1))
+                    queue.append((ni, nj))
+                    reachable.add((ni, nj))
+            
+            time += 1
 
-                if o_i<m-1 and grid[o_i + 1][o_j] == 1:
-                    grid[o_i + 1][o_j] = 2
-                    next_rotten.append((o_i + 1, o_j))
-
-                if o_j<n-1 and grid[o_i][o_j + 1] == 1:
-                    grid[o_i][o_j + 1] = 2
-                    next_rotten.append((o_i, o_j + 1))
-
-            bfs(next_rotten)
-
-        bfs(rotten)
-        ans -= 2
-        for x in grid:
-            if 1 in x:
-                ans = -1
-                break
-
-        return ans
-    
+        return -1
 
 
-                
+
