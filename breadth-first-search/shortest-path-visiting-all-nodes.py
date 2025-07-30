@@ -5,15 +5,18 @@ class Solution:
 
         for start in range(n):
             queue = deque([(start, 1 << start)])
-            reachable = set(queue) 
+            reachable = set(queue)
+            found_all = False 
             step = 0
                 
-            while queue:
+            while queue and not found_all:
                 for _ in range(len(queue)):
                     node, past_path = queue.popleft()
                     
                     if past_path == (1 << n) - 1:
                         ans = min(ans, step)
+                        found_all = True
+                        break
 
                     for neigh in graph[node]:
                         
