@@ -18,7 +18,7 @@ class Solution:
         time = 0
 
 
-        while queue:
+        while queue or not good_orange:
             
             # Return if there is no good orange left
             if good_orange == 0:
@@ -47,4 +47,4 @@ class Solution:
             
             time += 1 # time done after each infection round
 
-        return -1 if good_orange != 0 else 0
+        return -1
