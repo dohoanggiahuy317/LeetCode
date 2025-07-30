@@ -41,7 +41,7 @@ class Solution:
             
             time += 1
 
-        return -1
+        return -1 if good_orange != 0 else 0
 
 
 
