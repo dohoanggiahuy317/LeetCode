@@ -17,11 +17,13 @@ class Solution:
         time = 0
 
         while queue:
+
+            if good_orange == 0:
+                return time
+
             for _ in range(len(queue)):
                 i, j = queue.popleft()
 
-                if good_orange == 0:
-                    return time
 
                 for x, y in DIRECTIONS:
                     ni, nj = i + x, j + y
@@ -44,4 +46,6 @@ class Solution:
         return -1 if good_orange != 0 else 0
 
 
-
+# 2 1 1
+# 1 1 1
+# 0 1 2
