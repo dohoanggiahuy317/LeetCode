@@ -47,4 +47,4 @@ class Solution:
             
             time += 1 # time done after each infection round
 
-        return -1
+        return -1 if good_orange != 0 else 0
