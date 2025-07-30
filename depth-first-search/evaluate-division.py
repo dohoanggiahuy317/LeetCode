@@ -21,15 +21,15 @@ class Solution:
                 for _ in range(len(queue)):
                     node, prev_quotient = queue.popleft()
 
+                    if node not in eq_map:
+                        break
+
                     if node == divisor:
                         result = prev_quotient
                         break
 
                     for neigh, value in eq_map[node]:
-
-                        if neigh not in eq_map:
-                            break
-
+                        
                         if neigh in reachable:
                             continue
                         
