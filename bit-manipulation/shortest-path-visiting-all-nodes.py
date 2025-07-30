@@ -1,5 +1,5 @@
 class Solution:
-    def shortestPathLength(self, graph: List[List[int]]) -> int
+    def shortestPathLength(self, graph: List[List[int]]) -> int:
         n = len(graph)
         ans = inf
 
@@ -27,11 +27,7 @@ class Solution:
                 step += 1
 
         return ans
-#     4 - 5
-#         |
-# 0 - 1 - 6 - 7
-#     |
-#     2 - 3
+
 
 
      
