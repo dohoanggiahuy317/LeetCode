@@ -23,20 +23,19 @@ class Solution:
 
             return tree_map[neigh]
 
-
+        # BFS
         copy_node = Node(node.val)
         tree_map = {node: copy_node}
         queue = deque([(node, copy_node)])
         reachable = set([node])
 
-
         while queue:
-
             for _ in range(len(queue)):
                 curr, copy_curr = queue.popleft()
 
                 for neigh in curr.neighbors:
 
+                    # Copy neighbor to current node
                     neigh_copy = getCopy(neigh)
                     copy_curr.neighbors.append(neigh_copy)
 
