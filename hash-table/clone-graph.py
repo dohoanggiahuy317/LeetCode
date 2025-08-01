@@ -14,35 +14,23 @@ class Solution:
         if not node:
             return None
 
-        def getCopy(neigh):
-            nonlocal tree_map
-
-            if neigh not in tree_map:
-                copy_neigh = Node(neigh.val)
-                tree_map[neigh] = copy_neigh
-
-            return tree_map[neigh]
-
         # BFS
         copy_node = Node(node.val)
         tree_map = {node: copy_node}
         queue = deque([(node, copy_node)])
-        reachable = set([node])
 
         while queue:
             for _ in range(len(queue)):
-                curr, copy_curr = queue.popleft()
+                curr, copy_curr = queue.popleft() # get the current node
 
                 for neigh in curr.neighbors:
 
-                    # Copy neighbor to current node
-                    neigh_copy = getCopy(neigh)
-                    copy_curr.neighbors.append(neigh_copy)
+                    # only add the queue the node that is just created
+                    if neigh not in tree_map:
+                        tree_map[neigh] = Node(neigh.val)
+                        queue.append((neigh, tree_map[neigh]))
 
-                    if neigh in reachable:
-                        continue
-
-                    queue.append((neigh, neigh_copy))
-                    reachable.add(neigh)
+                    # copy the neighbor to the current node
+                    copy_curr.neighbors.append(tree_map[neigh])
 
         return copy_node
