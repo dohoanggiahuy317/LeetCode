@@ -7,7 +7,7 @@ class Solution:
         m, n = len(grid), len(grid[0])
         START_TIME = grid[START_X][START_Y]
         queue = deque([ (START_X, START_Y, START_TIME) ])
-        reachable = set(queue)
+        reachable = defaultdict(lambda : inf)
         ans = inf
 
         while queue:
@@ -26,11 +26,11 @@ class Solution:
                     if grid[n_x][n_y] > cur_time:
                         n_time = grid[n_x][n_y]
 
-                    if (n_x, n_y, n_time) in reachable:
+                    if reachable[(n_x, n_y)] <= n_time:
                         continue
 
                     queue.append( (n_x, n_y, n_time) )
-                    reachable.add((n_x, n_y, n_time))
+                    reachable[(n_x, n_y)] = n_time
 
 
         return ans
