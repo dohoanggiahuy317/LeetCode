@@ -1,10 +1,11 @@
-START_X, START_Y, START_TIME = 0, 0, 0
+START_X, START_Y = 0, 0
 DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
 class Solution:
     def swimInWater(self, grid: List[List[int]]) -> int:
         
         m, n = len(grid), len(grid[0])
+        START_TIME = grid[START_X][START_Y]
         queue = deque([ (START_X, START_Y, START_TIME) ])
         reachable = set(queue)
         ans = inf
