@@ -32,5 +32,4 @@ class Solution:
                     queue.append( (n_x, n_y, n_time) )
                     reachable[(n_x, n_y)] = n_time
 
-
         return ans
