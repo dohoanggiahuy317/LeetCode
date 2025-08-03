@@ -1,30 +1,21 @@
-class Solution {
-public:
-    long long minCost(vector<int>& basket1, vector<int>& basket2) {
-        int m = INT_MAX;
-        unordered_map<int, int> frequency_map;
-        for (int b1 : basket1) {
-            frequency_map[b1]++;
-            m = min(m, b1);
-        }
-        for (int b2 : basket2) {
-            frequency_map[b2]--;
-            m = min(m, b2);
-        }
-        vector<int> merge;
-        for (auto [k, c] : frequency_map) {
-            if (c % 2 != 0) {
-                return -1;
-            }
-            for (int i = 0; i < abs(c) / 2; ++i) {
-                merge.push_back(k);
-            }
-        }
-        nth_element(merge.begin(), merge.begin() + merge.size() / 2,
-                    merge.end());
-        return accumulate(merge.begin(), merge.begin() + merge.size() / 2, 0ll,
-                          [&](long long res, int x) -> long long {
-                              return res + min(2 * m, x);
-                          });
-    }
-};
+class Solution:
+    def minCost(self, basket1: List[int], basket2: List[int]) -> int:
+        freq = Counter()
+        m = float("inf")
+        for b1 in basket1:
+            freq[b1] += 1
+            m = min(m, b1)
+        for b2 in basket2:
+            freq[b2] -= 1
+            m = min(m, b2)
+
+        merge = []
+        for k, c in freq.items():
+            if c % 2 != 0:
+                return -1
+            merge.extend([k] * (abs(c) // 2))
+
+        if not merge:
+            return 0
+        merge.sort()
+        return sum(min(2 * m, x) for x in merge[: len(merge) // 2])
