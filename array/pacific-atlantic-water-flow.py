@@ -24,7 +24,7 @@ class Solution:
 
                     if ((cx, cy) in valid) or (pacific and atlantic):
                         valid.add((sx, sy))
-                        # return
+                        return
 
                     for i, j in DIRECTIONS:
                         nx, ny = cx + i, cy + j
@@ -34,10 +34,6 @@ class Solution:
 
                         if heights[nx][ny] > heights[cx][cy]:
                             continue
-
-                        if (nx, ny) in valid:
-                            valid.add((cx, cy))
-                            break
                         
                         if (nx, ny) in reachable:
                             continue
