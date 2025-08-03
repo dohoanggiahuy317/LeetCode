@@ -22,9 +22,9 @@ class Solution:
                     if cx == m - 1 or cy == n - 1:
                         atlantic = True
 
-                    if (cx, cy) in valid or (pacific and atlantic):
+                    if ((cx, cy) in valid) or (pacific and atlantic):
                         valid.add((sx, sy))
-                        return
+                        # return
 
                     for i, j in DIRECTIONS:
                         nx, ny = cx + i, cy + j
