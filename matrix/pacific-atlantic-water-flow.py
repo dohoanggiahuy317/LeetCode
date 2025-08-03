@@ -1,41 +1,57 @@
+DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        m = len(heights)
-        n = len(heights[0])
+        
+        m, n = len(heights), len(heights[0])
 
-        p = set()
-        a = set()
+        def bfs(sx, sy):
+            nonlocal m, n, valid
 
-        def bfs(i, j, sea, prevHeight):
-            nonlocal m, n, heights   
-            if (
-                i < 0 or
-                j < 0 or
-                i > m - 1 or
-                j > n - 1 or 
-                (i, j) in sea or
-                heights[i][j] < prevHeight
-            ):
-                return
+            queue = deque([(sx, sy)])
+            reachable = set(queue)
+            pacific = atlantic = False
 
-            sea.add((i, j))
+            while queue:
+                for _ in range(len(queue)):
+                    cx, cy = queue.popleft()
 
-            bfs(i+1, j, sea, heights[i][j])
-            bfs(i-1, j, sea, heights[i][j])
-            bfs(i, j+1, sea, heights[i][j])
-            bfs(i, j-1, sea, heights[i][j])
+                    if cx == 0 or cy == 0:
+                        pacific = True
+                    
+                    if cx == m - 1 or cy == n - 1:
+                        atlantic = True
 
+                    if (cx, cy) in valid or (pacific and atlantic):
+                        valid.add((sx, sy))
+                        return
+
+                    for i, j in DIRECTIONS:
+                        nx, ny = cx + i, cy + j
+
+                        if not (0 <= nx <  m and 0 <= ny < n):
+                            continue
+
+                        if heights[nx][ny] > heights[cx][cy]:
+                            continue
+
+                        if (nx, ny) in valid:
+                            valid.add((cx, cy))
+                            break
+                        
+                        if (nx, ny) in reachable:
+                            continue
+
+                        queue.append((nx, ny))
+                        reachable.add((nx, ny))
+            
+            return
+
+        valid = set()
         for i in range(m):
-            bfs(i, 0, p, heights[i][0])
-            bfs(i, n-1, a, heights[i][n-1])
+            for j in range(n):
+                bfs(i, j)
+        
+        return [[x, y] for x, y in valid]
 
-        for i in range(n):
-            bfs(0, i, p, heights[0][i])
-            bfs(m-1, i, a, heights[m-1][i])
-
-        ans = []
-        for i in p:
-            if i in a:
-                ans.append(i)
-
-        return ans
+        
