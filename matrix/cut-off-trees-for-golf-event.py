@@ -23,7 +23,6 @@ class Solution:
 # 7 6 5
         while queue:
             for _ in range(len(queue)):
-                print(queue)
                 cx, cy, cut_idx = queue.popleft()
 
                 if forest[cx][cy] == tree_list[cut_idx]:
