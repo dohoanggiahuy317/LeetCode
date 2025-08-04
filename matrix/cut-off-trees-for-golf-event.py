@@ -5,22 +5,26 @@ class Solution:
     def cutOffTree(self, forest: List[List[int]]) -> int:
         m, n = len(forest), len(forest[0])
 
-        largest_tree = 0
-        rem_tree = 0
+        tree_list = []
         for i in range(m):
             for j in range(n):
-                largest_tree = max(largest_tree, forest[i][j])
-                rem_tree += 1 if forest[i][j] != 0 else 0
+                if forest[i][j] != 0:
+                    tree_list.append(forest[i][j])
+        tree_list.sort()
+        cut_idx = 0
 
-        queue = deque([(START_X, START_Y, INIT_CUT, rem_tree)])
+        queue = deque([(START_X, START_Y, cut_idx)])
         reachable = set(queue)
         step = 0
 
         while queue:
             for _ in range(len(queue)):
-                cx, cy, c_largest, c_tree = queue.popleft()
+                cx, cy, cut_idx = queue.popleft()
 
-                if c_largest == largest_tree and c_tree == 1:
+                if forest[cx][cy] == tree_list[cut_idx]:
+                    cut_idx += 1
+
+                if cut_idx == len(tree_list):
                     return step
 
                 for i, j in DIRECTIONS:
@@ -32,21 +36,11 @@ class Solution:
                     if forest[nx][ny] == 0:
                         continue
 
-                    if (nx, ny, c_largest, c_tree) in reachable:
+                    if (nx, ny, cut_idx) in reachable:
                         continue
 
-                    if forest[nx][ny] < c_largest:
-                        continue
-
-                    if forest[nx][ny] > c_largest:
-                        queue.append((nx, ny, c_largest, c_tree))
-                        reachable.add((nx, ny, c_largest, c_tree))
-
-                        n_largest = forest[nx][ny]
-                        n_tree = c_tree - 1
-
-                        queue.append((nx, ny, n_largest, n_tree))
-                        reachable.add((nx, ny, n_largest, n_tree))
+                    queue.append((nx, ny, cut_idx))
+                    reachable.add((nx, ny, cut_idx))
 
             step += 1
 
