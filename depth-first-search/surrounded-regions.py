@@ -11,11 +11,15 @@ class Solution:
             if board[sx][sy] == "X":
                 return
 
+            if (sx, sy) in invalid:
+                return
+
             queue = deque([ (sx, sy) ])
             reachable = set(queue)
 
             while queue:
                 for _ in range(len(queue)):
+                    
                     cx, cy = queue.popleft()
                     invalid.add((cx, cy))
 
@@ -32,7 +36,7 @@ class Solution:
                             continue
 
                         queue.append((nx, ny))
-                        reachable.add((ny, ny))
+                        reachable.add((nx, ny))
 
         
         m, n = len(board), len(board[0])
