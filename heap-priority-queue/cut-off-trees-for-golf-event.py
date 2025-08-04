@@ -8,7 +8,7 @@ class Solution:
         tree_list = []
         for i in range(m):
             for j in range(n):
-                if forest[i][j] != 0:
+                if forest[i][j] != 0 and forest[i][j] != 1:
                     tree_list.append(forest[i][j])
         tree_list.sort()
         cut_idx = 0
@@ -17,8 +17,13 @@ class Solution:
         reachable = set(queue)
         step = 0
 
+
+# 4 2 3
+# 0 0 1
+# 7 6 5
         while queue:
             for _ in range(len(queue)):
+                print(queue)
                 cx, cy, cut_idx = queue.popleft()
 
                 if forest[cx][cy] == tree_list[cut_idx]:
