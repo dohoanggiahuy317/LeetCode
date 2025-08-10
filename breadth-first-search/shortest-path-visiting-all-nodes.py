@@ -1,6 +1,8 @@
 class Solution:
     def shortestPathLength(self, graph: List[List[int]]) -> int:
         n = len(graph)
+        ALL_VISITED = (1 << n) - 1
+
         queue = deque([(start, 1 << start) for start in range(n)])
         reachable = set(queue)
         step = 0
@@ -9,7 +11,7 @@ class Solution:
             for _ in range(len(queue)):
                 node, past_path = queue.popleft()
                 
-                if past_path == (1 << n) - 1:
+                if past_path == ALL_VISITED:
                     return step
 
                 for neigh in graph[node]:
