@@ -11,25 +11,28 @@ class Solution:
                     d[a].append(b)
 
         ans = 0
-        temp = []
 
-        def backtrack(val):
-            nonlocal ans
-            if val in temp:
+        def dfs(val, count):
+            nonlocal n, d, visited, ans, MOD
+
+            if val in visited:
                 return
 
-            temp.append(val)
-
-            if len(temp) == n:
+            if count == n:
                 ans = (ans + 1) % MOD
-            else:
-                for nxt in d[val]:
-                    backtrack(nxt)
+                return
 
-            temp.pop()
+            # print(val)
+            
+            visited.add(val)
+
+            for neigh in d[val]:
+                dfs(neigh, count + 1)
 
         for val in nums:
-            backtrack(val)
+            # print("STAT")
+            visited = set()
+            dfs(val, 1)
 
         return ans
 
