@@ -40,10 +40,10 @@ class Solution:
             return UNSWIMABLE
 
         # START SWIMING
-        l, r = inf, -inf
+        l = grid[S_X][S_Y]
+        r = -inf
         for row in grid:
             for cell in row:
-                l = min(cell, l)
                 r = max(cell, r)
         ans = -1
         
