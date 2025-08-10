@@ -2,21 +2,23 @@ DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        
+        FRESH_ORANGE = 1
+        ROTTEN_ORANGE = 2
+        EMPTY_ORANGE = 0
+
         m, n = len(grid), len(grid[0])
         good_orange = 0
         queue = deque()
 
-        for i in range(m):
-            for j in range(n):
-                if grid[i][j] == 1:
+        for i, row in enumerate(grid):
+            for j, orange in enumerate(row):
+                if orange == FRESH_ORANGE:
                     good_orange += 1
-                if grid[i][j] == 2:
+                if orange == ROTTEN_ORANGE:
                     queue.append((i, j))
 
         reachable = set(queue)
         time = 0
-
 
         while queue or not good_orange:
             
@@ -32,9 +34,9 @@ class Solution:
 
                     if not ( 0 <= ni < m and 0 <= nj < n):
                         continue
-                    if grid[ni][nj] == 0:
+                    if grid[ni][nj] == EMPTY_ORANGE:
                         continue
-                    if grid[ni][nj] == 2:
+                    if grid[ni][nj] == ROTTEN_ORANGE:
                         continue
 
                     # turn the orange to be rotten, once it get rotten, no need to 
