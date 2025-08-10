@@ -2,16 +2,9 @@ INIT_QUOTIENT = 1
 
 class Solution:
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
-        
-        eq_map = defaultdict(list)
-        for (x, y), value in zip(equations, values):
-            eq_map[x].append((y, value))
-            eq_map[y].append((x, 1/value))
 
-        ans = []
-
-        # loop through query
-        for divider, divisor in queries:
+        def bfs(divider, divisor):
+            nonlocal ans, eq_map
 
             queue = deque([(divider, INIT_QUOTIENT)])
             reachable = set(queue)
@@ -29,7 +22,7 @@ class Solution:
                         break
 
                     for neigh, value in eq_map[node]:
-                        
+
                         if neigh in reachable:
                             continue
                         
@@ -38,5 +31,17 @@ class Solution:
                         reachable.add(neigh)
 
             ans.append(result)
+
+
+        
+        eq_map = defaultdict(list)
+        for (x, y), value in zip(equations, values):
+            eq_map[x].append((y, value))
+            eq_map[y].append((x, 1/value))
+
+        ans = []
+        # loop through query
+        for divider, divisor in queries:
+            bfs(divider, divisor)
 
         return ans
