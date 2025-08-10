@@ -20,12 +20,9 @@ class Solution:
         reachable = set(queue)
         step = 0
 
-
-# 4 2 3
-# 0 0 1
-# 7 6 5
         while queue:
             for _ in range(len(queue)):
+                print(queue)
                 c_x, c_y, c_idx = queue.popleft()
                 n_idx = c_idx
 
@@ -41,7 +38,7 @@ class Solution:
                     if not (0 <= n_x < m and 0 <= n_y < n):
                         continue
 
-                    if forest[n_x][n_y] == WALL or forest[n_x][n_y] == EMPTY:
+                    if forest[n_x][n_y] == WALL:
                         continue
 
                     if (n_x, n_y, n_idx) in reachable:
