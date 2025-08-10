@@ -1,35 +1,59 @@
-START_X, START_Y = 0, 0
 DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
 class Solution:
     def swimInWater(self, grid: List[List[int]]) -> int:
-        
+        # Constant
         m, n = len(grid), len(grid[0])
-        START_TIME = grid[START_X][START_Y]
-        queue = deque([ (START_X, START_Y, START_TIME) ])
-        reachable = defaultdict(lambda : inf)
-        ans = inf
+        S_X, S_Y = 0, 0
+        T_X, T_Y = m - 1, n - 1
+        SWIMABLE, UNSWIMABLE = True, False
+        
+        # BFS
+        def bfs(target_time):
+            nonlocal S_X, S_Y, T_X, T_Y
 
-        while queue:
-            for _ in range(len(queue)):
-                cur_x, cur_y, cur_time = queue.popleft()
+            queue = deque([ (S_X, S_Y) ])
+            reachable = set(queue)
 
-                if cur_x == m - 1 and cur_y == n - 1:
-                    ans = min(ans, cur_time)
+            while queue:
+                for _ in range(len(queue)):
+                    c_x, c_y = queue.popleft()
 
-                for i, j in DIRECTIONS:
-                    n_x, n_y, n_time = cur_x + i, cur_y + j, cur_time
+                    if c_x == T_X and c_y == T_Y:
+                        return SWIMABLE
 
-                    if not(0 <= n_x < m and 0 <= n_y < n):
-                        continue
-                    
-                    if grid[n_x][n_y] > cur_time:
-                        n_time = grid[n_x][n_y]
+                    for i, j in DIRECTIONS:
+                        n_x, n_y = c_x + i, c_y + j
 
-                    if reachable[(n_x, n_y)] <= n_time:
-                        continue
+                        if not(0 <= n_x < m and 0 <= n_y < n):
+                            continue
+                        
+                        if grid[n_x][n_y] > target_time:
+                            continue
+                        
+                        if (n_x, n_y) in reachable:
+                            continue
 
-                    queue.append( (n_x, n_y, n_time) )
-                    reachable[(n_x, n_y)] = n_time
+                        queue.append( (n_x, n_y) )
+                        reachable.add((n_x, n_y))
+
+            return UNSWIMABLE
+
+        # START SWIMING
+        l, r = inf, -inf
+        for row in grid:
+            for cell in row:
+                l = min(cell, l)
+                r = max(cell, r)
+        ans = -1
+        
+        while l <= r:
+            m_target_time = (l + r) // 2
+
+            if bfs(m_target_time):
+                ans = m_target_time
+                r = m_target_time - 1
+            else:
+                l = m_target_time + 1
 
         return ans
