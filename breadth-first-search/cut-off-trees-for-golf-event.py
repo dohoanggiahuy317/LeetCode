@@ -22,7 +22,7 @@ class Solution:
 
         while queue:
             for _ in range(len(queue)):
-                print(queue)
+                # print(queue)
                 c_x, c_y, c_idx = queue.popleft()
                 n_idx = c_idx
 
