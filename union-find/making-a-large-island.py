@@ -28,7 +28,7 @@ class Solution:
                     if (c_grid_1d, (n_x, n_y)) in reachable:
                         continue
 
-                    bit = 1 << idx(n_x, n_y)
+                    bit = 1 << (m * n + 1 - idx(n_x, n_y))
 
                     if ((c_grid_1d & bit) != 0):
                         queue.append((c_grid_1d, (n_x, n_y)))
