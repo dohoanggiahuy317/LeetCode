@@ -50,7 +50,7 @@ class Solution:
                 grid_1d = (grid_1d << 1) | grid[i][j]
         grid_1d <<= 1
 
-        ans = 0
+        ans = 1
         for i in range(m):
             for j in range(n):
                 if (grid_1d & (1 << idx(i, j)) == 0):
