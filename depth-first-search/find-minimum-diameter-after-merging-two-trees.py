@@ -35,5 +35,10 @@ class Solution:
         for root2 in tree2.keys():
             height = calculating_height(tree2, root2)
             min_height2 = min(height, min_height2)
+
+        if not tree1:
+            min_height1 = 0
+        if not tree2:
+            min_height2 = 0
         
         return min_height1 + min_height2 + 1
