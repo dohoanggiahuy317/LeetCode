@@ -39,12 +39,11 @@ class Solution:
 
                 if not (0 <= nx < m and 0 <= ny < n):
                     continue
-
                 if grid[nx][ny] == 1 and (nx, ny) not in found_island:
                     for island, size in islands.items():
-                        found_island.update(island)
-                        group_island_size += size
-            
+                        if (nx, ny) in island:
+                            found_island.update(island)
+                            group_island_size += size
             ans = max(ans, group_island_size + 1)
             return
 
@@ -55,6 +54,7 @@ class Solution:
                     visited, size  = set(), 0
                     get_island_size(x, y)
                         
+        # print(islands)
         
         ans = max(islands.values()) if islands else 0
         for x in range(m):
