@@ -1,22 +1,24 @@
 class Solution:
     def minimumDiameterAfterMerge(self, edges1: List[List[int]], edges2: List[List[int]]) -> int:
-        def calculating_height(tree, root):
-            queue = deque([root])
-            reachable = set(queue)
-            height = 0
-            
-            while queue:
-                for _ in range(len(queue)):
-                    curr = queue.popleft()
-                    for neigh in tree[curr]:
-                        if neigh in reachable:
-                            continue
-                        queue.append(neigh)
-                        reachable.add(neigh)
-                height += 1
+        def find_diameter(tree, root):
+            nonlocal visited, diameter
 
-            return height - 1
-        
+            visited.add(root)
+            best1 = best2 = 0
+            
+            for neigh in tree[root]:
+                if neigh in visited:
+                    continue
+                child = find_diameter(tree, neigh)
+                if child > best1:
+                    best2 = best1
+                    best1 = child
+                elif child > best2:
+                    best2 = child
+
+            diameter = best1 + best2
+            return max(best1, best2) + 1
+
         def create_tree(edges):
             tree = defaultdict(list)
             for u, v in edges:
@@ -26,19 +28,21 @@ class Solution:
 
         tree1 = create_tree(edges1)
         tree2 = create_tree(edges2)
-        min_height1 = min_height2 = inf
-        
-        for root1 in tree1.keys():
-            height = calculating_height(tree1, root1)
-            # print(root1, height)
-            min_height1 = min(height, min_height1)
-        for root2 in tree2.keys():
-            height = calculating_height(tree2, root2)
-            min_height2 = min(height, min_height2)
+        b1_diameter = b2_diameter = 0
 
-        if not tree1:
-            min_height1 = 0
-        if not tree2:
-            min_height2 = 0
-        
-        return min_height1 + min_height2 + 1
+        for root1 in tree1.keys():
+            visited = set()
+            diameter = 0
+            find_diameter(tree1, root1)
+            b1_diameter = max(b1_diameter, diameter)
+
+        for root2 in tree2.keys():
+            visited = set()
+            diameter = 0
+            find_diameter(tree2, root2)
+            b2_diameter = max(b2_diameter, diameter)
+
+        return max([ b1_diameter, 
+                     b2_diameter, 
+                     (b1_diameter + 1) // 2 + (b2_diameter + 1) // 2 + 1
+                    ])
