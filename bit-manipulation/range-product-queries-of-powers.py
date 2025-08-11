@@ -1,22 +1,21 @@
 class Solution:
     def productQueries(self, n: int, queries: List[List[int]]) -> List[int]:
-        powers = []
         MOD = 10 ** 9 + 7
-
+        exps = []
+    
         while n > 0:
-            power = int(math.log(n, 2))
-            powers.append(2 ** power)
-            n -= 2 ** power
+            exp = int(math.log(n, 2))
+            exps.append(exp)
+            n -= 2 ** exp
 
-        powers.sort()
-        pref_prod = [1]
-        curr_prod = 1
-        for power in powers:
-            curr_prod = (curr_prod * power) 
-            pref_prod.append(curr_prod)        
+        exps.sort()
+        prefsum = [0]
+        for exp in exps:
+            new_pref = (prefsum[-1] + exp) 
+            prefsum.append(new_pref)        
 
         ans = []
         for l, r in queries:
-            ans.append((pref_prod[r+1]//pref_prod[l])% MOD)
+            ans.append((1 << (prefsum[r+1] - prefsum[l])) % MOD)
 
         return ans
