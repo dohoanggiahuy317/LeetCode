@@ -1,60 +1,67 @@
-from typing import List
-from collections import deque
-
 DIRECTIONS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
 
 class Solution:
     def largestIsland(self, grid: List[List[int]]) -> int:
         m, n = len(grid), len(grid[0])
 
-        def idx(x, y):
-            return x * n + y
+        def dfs(x, y):
+            nonlocal size, visited, grid, m, n
+            if not (0 <= x < m and 0 <= y < n):
+                return
+            if grid[x][y] == 0:
+                return
+            if (x, y) in visited:
+                return
+            
+            visited.add((x, y))
+            size += 1
+            for i, j in DIRECTIONS:
+                dfs(x + i, y + j)
 
-        def bfs(grid_1d, pos):
-            nonlocal m, n
+        def get_island_size(i, j):
+            nonlocal visited, size, grid, islands
 
-            queue = deque([(grid_1d, pos)])
-            reachable = set([(grid_1d, pos)])
-            land = set()
+            for island in islands:
+                if (i, j) in island:
+                    return
 
-            while queue:
-                # print([bin(x[0]) for x in queue])
-                c_grid_1d, (c_x, c_y) = queue.popleft()
+            dfs(i, j)    
+            islands[tuple(visited)] = size
 
-                for di, dj in DIRECTIONS:
-                    n_x, n_y = c_x + di, c_y + dj
-                    if not (0 <= n_x < m and 0 <= n_y < n):
-                        continue
-                    if (c_grid_1d, (n_x, n_y)) in reachable:
-                        continue
+        def group_island(x, y):
+            nonlocal grid, ans
 
-                    bit = 1 << (m * n + 1 - idx(n_x, n_y))
+            found_island = set()
+            group_island_size = 0
 
-                    if ((c_grid_1d & bit) != 0):
-                        queue.append((c_grid_1d, (n_x, n_y)))
-                        reachable.add((c_grid_1d, (n_x, n_y)))
-                        land.add((n_x, n_y))
-                    else:
-                        if ((c_grid_1d & 1) == 0):
-                            n_grid_1d = (c_grid_1d | 1) | bit
-                            if (n_grid_1d, (n_x, n_y)) not in reachable:
-                                queue.append((n_grid_1d, (n_x, n_y)))
-                                reachable.add((n_grid_1d, (n_x, n_y)))
-                                land.add((n_x, n_y))
+            for i, j in DIRECTIONS:
+                nx, ny = x + i, y + j
 
-            return len(land)
-
-        grid_1d = 0
-        for i in range(m):
-            for j in range(n):
-                grid_1d = (grid_1d << 1) | grid[i][j]
-        grid_1d <<= 1
-
-        ans = 1
-        for i in range(m):
-            for j in range(n):
-                if (grid_1d & (1 << idx(i, j)) == 0):
+                if not (0 <= nx < m and 0 <= ny < n):
                     continue
-                ans = max(ans, bfs(grid_1d, (i, j)))
+
+                if grid[nx][ny] == 1 and (nx, ny) not in found_island:
+                    for island, size in islands.items():
+                        found_island.update(island)
+                        group_island_size += size
+            
+            ans = max(ans, group_island_size + 1)
+            return
+
+            
+
+        islands = {}
+        for x in range(m):
+            for y in range(n):
+                if grid[x][y] == 1:
+                    visited, size  = set(), 0
+                    get_island_size(x, y)
+                        
+        
+        ans = max(islands.values())
+        for x in range(m):
+            for y in range(n):
+                if grid[x][y] == 0:
+                    group_island(x, y)
 
         return ans
