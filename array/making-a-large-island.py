@@ -48,8 +48,6 @@ class Solution:
             ans = max(ans, group_island_size + 1)
             return
 
-            
-
         islands = {}
         for x in range(m):
             for y in range(n):
@@ -58,7 +56,7 @@ class Solution:
                     get_island_size(x, y)
                         
         
-        ans = max(islands.values())
+        ans = max(islands.values()) if islands else 0
         for x in range(m):
             for y in range(n):
                 if grid[x][y] == 0:
