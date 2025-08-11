@@ -1,45 +1,35 @@
-class EmailNode:
-    def __init__(self, email, acc_holder):
-        self.email = email
-        self.acc_holder = acc_holder
+class Tree:
+    def __init__(self, num_node):
+        self.parents = [i for i in range(num_node)]
+    
+    def find(self, x):
+        if self.parents[x] != x:
+            self.parents[x] = self.find(self.parents[x])
+        return self.parents[x]
 
-class AccHolder:
-    def __init__(self, acc_id, name):
-        self.acc_id = acc_id
-        self.name = name
+    def union(self, x, y):
+        xr, yr = self.find(x), self.find(y)
+        self.parents[yr] = xr
 
 class Solution:
     def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
-        handled_email = defaultdict(lambda : AccHolder)
-        acc_id = 0
+        tree = Tree(len(accounts))
         
-        for name, *emails in accounts:
-
-            acc_holder = AccHolder(acc_id, name)
-            acc_id += 1
-
+        handled_emails = defaultdict(int)
+        for i, (name, *emails) in enumerate(accounts):
             for email in emails:
-                if email in handled_email:
-                    prev_acc_holder = handled_email[email]
-                    min_id = min(prev_acc_holder.acc_id, acc_holder.acc_id)
-
-                    acc_holder.acc_id = min_id
-                    prev_acc_holder.acc_id = min_id
-                
-                handled_email[email] = acc_holder
-
-        temp = [(value.acc_id, key, value.name) for key, value in handled_email.items()]
-        temp.sort()
-        ans = []
-        curr_id = -1
-        while temp:
-            acc_id, email, name = temp.pop(0)
-            if acc_id != curr_id:
-                curr_id = acc_id
-                ans.append([name])
-            ans[-1].append(email)
-            
-        return ans
-                    
-
+                if (name, email) in handled_emails:
+                    tree.union(i, handled_emails[(name, email)])
+                else:
+                    handled_emails[(name, email)] = i
         
+        ans = defaultdict(list)
+        for (name, email), parent in handled_emails.items():
+            root = tree.find(parent)
+            if root not in ans:
+                ans[root] = [[name], []]
+            ans[root][1].append(email)
+
+        return [x[0] + sorted(x[1]) for x in ans.values()]
+
+           
