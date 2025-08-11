@@ -12,11 +12,11 @@ class Solution:
         pref_prod = [1]
         curr_prod = 1
         for power in powers:
-            curr_prod = (curr_prod * power) % MOD
+            curr_prod = (curr_prod * power) 
             pref_prod.append(curr_prod)        
 
         ans = []
         for l, r in queries:
-            ans.append(pref_prod[r+1]//pref_prod[l])
+            ans.append((pref_prod[r+1]//pref_prod[l])% MOD)
 
         return ans
