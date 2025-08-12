@@ -8,38 +8,40 @@ class Solution:
                 tree[v].append(u)
             return tree
 
-        def find_diameter(tree, root):
-            nonlocal visited, diameter
-            if root in visited:
-                return max(visited[root]) + 1
+        def get_best(tree, root):
 
-            visited[root] = [0, 0]
-            for neigh in tree[root]:
-                if neigh in visited:
-                    continue
-                child = find_diameter(tree, neigh)
-                if child > visited[root][0]:
-                    visited[root][1] = visited[root][0]
-                    visited[root][0] = child
-                elif child > visited[root][1]:
-                    visited[root][1] = child
+            queue = deque([root])
+            reachable = set(queue)
+            best_node = root
+            step = 0
 
-            diameter = sum(visited[root])
-            return max(visited[root]) + 1
+            while queue:
+                for _ in range(len(queue)):
+                    curr = queue.popleft()
+                    best_node = curr
+
+                    for neigh in tree[curr]:
+                        if neigh in reachable:
+                            continue
+                        queue.append(neigh)
+                        reachable.add(neigh)
+                
+                step += 1
+            
+            return best_node, step - 1
+
+        def find_diameter(tree, root):            
+            first, _ = get_best(tree, root)
+            sec, diameter = get_best(tree, first)
+            # print(first, sec)
+
+            return diameter
 
         tree1 = create_tree(edges1)
         tree2 = create_tree(edges2)
-        b1_diameter = b2_diameter = 0
-
-        visited = defaultdict(list)
-        diameter = 0
-        find_diameter(tree1, 0)
-        b1_diameter = diameter
-        
-        visited = defaultdict(list)
-        diameter = 0
-        find_diameter(tree2, 0)
-        b2_diameter = diameter
+        b1_diameter = find_diameter(tree1, 0)
+        b2_diameter = find_diameter(tree2, 0)
+        # print(b1_diameter, b2_diameter)
 
         return max([ b1_diameter, 
                      b2_diameter, 
