@@ -1,23 +1,5 @@
 class Solution:
     def minimumDiameterAfterMerge(self, edges1: List[List[int]], edges2: List[List[int]]) -> int:
-        def find_diameter(tree, root):
-            nonlocal visited, diameter
-
-            visited.add(root)
-            best1 = best2 = 0
-            
-            for neigh in tree[root]:
-                if neigh in visited:
-                    continue
-                child = find_diameter(tree, neigh)
-                if child > best1:
-                    best2 = best1
-                    best1 = child
-                elif child > best2:
-                    best2 = child
-
-            diameter = best1 + best2
-            return max(best1, best2) + 1
 
         def create_tree(edges):
             tree = defaultdict(list)
@@ -26,21 +8,38 @@ class Solution:
                 tree[v].append(u)
             return tree
 
+        def find_diameter(tree, root):
+            nonlocal visited, diameter
+            if root in visited:
+                return max(visited[root]) + 1
+
+            visited[root] = [0, 0]
+            for neigh in tree[root]:
+                if neigh in visited:
+                    continue
+                child = find_diameter(tree, neigh)
+                if child > visited[root][0]:
+                    visited[root][1] = visited[root][0]
+                    visited[root][0] = child
+                elif child > visited[root][1]:
+                    visited[root][1] = child
+
+            diameter = sum(visited[root])
+            return max(visited[root]) + 1
+
         tree1 = create_tree(edges1)
         tree2 = create_tree(edges2)
         b1_diameter = b2_diameter = 0
 
-        for root1 in tree1.keys():
-            visited = set()
-            diameter = 0
-            find_diameter(tree1, root1)
-            b1_diameter = max(b1_diameter, diameter)
-
-        for root2 in tree2.keys():
-            visited = set()
-            diameter = 0
-            find_diameter(tree2, root2)
-            b2_diameter = max(b2_diameter, diameter)
+        visited = defaultdict(list)
+        diameter = 0
+        find_diameter(tree1, 0)
+        b1_diameter = diameter
+        
+        visited = defaultdict(list)
+        diameter = 0
+        find_diameter(tree2, 0)
+        b2_diameter = diameter
 
         return max([ b1_diameter, 
                      b2_diameter, 
