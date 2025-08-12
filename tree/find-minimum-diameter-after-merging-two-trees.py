@@ -33,8 +33,8 @@ class Solution:
             return endpoint, num_edges
 
         def find_diameter(tree, root):            
-            endpoint, _ = get_best(tree, root)
-            _, diameter = get_best(tree, endpoint)
+            endpoint, _ = get_endpoint(tree, root)
+            _, diameter = get_endpoint(tree, endpoint)
             return diameter
 
         tree1 = create_tree(edges1)
