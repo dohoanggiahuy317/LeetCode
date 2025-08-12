@@ -1,5 +1,7 @@
 class Solution:
     def minimumDiameterAfterMerge(self, edges1: List[List[int]], edges2: List[List[int]]) -> int:
+        START_ROOT = 0
+        INIT_NUM_EDGES = -1
 
         def create_tree(edges):
             tree = defaultdict(list)
@@ -8,17 +10,17 @@ class Solution:
                 tree[v].append(u)
             return tree
 
-        def get_best(tree, root):
+        def get_endpoint(tree, root):
 
             queue = deque([root])
             reachable = set(queue)
-            best_node = root
-            step = 0
+            endpoint = root
+            num_edges = INIT_NUM_EDGES
 
             while queue:
                 for _ in range(len(queue)):
                     curr = queue.popleft()
-                    best_node = curr
+                    endpoint = curr
 
                     for neigh in tree[curr]:
                         if neigh in reachable:
@@ -26,22 +28,20 @@ class Solution:
                         queue.append(neigh)
                         reachable.add(neigh)
                 
-                step += 1
+                num_edges += 1
             
-            return best_node, step - 1
+            return endpoint, num_edges
 
         def find_diameter(tree, root):            
-            first, _ = get_best(tree, root)
-            sec, diameter = get_best(tree, first)
-            # print(first, sec)
-
+            endpoint, _ = get_best(tree, root)
+            _, diameter = get_best(tree, endpoint)
             return diameter
 
         tree1 = create_tree(edges1)
         tree2 = create_tree(edges2)
-        b1_diameter = find_diameter(tree1, 0)
-        b2_diameter = find_diameter(tree2, 0)
-        # print(b1_diameter, b2_diameter)
+
+        b1_diameter = find_diameter(tree1, START_ROOT)
+        b2_diameter = find_diameter(tree2, START_ROOT)
 
         return max([ b1_diameter, 
                      b2_diameter, 
