@@ -1,8 +1,11 @@
 class Solution:
     def minFlips(self, mat: List[List[int]]) -> int:
+        # CONSTANT
         m, n = len(mat), len(mat[0])
         length = m * n
+        TARGET = 0
 
+        # HELPER
         def flatten(mat):
             nonlocal m, n
             val = 0
@@ -38,6 +41,7 @@ class Solution:
 
             return neigh_list
 
+        # BFS
         start_val = flatten(mat)
         queue = deque([start_val])
         reachable = set(queue)
@@ -47,7 +51,7 @@ class Solution:
             for _ in range(len(queue)):
                 curr = queue.popleft()
 
-                if curr == 0:
+                if curr == TARGET:
                     return step
 
                 for neigh in find_neigh(curr):
