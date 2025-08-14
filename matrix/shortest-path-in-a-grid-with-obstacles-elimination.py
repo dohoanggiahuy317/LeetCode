@@ -1,10 +1,14 @@
 DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-START_X, START_Y = 0, 0
 
 class Solution:
     def shortestPath(self, grid: List[List[int]], k: int) -> int:
-        
+        # CONSTANT
         m, n = len(grid), len(grid[0])
+        START_X, START_Y = 0, 0
+        EMPTY, OBSTACBLE = 0, 1
+        NO_MORE_K = 0
+
+        # BFS
         queue = deque([ (START_X, START_Y, k) ])
         reachable = set(queue)
         step = 0
@@ -13,6 +17,7 @@ class Solution:
             for _ in range(len(queue)):
                 curr_x, curr_y, curr_k = queue.popleft()
 
+                # reach destination
                 if curr_x == m - 1 and curr_y == n - 1:
                     return step
 
@@ -22,8 +27,8 @@ class Solution:
                     if not (0 <= n_x < m and 0 <= n_y < n):
                         continue
 
-                    if grid[n_x][n_y] == 1:
-                        if curr_k == 0:
+                    if grid[n_x][n_y] == OBSTACBLE:
+                        if curr_k == NO_MORE_K:
                             continue
                         n_k -= 1
 
@@ -32,7 +37,6 @@ class Solution:
                     
                     queue.append((n_x, n_y, n_k))
                     reachable.add((n_x, n_y, n_k))
-
 
             step += 1
 
