@@ -2,28 +2,28 @@ DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
+        # Constant
+        m, n = len(grid), len(grid[0])
         FRESH_ORANGE = 1
         ROTTEN_ORANGE = 2
         EMPTY_ORANGE = 0
 
-        m, n = len(grid), len(grid[0])
-        good_orange = 0
+        # Set up BFS
         queue = deque()
-
+        good_orange_left = 0
         for i, row in enumerate(grid):
             for j, orange in enumerate(row):
                 if orange == FRESH_ORANGE:
-                    good_orange += 1
+                    good_orange_left += 1
                 if orange == ROTTEN_ORANGE:
                     queue.append((i, j))
-
         reachable = set(queue)
         time = 0
 
-        while queue or not good_orange:
-            
+        # Start BFS
+        while queue or not good_orange_left:
             # Return if there is no good orange left
-            if good_orange == 0:
+            if good_orange_left == 0:
                 return time
 
             for _ in range(len(queue)):
@@ -39,10 +39,11 @@ class Solution:
                     if grid[ni][nj] == ROTTEN_ORANGE:
                         continue
 
-                    # turn the orange to be rotten, once it get rotten, no need to 
-                    # put it in the queue twice, so update the grid[i][j] to 2
-                    grid[ni][nj] = 2
-                    good_orange -= 1
+                    # turn the orange to be rotten, once it get rotten
+                    # by update the grid[i][j] to 2 (if not this orage will be 
+                    # consider again if another rotten orange touch this)
+                    grid[ni][nj] = ROTTEN_ORANGE
+                    good_orange_left -= 1
 
                     queue.append((ni, nj))
                     reachable.add((ni, nj))
