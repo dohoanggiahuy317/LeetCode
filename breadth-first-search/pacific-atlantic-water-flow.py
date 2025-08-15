@@ -6,10 +6,10 @@ class Solution:
         m, n = len(heights), len(heights[0])
 
         # BFS
-        def bfs(sx, sy, from_pacific):
+        def bfs(starting_cells, from_pacific):
             nonlocal m, n, flow_to_pacific, valid_cell
 
-            queue = deque([(sx, sy)])
+            queue = deque(starting_cells)
             reachable = set(queue)
 
             while queue:
@@ -44,16 +44,12 @@ class Solution:
         flow_to_pacific = [[False] * n for _ in range(m)]
 
         # GO FROM SHORE FROM PACIFIC
-        for i in range(m):
-            bfs(i, 0, from_pacific = True)
-        for j in range(n):
-            bfs(0, j, from_pacific = True)
+        pacific_shores = [(i, 0) for i in range(m)] + [(0, j) for j in range(m)] 
+        bfs(pacific_shores, from_pacific = True)
 
         # GO FROM SHORE FROM ATLANTIC
-        for i in range(m):
-            bfs(i, n-1, from_pacific = False)
-        for j in range(n):
-            bfs(m-1, j, from_pacific = False)
+        atlantic_shores = [(i, n-1) for i in range(m)] + [(m-1, j) for j in range(m)] 
+        bfs(atlantic_shores, from_pacific = False)
         
         return [[x, y] for x, y in valid_cell]
 
