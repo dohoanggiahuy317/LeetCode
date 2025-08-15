@@ -25,7 +25,7 @@ class Solution:
                     for i, j in DIRECTIONS:
                         nx, ny = cx + i, cy + j
 
-                        if not (0 <= nx <  m and 0 <= ny < n):
+                        if not (0 <= nx < m and 0 <= ny < n):
                             continue
 
                         if heights[nx][ny] < heights[cx][cy]:
@@ -51,9 +51,9 @@ class Solution:
 
         # GO FROM SHORE FROM ATLANTIC
         for i in range(m):
-            bfs(i, m-1, from_pacific = False)
+            bfs(i, n-1, from_pacific = False)
         for j in range(n):
-            bfs(n-1, j, from_pacific = False)
+            bfs(m-1, j, from_pacific = False)
         
         return [[x, y] for x, y in valid_cell]
 
