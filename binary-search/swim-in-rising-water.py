@@ -7,8 +7,6 @@ class Solution:
         
         # can_swim
         def can_swim(target_time):
-            nonlocal T_X, T_Y
-
             queue = deque([ (0, 0) ])
             reachable = set(queue)
 
