@@ -14,14 +14,14 @@ class Solution:
                 for _ in range(len(queue)):
                     cx, cy = queue.popleft()
 
+                    if cx == m - 1 and cy == n - 1:
+                            return True
+
                     for i, j in DIRECTIONS:
                         nx, ny = cx + i, cy + j
 
                         if not(0 <= nx < m and 0 <= ny < n):
                             continue
-
-                        if nx == m - 1 and ny == n - 1:
-                            return True
                         
                         if grid[nx][ny] > target_time:
                             continue
@@ -35,7 +35,7 @@ class Solution:
             return False
 
         # START SWIMING
-        l = grid[S_X][S_Y]
+        l = grid[0][0]
         r = max(max(row) for row in grid)
         ans = -1
         
