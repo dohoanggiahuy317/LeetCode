@@ -5,23 +5,17 @@ class Solution:
         Do not return anything, modify board in-place instead.
         """
 
-        def bfs(sx, sy):
-            nonlocal not_surrounded, m, n, board
+        def bfs(board_borders):
+            nonlocal invalid, m, n, board
 
-            if board[sx][sy] == "X":
-                return
-
-            if (sx, sy) in not_surrounded:
-                return
-
-            queue = deque([ (sx, sy) ])
+            queue = deque(board_borders)
             reachable = set(queue)
 
             while queue:
                 for _ in range(len(queue)):
                     
                     cx, cy = queue.popleft()
-                    not_surrounded.add((cx, cy))
+                    invalid.add((cx, cy))
 
                     for i, j in DIRECTIONS:
                         nx, ny = cx + i, cy + j
@@ -38,21 +32,29 @@ class Solution:
                         queue.append((nx, ny))
                         reachable.add((nx, ny))
 
-        
+        # CONSTANT
         m, n = len(board), len(board[0])
-        not_surrounded = set()
+        invalid = set()
 
+        # BFS
+        board_borders = []
         for i in range(m):
-            bfs(i, 0)
-            bfs(i, n - 1)
-            
+            if board[i][0] == "O":
+                board_borders.append((i, 0))
+            if board[i][n-1] == "O":
+                board_borders.append((i, n-1))
+
         for j in range(n):
-            bfs(0, j)
-            bfs(m - 1, j)
+            if board[0][j] == "O":
+                board_borders.append((0, j))
+            if board[m-1][j] == "O":
+                board_borders.append((m-1, j))
+
+        bfs(board_borders)
 
         for i in range(m):
             for j in range(n):
-                if board[i][j] == "O" and (i, j) not in not_surrounded:
+                if board[i][j] == "O" and (i, j) not in invalid:
                     board[i][j] = "X"
 
         return 
