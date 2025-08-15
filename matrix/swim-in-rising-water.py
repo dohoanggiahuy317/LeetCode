@@ -37,7 +37,7 @@ class Solution:
         # START SWIMING
         l = grid[0][0]
         r = max(max(row) for row in grid)
-        ans = -1
+        ans = 0
         
         while l <= r:
             m_target_time = (l + r) // 2
