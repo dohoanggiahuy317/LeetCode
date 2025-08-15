@@ -11,7 +11,7 @@ class Solution:
         board_1d = "".join( [str(val) for row in board for val in row] )
         x0 = board_1d.index("0")
 
-        def move_handler(board_1d, x0):
+        def get_next_states(board_1d, x0):
             nonlocal m, n
             neighs = []
 
@@ -34,7 +34,7 @@ class Solution:
                 if curr_board_1d == TARGET:
                     return step
 
-                for neigh, new_x0 in move_handler(curr_board_1d, curr_x0):
+                for neigh, new_x0 in get_next_states(curr_board_1d, curr_x0):
                     if (neigh, new_x0) in reachable:
                         continue
                     
