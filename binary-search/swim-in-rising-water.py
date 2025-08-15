@@ -4,29 +4,26 @@ class Solution:
     def swimInWater(self, grid: List[List[int]]) -> int:
         # Constant
         m, n = len(grid), len(grid[0])
-        S_X, S_Y = 0, 0
-        T_X, T_Y = m - 1, n - 1
-        SWIMABLE, UNSWIMABLE = True, False
         
         # can_swim
         def can_swim(target_time):
-            nonlocal S_X, S_Y, T_X, T_Y
+            nonlocal T_X, T_Y
 
-            queue = deque([ (S_X, S_Y) ])
+            queue = deque([ (0, 0) ])
             reachable = set(queue)
 
             while queue:
                 for _ in range(len(queue)):
                     cx, cy = queue.popleft()
 
-                    if cx == T_X and cy == T_Y:
-                        return SWIMABLE
-
                     for i, j in DIRECTIONS:
                         nx, ny = cx + i, cy + j
 
                         if not(0 <= nx < m and 0 <= ny < n):
                             continue
+
+                        if nx == m - 1 and ny == n - 1:
+                            return True
                         
                         if grid[nx][ny] > target_time:
                             continue
@@ -37,7 +34,7 @@ class Solution:
                         queue.append( (nx, ny) )
                         reachable.add((nx, ny))
 
-            return UNSWIMABLE
+            return False
 
         # START SWIMING
         l = grid[S_X][S_Y]
