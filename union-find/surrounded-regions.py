@@ -6,12 +6,12 @@ class Solution:
         """
 
         def bfs(sx, sy):
-            nonlocal invalid, m, n, board
+            nonlocal not_surrounded, m, n, board
 
             if board[sx][sy] == "X":
                 return
 
-            if (sx, sy) in invalid:
+            if (sx, sy) in not_surrounded:
                 return
 
             queue = deque([ (sx, sy) ])
@@ -21,7 +21,7 @@ class Solution:
                 for _ in range(len(queue)):
                     
                     cx, cy = queue.popleft()
-                    invalid.add((cx, cy))
+                    not_surrounded.add((cx, cy))
 
                     for i, j in DIRECTIONS:
                         nx, ny = cx + i, cy + j
@@ -40,7 +40,7 @@ class Solution:
 
         
         m, n = len(board), len(board[0])
-        invalid = set()
+        not_surrounded = set()
 
         for i in range(m):
             bfs(i, 0)
@@ -52,7 +52,7 @@ class Solution:
 
         for i in range(m):
             for j in range(n):
-                if board[i][j] == "O" and (i, j) not in invalid:
+                if board[i][j] == "O" and (i, j) not in not_surrounded:
                     board[i][j] = "X"
 
         return 
