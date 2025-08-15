@@ -44,11 +44,11 @@ class Solution:
         flow_to_pacific = [[False] * n for _ in range(m)]
 
         # GO FROM SHORE FROM PACIFIC
-        pacific_shores = [(i, 0) for i in range(m)] + [(0, j) for j in range(m)] 
+        pacific_shores = [(i, 0) for i in range(m)] + [(0, j) for j in range(n)] 
         bfs(pacific_shores, from_pacific = True)
 
         # GO FROM SHORE FROM ATLANTIC
-        atlantic_shores = [(i, n-1) for i in range(m)] + [(m-1, j) for j in range(m)] 
+        atlantic_shores = [(i, n-1) for i in range(m)] + [(m-1, j) for j in range(n)] 
         bfs(atlantic_shores, from_pacific = False)
         
         return [[x, y] for x, y in valid_cell]
