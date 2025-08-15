@@ -23,11 +23,11 @@ class Solution:
                         if grid[nx][ny] > target_time:
                             continue
                         
-                        if nx == m - 1 and ny == n - 1:
-                            return True
-                        
                         if (nx, ny) in reachable:
                             continue
+                        
+                        if nx == m - 1 and ny == n - 1:
+                            return True
 
                         queue.append( (nx, ny) )
                         reachable.add((nx, ny))
