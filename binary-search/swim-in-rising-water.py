@@ -14,9 +14,6 @@ class Solution:
                 for _ in range(len(queue)):
                     cx, cy = queue.popleft()
 
-                    if cx == m - 1 and cy == n - 1:
-                            return True
-
                     for i, j in DIRECTIONS:
                         nx, ny = cx + i, cy + j
 
@@ -25,6 +22,9 @@ class Solution:
                         
                         if grid[nx][ny] > target_time:
                             continue
+                        
+                        if nx == m - 1 and ny == n - 1:
+                            return True
                         
                         if (nx, ny) in reachable:
                             continue
