@@ -16,9 +16,9 @@ class Solution:
                 for _ in range(len(queue)):
                     cx, cy = queue.popleft()
 
-                    if from_pacific:
+                    if from_pacific: # Walk from the pacific shore to top
                         flow_to_pacific[cx][cy] = True
-                    else:
+                    else: # walk from atlantic and add any cell that is found from pacific
                         if flow_to_pacific[cx][cy] == True:
                             valid_cell.add((cx, cy))
 
