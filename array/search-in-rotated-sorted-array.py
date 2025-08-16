@@ -3,25 +3,37 @@ class Solution:
         l, r = 0, len(nums) - 1
         pivot = 0
 
+        while l < r:
+            m = (l + r) // 2
+
+            if nums[m] > nums[r]:
+                l = m + 1
+                pivot = l
+            else:
+                r = m
+
+        l, r = 0, pivot
         while l <= r:
             m = (l + r) // 2
 
             if nums[m] == target:
                 return m
-
-            if nums[m] >= nums[l]:
-                if nums[m] > target >= nums[l]:
-                    r = m - 1
-                else:
-                    l = m + 1
-            
+            elif nums[m] > target:
+                r = m - 1
             else:
-                if nums[m] < target <= nums[r]:
-                    l = m + 1
-                else:
-                    r = m - 1
+                l = m + 1
 
-            print(m, l, r)
-            
+        l, r = pivot, len(nums) - 1
+        while l <= r:
+            m = (l + r) // 2
+
+            if nums[m] == target:
+                return m
+            elif nums[m] > target:
+                r = m - 1
+            else:
+                l = m + 1
+
         return -1
 
+        
