@@ -12,10 +12,14 @@ class NumMatrix:
                 self.matrix_sum[i][j] = a + b + matrix[i][j]
 
     def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
-        t1 = self.matrix_sum[row2][col2]
-        t2 = self.matrix_sum[row1 - 1][col2] if row1 > 0 else 0
-        t3 = self.matrix_sum[row2][col1 - 1] if row1 > 0 else 0
-        t4 = self.matrix_sum[row1 - 1][col1 - 1] if (row1 > 0 and col1 > 0) else 0
+        rmax, rmin = max(row1, row2), min(row1, row2)
+        cmax, cmin = max(col1, col2), min(col1, col2)
+
+
+        t1 = self.matrix_sum[rmax][cmax]
+        t2 = self.matrix_sum[rmin - 1][cmax] if rmin > 0 else 0
+        t3 = self.matrix_sum[rmax][cmin - 1] if cmin > 0 else 0
+        t4 = self.matrix_sum[rmin - 1][cmin - 1] if (rmin > 0 and cmin > 0) else 0
 
         return t4 - t3 - t2 + t1
 
