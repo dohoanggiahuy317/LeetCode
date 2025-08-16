@@ -15,7 +15,6 @@ class NumMatrix:
         rmax, rmin = max(row1, row2), min(row1, row2)
         cmax, cmin = max(col1, col2), min(col1, col2)
 
-
         t1 = self.matrix_sum[rmax][cmax]
         t2 = self.matrix_sum[rmin - 1][cmax] if rmin > 0 else 0
         t3 = self.matrix_sum[rmax][cmin - 1] if cmin > 0 else 0
