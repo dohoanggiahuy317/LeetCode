@@ -14,14 +14,14 @@ class Solution:
             smallest = i - maxPts - 1
             prev_prob = pref_sum[largest] - (pref_sum[smallest] if smallest >= 0 else 0)
 
-            prob_i = (prev_prob) * 1/maxPts
+            prob_i = (prev_prob if prev_prob > 0 else 0) * 1/maxPts
             
             dp[i] = prob_i
             pref_sum[i] = pref_sum[i - 1] + prob_i
 
         
         ans = 0
-        for i in range(k, n+1):
+        for i in range(k, n+2):
             ans += dp[i]
 
         return ans
