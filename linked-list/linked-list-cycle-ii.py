@@ -10,7 +10,7 @@ class Solution:
         meet = False
 
         while (fast or slow) and (not meet):
-            if fast.next:
+            if fast and fast.next:
                 fast = fast.next.next
             else:
                 return None
