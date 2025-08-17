@@ -6,7 +6,6 @@
 #         self.right = right
 class Solution:
     def pruneTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        
         if not root:
             return None
 
@@ -14,7 +13,7 @@ class Solution:
             root.left = None
         if not self.pruneTree(root.right):
             root.right = None
-        
+
         if root.val != 1 and not root.left and not root.right:
             root = None
 
