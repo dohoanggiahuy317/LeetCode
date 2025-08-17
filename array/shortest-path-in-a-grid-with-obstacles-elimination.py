@@ -18,7 +18,7 @@ class Solution:
                 curr_x, curr_y, curr_k = queue.popleft()
 
                 # reach destination
-                if curr_x == m - 1 and curr_y == n - 1:
+                if (curr_x, curr_y) == (m - 1, n - 1):
                     return step
 
                 for i, j in DIRECTIONS:
