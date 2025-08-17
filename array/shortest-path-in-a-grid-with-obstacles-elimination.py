@@ -6,10 +6,9 @@ class Solution:
         m, n = len(grid), len(grid[0])
         START_X, START_Y = 0, 0
         EMPTY, OBSTACBLE = 0, 1
-        NO_MORE_K = 0
 
         # BFS
-        queue = deque([ (START_X, START_Y, k) ])
+        queue = deque([(START_X, START_Y, k)])
         reachable = set(queue)
         step = 0
 
@@ -28,7 +27,7 @@ class Solution:
                         continue
 
                     if grid[n_x][n_y] == OBSTACBLE:
-                        if curr_k == NO_MORE_K:
+                        if curr_k == 0:
                             continue
                         n_k -= 1
 
