@@ -34,4 +34,5 @@ class Solution:
         roots = {graph.find(x) for x in range(n)}
         sizes = [graph.size[x] for x in roots]
 
+        # Sigma cyclic = sum ** 2 - sigma ** 2
         return (sum(sizes) ** 2 - sum([x ** 2 for x in sizes])) // 2
