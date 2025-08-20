@@ -21,8 +21,8 @@ class Solution:
                 ans.append(idx)
                 time += proc_time # add tiem that proc the current process
             
-            else: # if CPU done all task, move to next time frame
-                time += tasks[i][0]
+            else: # if CPU done all task, move to next time frame that ready for next thread
+                time = tasks[i][0]
 
         return ans
 
