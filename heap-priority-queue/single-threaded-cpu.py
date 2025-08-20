@@ -1,29 +1,28 @@
 class Solution:
     def getOrder(self, tasks: List[List[int]]) -> List[int]:
-        # CONSTANT
         n = len(tasks)
-
-        # Prep
-        tasks = [(et, pt, i) for i, (et, pt) in enumerate(tasks)]
+        tasks = [(enq_time, proc_time, idx) for idx, (enq_time, proc_time) in enumerate(tasks)]
         tasks.sort()
-    
-        result = []
+
         pq = []
-        time = 0
         i = 0
-        
-        # Run
-        while i < n or pq:
+        time = 0
+        ans = []
+
+        while pq or i < n:
+            # Load ready task
             while i < n and tasks[i][0] <= time:
-                et, pt, idx = tasks[i]
-                heapq.heappush(pq, (pt, idx))
+                enq_time, proc_time, idx = tasks[i]
+                heapq.heappush(pq, (proc_time, enq_time + proc_time, idx))
                 i += 1
             
             if pq:
-                pt, idx = heapq.heappop(pq)
-                result.append(idx)
-                time += pt
-            else:
-                time = tasks[i][0]
-        
-        return result
+                _, end_time, idx = heapq.heappop(pq)
+                ans.append(idx)
+                time = max(time, end_time)
+            
+            else: # if CPU done all task, move to next time frame
+                time += tasks[i][0]
+
+        return ans
+
