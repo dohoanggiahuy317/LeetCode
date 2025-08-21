@@ -24,18 +24,14 @@ class Solution:
                 heapq.heappush(occups_pq, (time + duration, room_idx))
                 room_count[room_idx] += 1
                 i += 1
-
-            print(time, occups_pq)
-
+            
             # Có free room cho next meeting, nhảy đến time đó và loop sẽ remove các meeting done
             if avail_pq and i < meets_num:
                 time = meetings[i][0]
             # nếu ko có room nào avail, xét time mà room tiếp theo avail
             elif not avail_pq and occups_pq:
                 time = occups_pq[0][0]
-            # Otherwise, just stay at current time (meeting assignment loop will handle it)
-            else:
-                time = max(time, meetings[i][0]) if i < meets_num else (occups_pq[0][0] if occups_pq else time + 1)
+
             
 
         rooms = [(-c, idx) for idx, c in room_count.items()]
