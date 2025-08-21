@@ -25,16 +25,12 @@ class Solution:
                 room_count[room_idx] += 1
                 i += 1
             
-            # print(curr_time, occups_pq)
             # Có free room cho next meeting, nhảy đến curr_time đó và loop sẽ remove các meeting done
             if avail_pq and i < meets_num:
                 curr_time = meetings[i][0]
             # nếu ko có room nào avail, xét curr_time mà room tiếp theo avail
             elif occups_pq:
                 curr_time = occups_pq[0][0]
-            # tăng
-            # else:
-            #     curr_time = max(time, meetings[i][0]) if i < meets_num else (occups_pq[0][0] if occups_pq else curr_time + 1)
             
 
         rooms = [(-c, idx) for idx, c in room_count.items()]
