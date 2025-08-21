@@ -25,15 +25,18 @@ class Solution:
                 room_count[room_idx] += 1
                 i += 1
 
-            # Jump to the next meeting start if there are free rooms but no meeting has started yet
-            if avail_pq and i < meets_num and meetings[i][0] > time:
+            print(time, occups_pq)
+
+            # Có free room cho next meeting, nhảy đến time đó và loop sẽ remove các meeting done
+            if avail_pq and i < meets_num:
                 time = meetings[i][0]
-            # All rooms busy -> jump to the earliest room release
+            # nếu ko có room nào avail, xét time mà room tiếp theo avail
             elif not avail_pq and occups_pq:
                 time = occups_pq[0][0]
             # Otherwise, just stay at current time (meeting assignment loop will handle it)
             else:
                 time = max(time, meetings[i][0]) if i < meets_num else (occups_pq[0][0] if occups_pq else time + 1)
+            
 
         rooms = [(-c, idx) for idx, c in room_count.items()]
         rooms.sort()
