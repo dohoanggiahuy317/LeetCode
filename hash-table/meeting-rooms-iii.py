@@ -25,7 +25,7 @@ class Solution:
                 room_count[room_idx] += 1
                 i += 1
             
-            print(curr_time, occups_pq)
+            # print(curr_time, occups_pq)
             # Có free room cho next meeting, nhảy đến curr_time đó và loop sẽ remove các meeting done
             if avail_pq and i < meets_num:
                 curr_time = meetings[i][0]
