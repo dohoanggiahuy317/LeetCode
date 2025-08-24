@@ -6,7 +6,7 @@ class Solution:
             graph[s].append((d, cost))
 
 
-        visited = [[inf] * (k + 2) for _ in range(n)]
+        visited = [[inf] * (k + 1) for _ in range(n)]
         visited[src][0] = 0
         pq = [(0, src, 0)]
         step = 0
