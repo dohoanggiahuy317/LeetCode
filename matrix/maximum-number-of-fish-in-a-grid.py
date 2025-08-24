@@ -1,47 +1,33 @@
+DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
 class Solution:
-    # Function to perform BFS and count fishes in the connected component
-    def count_fishes(self, grid, visited, row, col):
-        num_rows = len(grid)
-        num_cols = len(grid[0])
-        fish_count = 0
-        q = [(row, col)]
-        visited[row][col] = True
+    def findMaxFish(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
 
-        # Directions for exploring up, down, left, right
-        row_directions = [0, 0, 1, -1]
-        col_directions = [1, -1, 0, 0]
+        def start_catch(x, y):
+            nonlocal grid, m, n, ans, visited, fish
 
-        # BFS traversal
-        while q:
-            row, col = q.pop(0)
-            fish_count += grid[row][col]
+            if not (0 <= x < m and 0 <= y < n):
+                return
+            if grid[x][y] == 0:
+                return
+            if (x, y) in visited:
+                return
 
-            # Exploring all four directions
-            for i in range(4):
-                new_row = row + row_directions[i]
-                new_col = col + col_directions[i]
-                if (
-                    0 <= new_row < num_rows
-                    and 0 <= new_col < num_cols
-                    and grid[new_row][new_col]
-                    and not visited[new_row][new_col]
-                ):
-                    q.append((new_row, new_col))
-                    visited[new_row][new_col] = True
+            fish += grid[x][y]
+            visited.add((x, y))
+            
+            for i, j in DIRECTIONS:
+                start_catch(x + i, y + j)
 
-        return fish_count
+        visited = set()
+        ans = 0
+        for x in range(m):
+            for y in range(n):
+                fish = 0
+                start_catch(x, y)
+                ans = max(ans, fish)
 
-    # Function to find the maximum number of fishes
-    def findMaxFish(self, grid):
-        num_rows = len(grid)
-        num_cols = len(grid[0])
-        result = 0
-        visited = [[False] * num_cols for _ in range(num_rows)]
+        return ans
 
-        # Iterating through the entire grid
-        for i in range(num_rows):
-            for j in range(num_cols):
-                if grid[i][j] and not visited[i][j]:
-                    result = max(result, self.count_fishes(grid, visited, i, j))
-
-        return result
+        
