@@ -6,21 +6,25 @@ class Solution:
             graph[s].append((d, cost))
 
 
-        visited = [inf for _ in range(n)]
+        visited = [[inf] * (k + 2) for _ in range(n)]
         visited[src] = 0
         pq = [(0, src, 0)]
         step = 0
 
         while pq:
             cost, u, s = heapq.heappop(pq)
+            if u == dst:
+                return cost
             if s == k + 1:
                 continue
 
             for neigh, w in graph[u]:
                 new = cost + w
-                if new < visited[neigh]:
-                    visited[neigh] = new
+                if new < visited[neigh][s]:
+                    visited[neigh][s] = new
                     heapq.heappush(pq, (new, neigh, s + 1))
 
-        return visited[dst] if visited[dst] != inf else -1
+            # print(visited)
+
+        return -1
 
