@@ -13,16 +13,14 @@ class Solution:
 
         while pq:
             cost, u, s = heapq.heappop(pq)
-            if u == dst:
-                return cost
             if s == k + 1:
                 continue
 
             for neigh, w in graph[u]:
                 new = cost + w
-                if new < visited[neigh][s + 1]:
-                    visited[neigh][s + 1] = new
+                if new < visited[neigh]:
+                    visited[neigh] = new
                     heapq.heappush(pq, (new, neigh, s + 1))
 
-        return -1
+        return visited[dst]
 
