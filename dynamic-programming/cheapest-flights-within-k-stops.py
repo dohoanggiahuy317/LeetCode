@@ -22,5 +22,5 @@ class Solution:
                     visited[neigh] = new
                     heapq.heappush(pq, (new, neigh, s + 1))
 
-        return visited[dst]
+        return visited[dst] if visited[dst] != inf else -1
 
