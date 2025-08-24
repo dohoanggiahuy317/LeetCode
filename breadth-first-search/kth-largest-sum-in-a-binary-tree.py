@@ -4,26 +4,40 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
-from collections import Counter
-
 class Solution:
     def kthLargestLevelSum(self, root: Optional[TreeNode], k: int) -> int:
-        def trans(root, i):
-            nonlocal d
-            if root == None:
-                return
+        
+        # Store best k sum in pq
+        def get_k_level_sum(level_sum):
+            nonlocal pq, k
 
-            if i not in d:
-                d[i] = 0
-            d[i] += root.val
-            trans(root.left, i + 1)
-            trans(root.right, i + 1)
+            if len(pq) == k and level_sum > pq[0]:
+                heapq.heappop(pq)
+            
+            if len(pq) < k:
+                heapq.heappush(pq, level_sum)
+            
+        # BFS each row
+        def get_level_sum(root):
+            queue = deque([root])
+            
+            while queue:
+                level_sum = 0
 
-        d = Counter()
-        trans(root, 0)
-        l = sorted(list(d.values()), reverse = True)
+                for _ in range(len(queue)):
+                    node = queue.popleft()
+                    level_sum += node.val
 
-        if k-1 >= len(l):
-            return -1
-        return l[k-1]
+                    if node.left:
+                        queue.append(node.left)
+                    if node.right:
+                        queue.append(node.right)
+
+                get_k_level_sum(level_sum)
+
+
+        # Start
+        pq = []
+        get_level_sum(root)
+
+        return pq[0] if len(pq) == k else -1
