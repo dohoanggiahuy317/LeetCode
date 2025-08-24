@@ -1,26 +1,28 @@
-
 class Solution:
-    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
-        adj = defaultdict(list)
-        visited = [float('inf')] * n
-        visited[src] = 0
-        
-        for flight in flights:
-            adj[flight[0]].append((flight[1], flight[2]))
-            
-        queue = deque([(src, 0)])
-        K += 1
-        
-        while K > 0 and queue:
-            size = len(queue)
-            while size > 0:
-                curr_node, curr_price = queue.popleft()
-                for neighbor, price in adj[curr_node]:
-                    new_price = curr_price + price
-                    if new_price < visited[neighbor]:
-                        visited[neighbor] = new_price
-                        queue.append((neighbor, new_price))
-                size -= 1
-            K -= 1
-        
-        return visited[dst] if visited[dst] != float('inf') else -1
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        graph = defaultdict(list)
+
+        for s, d, cost in flights:
+            graph[s].append((d, cost))
+
+
+        visited = [[inf] * (k + 2) for _ in range(n)]
+        visited[src][0] = 0
+        pq = [(0, src, 0)]
+        step = 0
+
+        while pq:
+            cost, u, s = heapq.heappop(pq)
+            if u == dst:
+                return cost
+            if s == k + 1:
+                continue
+
+            for neigh, w in graph[u]:
+                new = cost + w
+                if new < visited[neigh][s + 1]:
+                    visited[neigh][s + 1] = new
+                    heapq.heappush(pq, (new, neigh, s + 1))
+
+        return -1
+
