@@ -1,67 +1,55 @@
+DIRECTIONS = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
 class Solution:
     def cutOffTree(self, forest: List[List[int]]) -> int:
-        # CONSTANT
-        DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-        WALL, EMPTY = 0, 1
         m, n = len(forest), len(forest[0])
-        CUT, UNCUT = True, False
 
-        # GET ALL TREES IN ORDER
-        tree_list = []
-        for i, row in enumerate(forest):
-            for j, tree in enumerate(row):
-                if tree != WALL and forest[i][j] != EMPTY:
-                    tree_list.append(forest[i][j])
-        tree_list.sort()
+        def bfs(start_cell, end_val):
+            nonlocal forest, ans, m, n
 
-        # BFS
-        def bfs(s_x, s_y, target) -> (bool, int, int, int):
-            queue = deque([(s_x, s_y)])
+            queue = deque([start_cell])
             reachable = set(queue)
             step = 0
 
             while queue:
                 for _ in range(len(queue)):
-                    c_x, c_y = queue.popleft()
+                    x, y = queue.popleft()
 
-                    if forest[c_x][c_y] == target:
-                        return CUT, step, c_x, c_y
-                    
+                    if forest[x][y] == end_val:
+                        ans += step
+                        return (x, y)
+
                     for i, j in DIRECTIONS:
-                        n_x, n_y = c_x + i, c_y + j
+                        nx, ny = x + i, y + j
 
-                        if not (0 <= n_x < m and 0 <= n_y < n):
+                        if not (0 <= nx < m and 0 <= ny < n):
                             continue
-
-                        if forest[n_x][n_y] == WALL:
+                        if forest[nx][ny] == 0:
                             continue
-
-                        if (n_x, n_y) in reachable:
+                        if (nx, ny) in reachable:
                             continue
-
-                        queue.append((n_x, n_y))
-                        reachable.add((n_x, n_y))
+                        
+                        queue.append((nx, ny))
+                        reachable.add((nx, ny))
 
                 step += 1
 
-            return UNCUT, -1, -1, -1
+            return -1
 
-        
-        # START CUTTING
-        if not tree_list:
-            return 0
+        visit_order = []
+        for row in forest:
+            for cell in row:
+                if cell != 0 and cell != 1:
+                    visit_order.append(cell)
+        visit_order.sort()
 
-        s_x, s_y = 0, 0
         ans = 0
-
-        for tree in tree_list:
-            cut, step, n_x, n_y = bfs(s_x, s_y, tree)
-
-            if not cut:
-                return - 1 
-
-            s_x, s_y = n_x, n_y
-            ans += step
-            # print(s_x, s_y, tree, ans)
+        start_cell = (0, 0)
+        dest_idx = 0
+        while dest_idx < len(visit_order):
+            start_cell = bfs(start_cell, visit_order[dest_idx])
+            if start_cell == -1:
+                return -1
+            dest_idx += 1
         
         return ans
