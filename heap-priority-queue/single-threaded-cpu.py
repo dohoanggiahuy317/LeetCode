@@ -1,28 +1,38 @@
 class Solution:
     def getOrder(self, tasks: List[List[int]]) -> List[int]:
-        n = len(tasks)
-        tasks = [(enq_time, proc_time, idx) for idx, (enq_time, proc_time) in enumerate(tasks)]
-        tasks.sort()
-
-        pq = []
-        i = 0
-        time = 0
+        tasks = sorted([s, p, idx] for idx, (s, p) in enumerate(tasks))
+        
+        s0, p0, idx0 = tasks.pop(0)
+        pq = [(p0, idx0, s0)] # -> (proc, idx, start)
+        
         ans = []
+        # print(tasks)
+        # print(pq)
+        # print(ans)
+        # print()
 
-        while pq or i < n:
-            # Load ready task
-            while i < n and tasks[i][0] <= time:
-                enq_time, proc_time, idx = tasks[i]
-                heapq.heappush(pq, (proc_time, idx))
-                i += 1
-            
+
+        # keep add when pq or task have smth
+        while pq or tasks:
+
+            # lấy ra 1 thằng task
             if pq:
-                proc_time, idx = heapq.heappop(pq)
+                p, idx, s = heapq.heappop(pq)
+                ctime = s + p
                 ans.append(idx)
-                time += proc_time # add tiem that proc the current process
-            
-            else: # if CPU done all task, move to next time frame that ready for next thread
-                time = tasks[i][0]
+
+            # add all task mà start time < cur_time:
+            while tasks and tasks[0][0] <= ctime:
+                ns, np, nidx = tasks.pop(0)
+                heapq.heappush(pq, (np, nidx, ns))
+
+            if tasks and not pq:
+                ns, np, nidx = task.pop(0)
+                pq = [(np, nidx, ns)]
+
+            # print(tasks)
+            # print(pq)
+            # print(ans)
+            # print()
 
         return ans
-
