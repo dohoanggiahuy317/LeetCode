@@ -5,16 +5,11 @@
 #         self.next = next
 class Solution:
     def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        
         def split(head):
             sl, fa = head, head
-
             while fa and fa.next:
                 fa = fa.next.next
-
-                # Lấy thằng trước thằng half 
-                # để ngắt bằng cách sl.next = None
-                if fa: 
+                if fa:
                     sl = sl.next
 
             half = sl.next
@@ -26,19 +21,19 @@ class Solution:
                 return l2
             if not l2:
                 return l1
-
-            if l1.val > l2.val:
-                l2.next = merge(l1, l2.next)
-                return l2
             
-            l1.next = merge(l1.next, l2)
-            return l1
+            if l1.val < l2.val:
+                l1.next = merge(l1.next, l2)
+                return l1
+
+            l2.next = merge(l1, l2.next)
+            return l2
 
         if not head or not head.next:
             return head
 
         half = split(head)
         l1 = self.sortList(head)
-        l2 = self.sortList(half)
+        l2 = self.sortList(hald)
 
         return merge(l1, l2)
