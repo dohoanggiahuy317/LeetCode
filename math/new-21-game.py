@@ -8,7 +8,7 @@ class Solution:
             left = max(0, i - maxPts)
             right = min(k - 1, i - 1)
 
-            dp[i] = (pref_sum[right] - pref_sum[left - 1]) * 1/maxPts
+            dp[i] = max(0, pref_sum[right] - pref_sum[left - 1]) * 1/maxPts
             pref_sum[i] = pref_sum[i - 1] + dp[i]
 
         # print(dp)
