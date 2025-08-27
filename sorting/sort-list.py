@@ -34,6 +34,6 @@ class Solution:
 
         half = split(head)
         l1 = self.sortList(head)
-        l2 = self.sortList(hald)
+        l2 = self.sortList(head)
 
         return merge(l1, l2)
