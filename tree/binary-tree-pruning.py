@@ -9,12 +9,12 @@ class Solution:
         if not root:
             return None
 
-        if not self.pruneTree(root.left):
-            root.left = None
-        if not self.pruneTree(root.right):
-            root.right = None
+        if root.left:
+            root.left = self.pruneTree(root.left)
+        if root.right:
+            root.right = self.pruneTree(root.right)
 
         if root.val != 1 and not root.left and not root.right:
-            root = None
+            return None
 
         return root
