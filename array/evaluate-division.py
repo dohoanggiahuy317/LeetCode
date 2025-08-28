@@ -1,52 +1,41 @@
-
-
 class Solution:
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
-        # Constant
-        INIT_QUOTIENT = 1
+        graph = defaultdict(list)
 
-        # BFS for each query
-        def bfs(divider, divisor):
-            nonlocal ans, eq_map
+        for (a, b), v in zip(equations, values):
+            graph[a].append((b, v))
+            graph[b].append((a, 1/v))
 
-            queue = deque([(divider, INIT_QUOTIENT)])
-            reachable = set([divider]) # -> dont want to divide smth twice
-            result = -1
+        def bfs(a, b):
+            nonlocal graph, ans
+
+            queue = deque([(a, 1)])
+            reachable = set(queue)
 
             while queue:
                 for _ in range(len(queue)):
-                    prev_divisor, prev_quotient = queue.popleft()
+                    curr, quot = queue.popleft()
 
-                    if prev_divisor not in eq_map: # prev_divisor not appear as divider 
-                        break
+                    if curr == b:
+                        return quot
 
-                    if prev_divisor == divisor:
-                        result = prev_quotient
-                        break
-
-                    for neigh, value in eq_map[prev_divisor]: 
-                    # prev_divisor/neigh = value
-
+                    for neigh, neigh_quot in graph[curr]:
                         if neigh in reachable:
                             continue
-                        
-                        # prev_divisor/neigh * neigh/neigh_of_neigh * ...
-                        new_quotient = prev_quotient * value 
-                        
-                        queue.append((neigh, new_quotient))
+                        new_quot = quot * neigh_quot
+                        queue.append((neigh, new_quot))
                         reachable.add(neigh)
 
-            ans.append(result)
+            return -1
 
-
-        eq_map = defaultdict(list) # eq_map[x] -> (y, value) where x/y = value
-        for (x, y), value in zip(equations, values):
-            eq_map[x].append((y, value)) 
-            eq_map[y].append((x, 1/value))
 
         ans = []
-        # loop through query
-        for divider, divisor in queries:
-            bfs(divider, divisor)
+        for a, b in queries:
+            if a not in graph or b not in graph:
+                ans.append(-1)
+                continue
+                
+            v = bfs(a, b)
+            ans.append(v)
 
         return ans
