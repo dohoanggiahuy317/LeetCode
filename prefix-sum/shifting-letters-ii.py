@@ -1,20 +1,18 @@
-
+SHIFT = {0: -1, 1: 1}
 
 class Solution:
     def shiftingLetters(self, s: str, shifts: List[List[int]]) -> str:
         n = len(s)
-        track = [0] * (n+1)
-        di_map = {0: -1, 1: 1}
+        shifts_track = [0] * (n + 1)
 
-        for start, end, di in shifts:
-            track[start] += di_map[di]
-            track[end + 1] -= di_map[di]
+        for st, en, di in shifts:
+            shifts_track[st] += SHIFT[di]
+            shifts_track[en + 1] -= SHIFT[di]
 
-        shift_map = list(accumulate(track))
+        pref_sum = list(accumulate(shifts_track))
+        
         ans = ""
         for i, ch in enumerate(s):
-            ans += chr((ord(ch) + shift_map[i] - ord("a")) % 26 + ord("a"))
+            ans += chr((ord(ch) - ord("a") + pref_sum[i]) % 26 + ord("a") )
 
         return ans
-
-        
