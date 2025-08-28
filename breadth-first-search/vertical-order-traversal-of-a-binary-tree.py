@@ -8,25 +8,24 @@ class Solution:
     def verticalTraversal(self, root: Optional[TreeNode]) -> List[List[int]]:
         
         def dfs(root, x, y):
-            nonlocal tree_map, left, right
+            nonlocal columns, mi, ma
 
             if not root:
                 return None
 
-            left = min(left, y)
-            right = max(right, y)
+            mi = min(mi, y)
+            ma = max(ma, y)
+            columns[y].append((x, root.val))
 
-            tree_map[y].append((x, root.val))
             dfs(root.left, x + 1, y - 1)
             dfs(root.right, x + 1, y + 1)
 
-        tree_map = defaultdict(list)
-        left, right = 0, 0
-
+        columns = defaultdict(list)
+        mi = ma = 0
         dfs(root, 0, 0)
         
         ans = []
-        for i in range(left, right + 1):
-            ans.append( [x[1] for x in sorted(tree_map[i])] )
+        for i in range(mi, ma + 1):
+            ans.append([v[1] for v in sorted(columns[i])])
 
         return ans
