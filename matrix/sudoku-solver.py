@@ -28,7 +28,6 @@ class Solution:
                 if backtrack(cell_idx + 1):
                     return True
                 
-                board[i][j] = "."
                 rows[i].remove(str(num))
                 cols[j].remove(str(num))
                 sqrs[i // 3 * 3 + j // 3].remove(str(num))
