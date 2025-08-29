@@ -9,7 +9,7 @@ class Solution:
             if len(curr_word) == s:
                 found = curr_word == word
                 return
-            
+                        
             for i, j in DIRECTIONS:
                 if found:
                     return
@@ -20,9 +20,9 @@ class Solution:
                 if visited[x + i][y + j]:
                     continue
                 
-                visited[x][y] = True  
-                word_search(x + i, y + j, visited, curr_word + board[x][y])
-                visited[x][y] = False
+                visited[x + i][y + j] = True  
+                word_search(x + i, y + j, visited, curr_word + board[x + i][y + j])
+                visited[x + i][y + j] = False
 
         m, n = len(board), len(board[0])
         s = len(word)
@@ -30,8 +30,11 @@ class Solution:
 
         for x in range(m):
             for y in range(n):
+                visited = [[False] * n for _ in range(m)]
+                visited[x][y] = True
+                word_search(x, y, visited, board[x][y])
+
                 if found:
                     return True
-                word_search(x, y, [[False] * n for _ in range(m)], "")
 
-        return found
+        return False
