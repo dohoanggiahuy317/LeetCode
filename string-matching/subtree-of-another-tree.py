@@ -6,24 +6,23 @@
 #         self.right = right
 class Solution:
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-        def treecomp(root1, root2):
-            if (root1 == None and root2 != None) or (root1 != None and root2 == None ):
+        
+        def tree_check(this, that):
+            if not this and that:
+                return False
+            if not that and this:
                 return False
 
-            if root1 == root2 == None:
+            if not that and not this:
                 return True
+            
+            return tree_check(this.left, that.left) and tree_check(this.right, that.right) and this.val == that.val
 
-            if root1.val != root2.val:
-                return False
-
-            return treecomp(root1.left, root2.left) and treecomp(root1.right, root2.right)
-
-        if root == None and subRoot == None:
+        if not root and not subRoot:
             return True
-        if root == None:
+        if root and not subRoot:
             return False
-
-        if treecomp(root, subRoot):
-            return True
-
-        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+        if not root and subRoot:
+            return False
+        
+        return tree_check(root, subRoot) or self.isSubtree(root.left, subRoot) or self.isSubtree(root.left, subRoot) 
