@@ -1,46 +1,50 @@
-class neighborSum:
+class NeighborSum:
 
     def __init__(self, grid: List[List[int]]):
-        self.grid = grid
+        self.m, self.n = len(grid), len(grid[0])
+        self.val2coor = {}
+        self.coor2val = {}
+
+        for i in range(self.m):
+            for j in range(self.n):
+                val = grid[i][j]
+                self.val2coor[val] = (i, j)
+                self.val2coor[(i, j)] = val
+        
 
     def adjacentSum(self, value: int) -> int:
-        for i in range(len(self.grid)):
-            if value in self.grid[i]:
-                j = self.grid[i].index(value)
-                break
-        
-        ans = 0
-        if i > 0:
-            ans += self.grid[i-1][j]
-        if i < len(self.grid) - 1:
-            ans += self.grid[i+1][j]
-        if j > 0:
-            ans += self.grid[i][j-1]
-        if j < len(self.grid[0]) - 1:
-            ans += self.grid[i][j+1]
+        i, j = self.val2coor[value]
 
-        return ans
+        s = 0
+        if i > 0:
+            s += self.val2coor[(i - 1, j)]
+        if i < self.m - 1:
+            s += self.val2coor[(i + 1, j)]
+        if j > 0:
+            s += self.val2coor[(i, j - 1)]
+        if j < self.n - 1:
+            s += self.val2coor[(i, j + 1)]
+
+        return s
+        
 
     def diagonalSum(self, value: int) -> int:
-        for i in range(len(self.grid)):
-            if value in self.grid[i]:
-                j = self.grid[i].index(value)
-                break
-        
-        ans = 0
-        if i > 0 and j < len(self.grid[0]) - 1:
-            ans += self.grid[i-1][j+1]
+        i, j = self.val2coor[value]
+
+        s = 0
         if i > 0 and j > 0:
-            ans += self.grid[i-1][j-1]
-        if i < len(self.grid) - 1 and j < len(self.grid[0]) - 1:
-            ans += self.grid[i+1][j+1]
-        if i < len(self.grid) - 1 and j > 0:
-            ans += self.grid[i+1][j-1]
+            s += self.val2coor[(i - 1, j - 1)]
+        if i < self.m - 1 and j > 0:
+            s += self.val2coor[(i + 1, j - 1)]
+        if j < self.n - 1 and i < self.m - 1:
+            s += self.val2coor[(i + 1, j + 1)]
+        if j < self.n - 1 and i > 0:
+            s += self.val2coor[(i - 1, j + 1)]
 
-        return ans
+        return s
 
 
-# Your neighborSum object will be instantiated and called as such:
-# obj = neighborSum(grid)
+# Your NeighborSum object will be instantiated and called as such:
+# obj = NeighborSum(grid)
 # param_1 = obj.adjacentSum(value)
 # param_2 = obj.diagonalSum(value)
