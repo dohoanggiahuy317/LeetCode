@@ -25,4 +25,4 @@ class Solution:
         if not root and subRoot:
             return False
         
-        return tree_check(root, subRoot) or self.isSubtree(root.left, subRoot) or self.isSubtree(root.left, subRoot) 
+        return tree_check(root, subRoot) or self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot) 
