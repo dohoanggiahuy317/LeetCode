@@ -3,38 +3,44 @@ DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         
-        def word_search(x, y, visited, curr_word):
-            nonlocal word, found, s, m, n
+        def word_search(x, y, i):
+            nonlocal word, found, s, m, n, visited
 
-            if len(curr_word) == s:
-                found = curr_word == word
-                return
+            if i == len(word):
+                return True
+
+            visited[x][y] = True 
                         
-            for i, j in DIRECTIONS:
-                if found:
-                    return
+            for dx, dy in DIRECTIONS:
+                nx, ny = x + dx, y + dy
+                if not (0 <= nx < m and 0 <= ny < n):
+                    continue
+                
+                if visited[nx][ny]:
+                    continue
 
-                if not (0 <= x + i < m and 0 <= y + j < n):
+                if board[nx][ny] != word[i]:
                     continue
                 
-                if visited[x + i][y + j]:
-                    continue
-                
-                visited[x + i][y + j] = True  
-                word_search(x + i, y + j, visited, curr_word + board[x + i][y + j])
-                visited[x + i][y + j] = False
+                if word_search(nx, ny, i + 1):
+                    return True
+            
+            visited[x][y] = False
+
+            return False
 
         m, n = len(board), len(board[0])
         s = len(word)
         found = False
+        visited = [[False] * n for _ in range(m)]
 
         for x in range(m):
             for y in range(n):
-                visited = [[False] * n for _ in range(m)]
-                visited[x][y] = True
-                word_search(x, y, visited, board[x][y])
 
-                if found:
+                if board[x][y] != word[0]:
+                    continue
+
+                if word_search(x, y, 1):
                     return True
 
         return False
