@@ -12,25 +12,25 @@ class Solution:
             
             i, j = empty[cell_idx]
         
-            for num in range(1, 10):
-                if str(num) in rows[i]:
+            for num in "123456789":
+                if num in rows[i]:
                     continue
-                if str(num) in cols[j]:
+                if num in cols[j]:
                     continue
-                if str(num) in sqrs[i // 3 * 3 + j // 3]:
+                if num in sqrs[i // 3 * 3 + j // 3]:
                     continue
                 
-                board[i][j] = str(num)
-                rows[i].add(str(num))
-                cols[j].add(str(num))
-                sqrs[i // 3 * 3 + j // 3].add(str(num))
+                board[i][j] = num
+                rows[i].add(num)
+                cols[j].add(num)
+                sqrs[i // 3 * 3 + j // 3].add(num)
 
                 if backtrack(cell_idx + 1):
                     return True
                 
-                rows[i].remove(str(num))
-                cols[j].remove(str(num))
-                sqrs[i // 3 * 3 + j // 3].remove(str(num))
+                rows[i].remove(num)
+                cols[j].remove(num)
+                sqrs[i // 3 * 3 + j // 3].remove(num)
 
             return False
 
