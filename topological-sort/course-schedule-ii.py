@@ -20,4 +20,4 @@ class Solution:
                 if indegree[neigh] == 0:
                     queue.append(neigh)
 
-        return ans
+        return ans if len(ans) == numCourses else []
