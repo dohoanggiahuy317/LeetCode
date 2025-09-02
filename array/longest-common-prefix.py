@@ -2,7 +2,7 @@ class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
         
         def add_node(word):
-            nonlocal trie, all_prefix_len
+            nonlocal trie
 
             node = trie
             word_prefix_len, still_prefix, first_word = 0, True, len(node) == 0
@@ -15,7 +15,7 @@ class Solution:
                     still_prefix = False
                     
                 node = node[ch]
-
+    
             # only calculate prefix length if first word is added
             return word_prefix_len if not first_word else len(word)  
         
@@ -25,4 +25,4 @@ class Solution:
             word_prefix_len = add_node(s)
             all_prefix_len = min(all_prefix_len, word_prefix_len)
 
-        return strs[0][:word_prefix_len]
+        return strs[0][:all_prefix_len]
