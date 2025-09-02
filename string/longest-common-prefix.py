@@ -18,7 +18,7 @@ class Trie:
             if ch not in node.children:
                 if self.empty:
                     node.children[ch] = TrieNode(ch)
-                    self.lcp_idx = prefix_idx
+                    self.lcp_idx = prefix_idx + 1
                 else:
                     self.lcp_idx = min(self.lcp_idx, prefix_idx)
                     return
