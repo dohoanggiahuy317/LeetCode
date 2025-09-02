@@ -23,7 +23,7 @@ class Trie:
                         
             node = node.children[ch]
         
-        self.lcp_idx = min(self.lcp_idx if empty else len(word), prefix_idx)
+        self.lcp_idx = len(word) if empty else min(self.lcp_idx, prefix_idx)
 
     def get_lcp(self):
         node = self.root
@@ -45,5 +45,6 @@ class Solution:
         
         for s in strs:
             word_prefix_len = trie.get_prefix_by_insert(s)
+            print(trie.lcp_idx)
         
         return trie.get_lcp()
