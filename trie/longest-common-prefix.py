@@ -12,6 +12,7 @@ class Solution:
                     word_prefix_len += 1
                 elif ch not in node:
                     node[ch] = {}
+                    still_prefix = False
                     
                 node = node[ch]
 
