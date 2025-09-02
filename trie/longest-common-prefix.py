@@ -1,28 +1,51 @@
+class TrieNode:
+    def __init__(self, ch):
+        self.ch = ch
+        self.children = {}
+        self.exist = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode("^")
+
+    def insert(self, word):
+        node = self.root
+
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode(ch)
+            node = node.children[ch]
+
+    def search(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                return False
+            node = node.children[ch]
+        
+        return node.exist
+    
+    def find_common_prefix(self):
+        node = self.root
+        ans = ""
+        while node.children:
+            if len(node.children) != 1:
+                return ans
+
+            ch = ""
+            for u, v in node.children.items():
+                node = node.children[u]
+                ch = v.ch
+            ans += ch
+
+        return ans
+            
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
         
-        def add_node(word):
-            nonlocal trie
-
-            node = trie
-            word_prefix_len, still_prefix, first_word = 0, True, len(node) == 0
-
-            for ch in word:
-                if ch in node and still_prefix:
-                    word_prefix_len += 1
-                elif ch not in node:
-                    node[ch] = {}
-                    still_prefix = False
-                    
-                node = node[ch]
-    
-            # only calculate prefix length if first word is added
-            return word_prefix_len if not first_word else len(word)  
+        trie = Trie()
         
-        trie = defaultdict()
-        all_prefix_len = inf
         for s in strs:
-            word_prefix_len = add_node(s)
-            all_prefix_len = min(all_prefix_len, word_prefix_len)
+            word_prefix_len = trie.insert(s)
 
-        return strs[0][:all_prefix_len]
+        return trie.find_common_prefix()
