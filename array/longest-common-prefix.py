@@ -26,7 +26,19 @@ class Trie:
             node = node.children[ch]
         
         self.empty = False
-        
+
+    def get_lcp(self):
+        node = self.root
+
+        lcp = ""
+        for _ in range(self.lcp_idx):
+            ch, = node.children
+            lcp += ch
+
+            node, = node.children.values()
+            
+
+        return lcp        
             
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
@@ -36,5 +48,4 @@ class Solution:
         for s in strs:
             word_prefix_len = trie.get_prefix_by_insert(s)
         
-        foo_str = strs[0]
-        return foo_str[:trie.lcp_idx]
+        return trie.get_lcp()
