@@ -33,7 +33,6 @@ class Trie:
         for _ in range(lcp_idx):
             ch, = node.children
             lcp += ch
-
             node, = node.children.values()
 
         return lcp        
@@ -44,7 +43,8 @@ class Solution:
         trie = Trie()
         
         for s in strs:
+            if not s:
+                return ""
             word_prefix_len = trie.get_prefix_by_insert(s)
-            print(trie.lcp_idx)
         
         return trie.get_lcp()
