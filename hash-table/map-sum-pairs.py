@@ -1,15 +1,14 @@
 class TrieNode:
-    def __init__(self, val):
-        self.val = val
+    def __init__(self, ch, val = -1):
+        self.ch = ch
         self.children = {}
         self.exist = False
+        self.val = val
 
 class MapSum:
 
     def __init__(self):
-        self.root = TrieNode("^")
-        self.node2val = defaultdict(int)
-        
+        self.root = TrieNode("^")        
 
     def insert(self, key: str, val: int) -> None:
         node = self.root
@@ -19,7 +18,7 @@ class MapSum:
                 node.children[ch] = TrieNode(ch)
             node = node.children[ch]
 
-        self.node2val[node] = val
+        node.val = val
         node.exist = True
 
     def sum(self, prefix: str) -> int:
@@ -31,13 +30,13 @@ class MapSum:
             else:
                 return 0
 
-        queue = deque([node])
+        queue = deque([node]) # all the node with the prefix
         ans = 0
         while queue:
             node = queue.popleft()
 
             if node.exist:
-                ans += self.node2val[node]
+                ans += node.val
             
             for neigh in node.children:
                 queue.append(node.children[neigh])
