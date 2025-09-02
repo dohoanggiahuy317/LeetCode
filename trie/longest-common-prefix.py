@@ -31,12 +31,12 @@ class Trie:
         node = self.root
 
         lcp = ""
-        for _ in range(self.lcp_idx):
+        lcp_idx = 0 if self.lcp_idx == inf else self.lcp_idx
+        for _ in range(lcp_idx):
             ch, = node.children
             lcp += ch
 
             node, = node.children.values()
-            
 
         return lcp        
             
