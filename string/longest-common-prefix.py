@@ -32,10 +32,8 @@ class Trie:
             if len(node.children) != 1:
                 return ans
 
-            ch = ""
-            for u, v in node.children.items():
-                node = node.children[u]
-                ch = v.ch
+            ch, = node.children
+            node, = node.children.values()
             ans += ch
 
         return ans
