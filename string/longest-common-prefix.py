@@ -7,36 +7,26 @@ class TrieNode:
 class Trie:
     def __init__(self):
         self.root = TrieNode("^")
+        self.empty = True
+        self.lcp_idx = inf
 
-    def insert(self, word):
+    def get_prefix_by_insert(self, word):
         node = self.root
+        prefix_idx = 0
 
         for ch in word:
             if ch not in node.children:
-                node.children[ch] = TrieNode(ch)
-            node = node.children[ch]
-
-    def search(self, word):
-        node = self.root
-        for ch in word:
-            if ch not in node.children:
-                return False
+                if self.empty:
+                    node.children[ch] = TrieNode(ch)
+                else:
+                    self.lcp_idx = self.lcp_idx if prefix_idx > self.lcp_idx else prefix_idx
+                    return
+            
+            prefix_idx += 1
             node = node.children[ch]
         
-        return node.exist
-    
-    def find_common_prefix(self):
-        node = self.root
-        ans = ""
-        while node.children:
-            if len(node.children) != 1:
-                return ans
-
-            ch, = node.children
-            node, = node.children.values()
-            ans += ch
-
-        return ans
+        self.empty = False
+        
             
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
@@ -44,9 +34,7 @@ class Solution:
         trie = Trie()
         
         for s in strs:
-            if s == "":
-                return ""
-                
-            word_prefix_len = trie.insert(s)
-
-        return trie.find_common_prefix()
+            word_prefix_len = trie.get_prefix_by_insert(s)
+        
+        foo_str = strs[0]
+        return foo_str[:trie.lcp_idx]
