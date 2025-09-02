@@ -7,26 +7,23 @@ class TrieNode:
 class Trie:
     def __init__(self):
         self.root = TrieNode("^")
-        self.empty = True
         self.lcp_idx = inf
 
     def get_prefix_by_insert(self, word):
         node = self.root
-        prefix_idx = 0
+        prefix_idx, still_prefix, empty = 0, True, len(node.children) == 0
+
 
         for ch in word:
-            if ch not in node.children:
-                if self.empty:
-                    node.children[ch] = TrieNode(ch)
-                    self.lcp_idx = prefix_idx + 1
-                else:
-                    self.lcp_idx = min(self.lcp_idx, prefix_idx)
-                    return
-            
-            prefix_idx += 1
+            if ch in node.children and still_prefix:
+                prefix_idx += 1
+            elif ch not in node.children:
+                node.children[ch] = TrieNode(ch)
+                still_prefix = False
+                        
             node = node.children[ch]
         
-        self.empty = False
+        self.lcp_idx = min(self.lcp_idx if empty else len(word), prefix_idx)
 
     def get_lcp(self):
         node = self.root
