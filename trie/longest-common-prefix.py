@@ -44,6 +44,9 @@ class Solution:
         trie = Trie()
         
         for s in strs:
+            if s == "":
+                return ""
+                
             word_prefix_len = trie.insert(s)
 
         return trie.find_common_prefix()
