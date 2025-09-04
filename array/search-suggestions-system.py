@@ -30,20 +30,21 @@ class Trie:
             node = node.children[ch]
         
         # find the node that exist starting from node
-        queue = [("", node)]
+        queue = deque([("", node)])
         words = []
 
         while queue and len(words) < 3:
-            subword, node = heapq.heappop(queue)
+            print([x[0] for x in queue])
+            subword, node = queue.popleft()
             
             if node.exist:
                 words.append(word + subword)
             
             for child_char, child_node in node.children.items():
-                if len(queue) == 3 and subword + child_char < queue[0][0]:
-                    heapq.heappop(queue)
-
-                heapq.heappush(queue, (subword + child_char, child_node)) 
+                queue.append((subword + child_char, child_node))
+                queue = deque(sorted(list(queue)))
+                if len(queue) > 3:
+                    queue.pop()
 
         return words
 
