@@ -26,18 +26,18 @@ class WordDictionary:
             for _ in range(len(queue)):
                 node = queue.popleft()
 
-                # If last char match a word
-                if i == len(word) - 1 and node.exist:
-                    return True
-                    
                 if ch != "." and ch not in node.children:
-                    continue
+                    continue 
 
                 if ch != "." and ch in node.children:
                     queue.append(node.children[ch])
 
                 if ch == ".":
                     queue.extend(list(node.children.values()))
+
+                # If last char match a word
+                if i == len(word) - 1 and node.exist:
+                    return True
 
         return False
 
