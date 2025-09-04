@@ -34,14 +34,14 @@ class Trie:
         words = []
 
         while queue and len(words) < 3:
-            subword, node = queue.popleft()
+            subword, node = queue.pop(0)
             
             if node.exist:
                 words.append(word + subword)
             
             for child_char, child_node in node.children.items():
                 queue.append((subword + child_char, child_node))
-                queue = deque(sorted(list(queue)))
+                queue.sort()
                 if len(queue) > 3:
                     queue.pop()
 
