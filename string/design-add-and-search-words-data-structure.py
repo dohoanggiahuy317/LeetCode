@@ -35,12 +35,8 @@ class WordDictionary:
                 if ch == ".":
                     queue.extend(list(node.children.values()))
 
-        for leaf in queue:
-            if leaf.exist:
-                return True
-
-        return False
-
+ 
+        return True if not all([not leaf.exist for leaf in queue]) else False
 
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
