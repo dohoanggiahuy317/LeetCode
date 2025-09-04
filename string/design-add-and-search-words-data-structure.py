@@ -2,7 +2,7 @@ class TrieNode:
     def __init__(self, ch):
         self.ch = ch
         self.children = {}
-        self.exist = True
+        self.exist = False
 
 class WordDictionary:
 
@@ -24,8 +24,6 @@ class WordDictionary:
         for i, ch in enumerate(word):
 
             for _ in range(len(queue)):
-                if word == "a.":
-                    print([x.ch for x in queue])
                 node = queue.popleft()
 
                 if ch != "." and ch not in node.children:
@@ -37,9 +35,9 @@ class WordDictionary:
                 if ch == ".":
                     queue.extend(list(node.children.values()))
 
-                # If last char match a word
-                if i == len(word) - 1 and ((node.children and ch == ".") or ch in node.children):
-                    return True
+        for leaf in queue:
+            if leaf.exist:
+                return True
 
         return False
 
