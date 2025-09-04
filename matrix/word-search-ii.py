@@ -20,6 +20,12 @@ class Trie:
     def dfs_word(self, board, visited, node, x, y):
         
         m, n = len(board), len(board[0])
+
+        ch = board[x][y]
+
+        if ch not in node.children:
+            node.children[ch] = TrieNode(ch)
+            
         visited[x][y] = True
 
         for dx, dy in DIRECTIONS:
@@ -30,11 +36,6 @@ class Trie:
 
             if visited[nx][ny]:
                 continue
-
-            ch = board[nx][ny]
-
-            if ch not in node.children:
-                node.children[ch] = TrieNode(ch)
 
             self.dfs_word(board, visited, node.children[ch], nx, ny)
         
