@@ -30,7 +30,7 @@ class Trie:
             node = node.children[ch]
         
         # find the node that exist starting from node
-        queue = deque([("", node)])
+        queue = [("", node)]
         words = []
 
         while queue and len(words) < 3:
