@@ -34,7 +34,6 @@ class Trie:
         words = []
 
         while queue and len(words) < 3:
-            print([x[0] for x in queue])
             subword, node = queue.popleft()
             
             if node.exist:
