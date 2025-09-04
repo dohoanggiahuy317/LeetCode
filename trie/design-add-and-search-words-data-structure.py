@@ -24,6 +24,8 @@ class WordDictionary:
         for i, ch in enumerate(word):
 
             for _ in range(len(queue)):
+                if word == "a.":
+                    print([x.ch for x in queue])
                 node = queue.popleft()
 
                 if ch != "." and ch not in node.children:
@@ -36,7 +38,7 @@ class WordDictionary:
                     queue.extend(list(node.children.values()))
 
                 # If last char match a word
-                if i == len(word) - 1 and node.exist:
+                if i == len(word) - 1 and ((node.children and ch == ".") or ch in node.children):
                     return True
 
         return False
