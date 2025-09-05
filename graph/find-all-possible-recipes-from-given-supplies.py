@@ -5,8 +5,9 @@ class Solution:
         for i, (recipe, ingres) in enumerate(zip(recipes, ingredients)):
             for ingre in ingres:
                 graph[ingre].append(recipe)
+                
                 indegree[ingre] = 0 if ingre not in indegree else indegree[ingre]
-            indegree[recipe] += 1
+                indegree[recipe] += 1
 
         queue = deque([ingre for ingre in indegree.keys() if indegree[ingre] == 0])
         
@@ -18,7 +19,7 @@ class Solution:
                 if indegree[recipe] == 0:
                     queue.append(recipe)
 
-        print(graph)
-        print(indegree)
+        # print(graph)
+        # print(indegree)
 
         return [recipe for recipe in recipes if indegree[recipe] == 0]
