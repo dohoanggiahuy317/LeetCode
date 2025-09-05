@@ -9,7 +9,7 @@ class Solution:
                 indegree[ingre] = 0 if ingre not in indegree else indegree[ingre]
                 indegree[recipe] += 1
 
-        queue = deque([ingre for ingre in indegree.keys() if indegree[ingre] == 0])
+        queue = deque([ingre for ingre in supplies if indegree[ingre] == 0])
         
         while queue:
             ingre = queue.popleft()
@@ -18,8 +18,5 @@ class Solution:
                 indegree[recipe] -= 1
                 if indegree[recipe] == 0:
                     queue.append(recipe)
-
-        # print(graph)
-        # print(indegree)
 
         return [recipe for recipe in recipes if indegree[recipe] == 0]
