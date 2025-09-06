@@ -15,12 +15,14 @@ class Trie:
         for x in range(m):
             for y in range(n):
                 visited = [[False] * n for _ in range(m)]
-                self.dfs_word(board, visited, self.root, x, y)
+                self.dfs_word(board, visited, self.root, x, y, 0)
 
-    def dfs_word(self, board, visited, node, x, y):
+    def dfs_word(self, board, visited, node, x, y, step):
+
+        if step == 10:
+            return
         
         m, n = len(board), len(board[0])
-
         ch = board[x][y]
 
         if ch not in node.children:
@@ -37,7 +39,7 @@ class Trie:
             if visited[nx][ny]:
                 continue
 
-            self.dfs_word(board, visited, node.children[ch], nx, ny)
+            self.dfs_word(board, visited, node.children[ch], nx, ny, step + 1)
         
         visited[x][y] = False
 
