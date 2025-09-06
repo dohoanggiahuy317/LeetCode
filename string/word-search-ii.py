@@ -28,7 +28,6 @@ class Solution:
         def dfs(x, y, node, step):
             nonlocal visited, curr_word, ans, m, n
 
-            
             visited[x][y] = True
             ch = board[x][y]
             curr_word.append(ch)
@@ -47,6 +46,9 @@ class Solution:
 
                 next_ch = board[nx][ny]
                 if next_ch not in node.children:
+                    continue
+                
+                if visited[nx][ny]:
                     continue
 
                 dfs(nx, ny, node.children[next_ch], step + 1)
