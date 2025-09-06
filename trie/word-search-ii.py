@@ -21,37 +21,42 @@ class Trie:
 
 class Solution:
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        
+        # INSERT TRIE
         trie = Trie()
         for word in words:
             trie.insert(word)
 
+        # DFS FOR EACH WORD
         def dfs(x, y, node, step):
             nonlocal visited, curr_word, ans, m, n
-
-            visited[x][y] = True
-            ch = board[x][y]
-            curr_word.append(ch)
-
-            if node.exist:
-                ans.add("".join(curr_word))
-            
+        
+            # no word has length > 10
             if step == 10:
                 return
+            
+            # if cannot make word from this path
+            ch = board[x][y]
+            if ch not in node.children:
+                return
 
+            # get the word
+            visited[x][y] = True
+            curr_word.append(ch)
+            next_node = node.children[ch]
+
+            if next_node.exist: # Found word here
+                ans.add("".join(curr_word))
+
+            # explore other
             for dx, dy in DIRECTIONS:
                 nx, ny = x + dx, y + dy
-
                 if not (0 <= nx < m and 0 <= ny < n):
                     continue
-
-                next_ch = board[nx][ny]
-                if next_ch not in node.children:
-                    continue
-                
                 if visited[nx][ny]:
                     continue
-
-                dfs(nx, ny, node.children[next_ch], step + 1)
+                
+                dfs(nx, ny, next_node, step + 1)
   
 
             visited[x][y] = False
@@ -64,9 +69,7 @@ class Solution:
         
         for x in range(m):
             for y in range(n):
-                if board[x][y] in trie.root.children:
-                    char = board[x][y]
-                    dfs(x, y, trie.root.children[char], 0)
+                dfs(x, y, trie.root, 0)
 
         return list(ans)
 
