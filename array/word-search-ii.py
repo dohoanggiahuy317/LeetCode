@@ -62,11 +62,13 @@ class Solution:
             visited[x][y] = False
             curr_word.pop()
 
+        # INIT
         m, n = len(board), len(board[0])
         ans = set()
         curr_word = []
         visited = [[False] * n for _ in range(m)]
         
+        # LOOP
         for x in range(m):
             for y in range(n):
                 dfs(x, y, trie.root, 0)
