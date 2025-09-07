@@ -1,24 +1,20 @@
 class Solution:
     def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
         graph = defaultdict(list)
+        u2v = [[False] * numCourses for _ in range(numCourses)]
         for u, v in prerequisites:
             graph[u].append(v)
-        ans = []
 
-        for u, v in queries:
+        
+        for u, _ in prerequisites:
             queue = deque([u])
-            reachable = set(queue)
-            found = False
 
             while queue:
                 node = queue.popleft()
-                if node == v:
-                    found = True
-                    break
 
                 for neigh in graph[node]:
-                    queue.append(neigh)
-            
-            ans.append(found)
+                    if not u2v[u][neigh]:
+                        u2v[u][neigh] = True
+                        queue.append(neigh)
 
-        return ans
+        return [u2v[u][v] for u, v, in queries]
