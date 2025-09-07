@@ -2,7 +2,6 @@ class TrieNode:
     def __init__(self, ch):
         self.ch = ch
         self.children = {}
-        self.best3 = []
         self.exist = False
 
 class Trie:
@@ -15,7 +14,6 @@ class Trie:
         for ch in word:
             if ch not in node.children:
                 node.children[ch] = TrieNode(ch)
-                node.best3 = sorted(node.best3 + [ch])[:3]
             node = node.children[ch]
         
         node.exist = True
