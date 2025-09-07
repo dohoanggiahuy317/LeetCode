@@ -11,9 +11,12 @@ class DSU:
     def union(self, x, y, w):
         xr, yr = self.find(x), self.find(y)
 
+        if xr < yr:
+            xr, yr = yr, xr
+
         self.parents[yr] = xr
 
-        self.total_cost[xr] = self.total_cost[yr] & w
+        self.total_cost[xr] = self.total_cost[yr] & self.total_cost[xr] & w
         self.total_cost[yr] = self.total_cost[xr]
 
 
