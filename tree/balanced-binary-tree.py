@@ -13,15 +13,19 @@ class Solution:
 
         def height(root):
             nonlocal ans
+            
             if not root:
+                return 0
+            
+            if not ans:
                 return 0
 
             height_left = height(root.left) 
             height_right = height(root.right) 
             
-            diff_check = abs(height_left - height_right) <= 1
-            if not diff_check and ans:
+            if not abs(height_left - height_right) <= 1:
                 ans = False
+                return 0
 
             return max(height_left, height_right) + 1
 
