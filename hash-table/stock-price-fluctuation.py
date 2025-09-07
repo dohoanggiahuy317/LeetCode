@@ -14,9 +14,10 @@ class StockPrice:
         heapq.heappush(self.mini, (price, timestamp))
 
     def current(self) -> int:
+        while self.time2stock[ -self.curr[0][0] ] != self.curr[0][1]:
+            heapq.heappop(self.curr)
         return self.curr[0][1]
         
-
     def maximum(self) -> int:
         while self.time2stock[ self.maxi[0][1] ] != -self.maxi[0][0]:
             heapq.heappop(self.maxi)
