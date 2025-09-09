@@ -17,6 +17,4 @@ class Solution:
                 char_stack.append(char)
                 freq_stack.append(1)
 
-
-
         return "".join([c * f for c, f in zip(char_stack, freq_stack)])
