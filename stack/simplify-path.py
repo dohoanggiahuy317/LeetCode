@@ -1,17 +1,19 @@
 class Solution:
     def simplifyPath(self, path: str) -> str:
         
-        path_li = path.split("/")
-        ans = []
+        dir_stack = []
 
-        for element in path_li:
-            if element == "." or element == "":
+        filenames = [filename for filename in path.split("/") if filename != ""]
+        # print(filenames)
+
+        for filename in filenames:
+            if filename == ".":
                 continue
-            elif element == "..":
-                if ans:
-                    ans.pop(-1)
+            if filename == "..":
+                if dir_stack:
+                    dir_stack.pop()
             else:
-                ans.append(element)
+                dir_stack.append(filename)
 
-        # print(ans)
-        return "/" + "/".join(ans)
+        return "/" + "/".join(dir_stack)
+            
