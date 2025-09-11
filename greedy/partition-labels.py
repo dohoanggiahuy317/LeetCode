@@ -1,26 +1,20 @@
-class Solution(object):
-    def partitionLabels(self, s):
-        """
-        :type s: str
-        :rtype: List[int]
-        """
+class Solution:
+    def partitionLabels(self, s: str) -> List[int]:
+        last_letter = {}
+        for i, char in enumerate(s):
+            last_letter[char] = i
+
         start = 0
-        end = 1
-        div = 0
+        end = 0
         ans = []
+        for i, char in enumerate(s):
+            end = max(last_letter[char], end)
 
-        while end < len(s)+1:
-            if end == len(s):
-                ans.append(s[div:end])
-                end += 1
+            if i != end:
+                continue
 
-            if s[start] in s[end:]:
-                end += 1
-            else:
-                start += 1
-                if start == end:
-                    ans.append(s[div : start])
-                    div = start
-                    end += 1
-                    
-        return list(map(lambda x: len(x), ans))
+            ans.append(end - start + 1)
+            start = end + 1
+
+        return ans
+            
