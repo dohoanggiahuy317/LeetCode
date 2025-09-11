@@ -3,6 +3,7 @@ class Solution:
         stack = []
 
         for token in tokens:
+            print(token, stack)
             if token[0] == '-' and len(token) > 1:
                 stack.append(-int(token[1:]))
             elif token[0].isnumeric():
@@ -19,7 +20,7 @@ class Solution:
                     val = num1 * num2
                 else:
                     val = num1 / num2
-                    val = int(val) if val >= 0 else int(val + 1)
+                    val = int(val) if val >= 0 else math.ceil(val)
 
                 stack.append(val)
 
