@@ -1,19 +1,14 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        q = []
+        paren = {"[": "]", "(": ")", "{": "}",}
+        stack = []
 
-        for x in s:
-            if x in "([{":
-                q.append(x)
-            elif x == ")" and len(q) > 0 and q[-1] == "(":
-               q.pop(-1)
-            elif x == "}" and len(q) > 0 and q[-1] == "{":
-               q.pop(-1)
-            elif x == "]" and len(q) > 0 and q[-1] == "[":
-               q.pop(-1)
+        for char in s:
+            if char in "[({":
+                stack.append(char)
             else:
-                # print(q)
-                return False
+                if not (stack and paren[stack[-1]] == char):
+                    return False
+                stack.pop()
 
-        return q == []
-
+        return True
