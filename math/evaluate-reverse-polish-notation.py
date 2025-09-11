@@ -3,24 +3,23 @@ class Solution:
         stack = []
 
         for token in tokens:
-            # print(token, stack)
-            if token.startswith('-') and token[1:].isnumeric():
+            if token[0] == '-' and len(token) > 1:
                 stack.append(-int(token[1:]))
-            elif token.isnumeric():
+            elif token[0].isnumeric():
                 stack.append(int(token))
             else:
                 num2 = stack.pop()
                 num1 = stack.pop()
-                val = -1
 
                 if token == "+":
                     val = num1 + num2
-                if token == "-":
+                elif token == "-":
                     val = num1 - num2
-                if token == "*":
+                elif token == "*":
                     val = num1 * num2
-                if token == "/":
-                    val = num1 // num2 if num1 * num2 >= 0 else math.ceil(num1 / num2)
+                else:
+                    val = num1 / num2
+                    val = int(val) if val >= 0 else int(val + 1)
 
                 stack.append(val)
 
