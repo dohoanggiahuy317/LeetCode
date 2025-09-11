@@ -5,11 +5,12 @@ class StockSpanner:
         self.stack = []
         self.day = 0
 
-    def next(self, price: int) -> int:        
+    def next(self, price: int) -> int:
+        
         while self.stack and self.stock[self.stack[-1]] <= price:
             self.stack.pop()
 
-        ans = self.day - self.stack[-1] if self.stack else 1
+        ans = self.day - self.stack[-1] if self.stack else self.day + 1
         self.stack.append(self.day)
         self.stock.append(price)
         self.day += 1
