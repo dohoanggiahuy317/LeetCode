@@ -2,32 +2,18 @@ class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
         n = len(heights)
 
-        prefix_area = [0] * n
-        left_stack = [-1] # stack of idx that only decreasing
+        prev_smallest = [-1] * n
+        next_smallest = [n] * n
+        stack = []
 
-        for i, h in enumerate(heights):
-            # pop all for non_decrease
-            while len(left_stack) > 1 and heights[left_stack[-1]] >= h:
-                left_stack.pop()
-            
-            # compute the prefix_area
-            prefix_area[i] = h * (i - left_stack[-1])
-            left_stack.append(i)
+        for i, height in enumerate(heights):
+            while stack and heights[stack[-1]] > height:
+                next_smallest[stack.pop()] = i
 
-        # Calculate suffix area        
-        ans = 0
-        right_stack = [n]
-        for i in range(n - 1, -1, -1):
-            h = heights[i]
+            if stack:
+                prev_smallest[i] = stack[-1]
+            stack.append(i)
 
-            while len(right_stack) > 1 and heights[right_stack[-1]] >= h:
-                right_stack.pop()
+        return max([(r - l - 1) * h for l, r, h in zip(prev_smallest, next_smallest, heights)])
 
-            # use prefix and suffix to get ans
-            suffix_area = h * (right_stack[-1] - i)
-            ans = max(suffix_area + prefix_area[i] - h, ans)
-            
-            right_stack.append(i)
-
-        return ans
         
