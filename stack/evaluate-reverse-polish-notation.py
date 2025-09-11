@@ -3,7 +3,6 @@ class Solution:
         stack = []
 
         for token in tokens:
-            print(token, stack)
             if token[0] == '-' and len(token) > 1:
                 stack.append(-int(token[1:]))
             elif token[0].isnumeric():
