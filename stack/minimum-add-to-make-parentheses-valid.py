@@ -1,6 +1,5 @@
 class Solution:
     def minAddToMakeValid(self, s: str) -> int:
-        
 
         ans = 0
         stack = 0
