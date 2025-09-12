@@ -1,16 +1,17 @@
 class Solution:
     def minAddToMakeValid(self, s: str) -> int:
-        l = 0
-        ans = 0
-
-        for char in list(s):
-            if char == "(":
-                l += 1
-            else:
-                l -= 1
-            
-            if l < 0:
-                ans += 1
-                l = 0
         
-        return ans + abs(l)
+
+        ans = 0
+        stack = 0
+
+        for char in s:
+            if char == "(":
+                stack += 1
+            else:
+                if stack == 0:
+                    ans += 1
+                else:
+                    stack -= 1
+        
+        return ans + stack
