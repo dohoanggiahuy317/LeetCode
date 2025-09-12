@@ -1,36 +1,26 @@
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
-        ans = []
-        open_paren = 0
 
-        for char in s:
-            if char == "(":
-                ans.append(char)
-                open_paren += 1
-            elif char == ")":
-                if open_paren == 0:
-                    continue
+        def remove_invalid_parent(word, paren1, paren2):
+            ans = []
+            paren1_count = 0
+
+            for char in word:
+                if char == paren2:
+                    if paren1_count == 0:
+                        continue
+                    else:
+                        paren1_count -= 1
+                        ans.append(char)
+
                 else:
-                    open_paren -= 1
+                    if char == paren1:
+                        paren1_count += 1
                     ans.append(char)
-            else:
-                ans.append(char)
-        
-        temp = ans[::-1]
-        ans = []
-        close_paren = 0
 
-        for char in temp:
-            if char == ")":
-                ans.append(char)
-                close_paren += 1
-            elif char == "(":
-                if close_paren == 0:
-                    continue
-                else:
-                    close_paren -= 1
-                    ans.append(char)
-            else:
-                ans.append(char)
+            return ans[::-1]
 
-        return "" .join(ans[::-1])
+        left2right = remove_invalid_parent(list(s), "(", ")")
+        right2left = remove_invalid_parent(left2right, ")", "(")
+
+        return "" .join(right2left)
