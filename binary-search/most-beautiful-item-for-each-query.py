@@ -1,30 +1,25 @@
 class Solution:
     def maximumBeauty(self, items: List[List[int]], queries: List[int]) -> List[int]:
-        items = sorted(items, key=lambda x: (x[0], x[1]))
-        prefMax = [0] * (len(items) + 1)
-        # print(items)
+        # CONSTANT
+        n = len(items)
 
-        for i, it in enumerate(items):
-            prefMax[i+1] = max(items[i][1], prefMax[i])
-        # print(prefMax)
+
+        prices_beauties = sorted(items)
+        pref_max_beauties = [prices_beauties[0][-1]] * n
+        for i in range(1, n):
+            pref_max_beauties[i] = max(pref_max_beauties[i - 1], prices_beauties[i][1])
 
         ans = []
-
-        for que in queries:
-            l, r = 0, len(items) - 1
-            ind = -1
-            while l <= r:
-                m = (l + r) // 2
-                if items[m][0] > que:
-                    r = m - 1
-                else:
-                    ind = m
-                    l = m + 1
-            # print(que, ind)
-            ans.append(prefMax[ind+1])
-            # print()
+        for q in queries:
+            idx = bisect.bisect_left(prices_beauties, [q, inf])
+            # print(q, idx)
+            # if idx == n:
+            if idx == 0:
+                ans.append(0)
+            else:
+                ans.append(pref_max_beauties[idx - 1])
 
         return ans
+        
 
-            
-            
+
