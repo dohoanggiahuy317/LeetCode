@@ -9,7 +9,7 @@ class Solution:
 
         vowel_map = dict(zip(idx_list, char_list[::-1]))
 
-        ans
+        ans = ""
         for i, char in enumerate(s):
             if i not in vowel_map:
                 ans += char
