@@ -36,6 +36,8 @@ class NestedIterator:
         
         while self.stack:
             nested_li, idx = self.stack.pop()
+            if len(nested_li) == 0:
+                continue
             sub_elem = nested_li[idx]
             if idx + 1 < len(nested_li):
                 self.stack.append((nested_li, idx + 1))
@@ -45,9 +47,8 @@ class NestedIterator:
             else:
                 self.stack.append((nested_li, idx))
                 break
-        # print(len(self.stack))
-        # print()
-        return True
+
+        return not len(self.stack) == 0
 
          
 
