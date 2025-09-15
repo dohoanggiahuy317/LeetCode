@@ -3,6 +3,7 @@ class Solution:
         d = defaultdict(list)
 
         for s in strs:
-            d[Counter(s)].append(s)
 
-        return d.values()
+            d["".join(sorted(list(s)))].append(s)
+
+        return list(d.values())
