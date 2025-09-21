@@ -10,8 +10,8 @@ class Solution:
             m = (l + r) // 2
             if isBadVersion(m):
                 ans = r
-                r -= 1
+                r = m - 1
             else:
-                l += 1
+                l = m + 1
 
         return ans
