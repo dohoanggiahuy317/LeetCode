@@ -12,7 +12,7 @@ class Solution:
                 if reward > dp[j]:
                     local_max = max(local_max, dp[j] + reward)
 
-            dp[i] = local_max
+            dp[i] = max(local_max, dp[i])
 
         return dp[-1]
 
