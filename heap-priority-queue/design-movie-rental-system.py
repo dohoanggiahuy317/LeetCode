@@ -1,15 +1,15 @@
 class Movie:
-    def __init__(self, id, shop, price):
-        self.id = id
+    def __init__(self, movie, shop, price):
+        self.movie = movie
         self.shop = shop
         self.price = price
         self.avail = True
 
     def __lt__(self, other):
-        return (self.price, self.shop) < (other.price, other.shop)
+        return (self.price, self.shop, self.movie) < (other.price, other.shop, other.movie)
     
     def __eq__(self, other):
-        return s(self.price, self.shop) == (other.price, other.shop)
+        return (self.price, self.shop, self.movie) == (other.price, other.shop, other.movie)
 
 class MovieRentingSystem:
 
@@ -30,11 +30,9 @@ class MovieRentingSystem:
         ans = []
         while len(ans) < 5 and self.movies_tracker[movie]:
             movie_obj = heapq.heappop(self.movies_tracker[movie])
-            
+            temp.append(movie_obj)
             if movie_obj.avail:
                 ans.append(movie_obj.shop)
-            else:
-                temp.append(movie_obj)
 
         for movie_obj in temp:
             heapq.heappush(self.movies_tracker[movie], movie_obj)
@@ -52,16 +50,20 @@ class MovieRentingSystem:
     def report(self) -> List[List[int]]:
         temp = []
         ans = []
+        seen = set()
+        
         while len(ans) < 5 and self.rented_tracker:
             movie_obj = heapq.heappop(self.rented_tracker)
+            temp.append(movie_obj)
             
-            if not movie_obj.avail:
-                ans.append([movie_obj.shop, movie_obj.id])
-            else:
-                temp.append(movie_obj)
-
+            if not movie_obj.avail and (movie_obj.shop, movie_obj.movie) not in seen:
+                ans.append([movie_obj.shop, movie_obj.movie])
+                seen.add((movie_obj.shop, movie_obj.movie))
+        
         for movie_obj in temp:
             heapq.heappush(self.rented_tracker, movie_obj)
+            
+        return ans
 
         return ans
 
