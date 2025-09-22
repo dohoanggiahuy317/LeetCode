@@ -1,19 +1,17 @@
 class Solution:
     def countBinarySubstrings(self, s: str) -> int:
-        group_freq = []
-        
-        curr_num = s[0]
-        count = 0
-        for char in s + " ":
-            if curr_num == char:
-                count += 1
-            else:
-                group_freq.append(count)
-                count = 1
-                curr_num = char
-
+        prev_freq = 0
+        curr_char = ""
+        curr_freq = 0
         ans = 0
-        for prev, after in pairwise(group_freq):
-            ans += min(prev, after)
-        
+
+        for char in s + " ":
+            if char != curr_char:
+                ans += min(prev_freq, curr_freq)
+                prev_freq = curr_freq
+                curr_freq = 1
+                curr_char = char
+            else:
+                curr_freq += 1
+
         return ans
