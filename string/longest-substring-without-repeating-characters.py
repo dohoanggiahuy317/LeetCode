@@ -1,5 +1,8 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
+        if not s:
+            return 0
+
         ans = 1
         l, r = 0, 1
         tracker = Counter(s[0])
