@@ -1,10 +1,10 @@
 class Solution:
     def minSteps(self, s: str, t: str) -> int:
-        s_dict, t_dict = Counter(s), Counter(t)
+        count_s = Counter(s)
+        count_t = Counter(t)
         ans = 0
 
-        for char, freq in s_dict.items():
-            if freq > t_dict[char]:
-                ans += freq - t_dict[char]
+        for char, freq in count_s.items():
+            ans += freq - count_t[char] if freq - count_t[char] > 0 else 0
 
         return ans
