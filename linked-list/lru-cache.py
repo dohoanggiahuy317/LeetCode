@@ -76,13 +76,14 @@ class LRUCache:
         else:
             node = Node(key, value)
             self.key2val[key] = node
+        
             if self.size == self.cap:
                 self.update_cache_tail()
                 self.size -= 1
+
+            self.size += 1
         
         self.update_cache_head(node)
-        self.size += 1
-
 
 
 
