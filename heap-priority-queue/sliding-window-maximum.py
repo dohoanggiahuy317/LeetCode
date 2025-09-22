@@ -12,7 +12,7 @@ class Solution:
         for i in range(k, len(nums)):
             while queue and queue[0] <= i - k:
                 queue.popleft()
-            while queue and queue[-1] <= nums[i]:
+            while queue and nums[queue[-1]] <= nums[i]:
                 queue.pop()
             queue.append(i)
             ans.append(nums[queue[0]])
