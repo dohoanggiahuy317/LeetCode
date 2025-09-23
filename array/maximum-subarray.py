@@ -13,6 +13,6 @@ class Solution:
         ans = -inf
         for i in range(len(nums)):
             ans = max(ans, prefix_max[i])
-            ans = max(ans, prefix_max[i] - prefix_min[i - 1] if i > 0 else 0)
+            ans = max(ans, prefix_max[i] - (prefix_min[i - 1] if i > 0 else 0))
 
         return ans
