@@ -4,32 +4,20 @@ class MyCalendar:
         self.bookings_order = SortedList()
 
     def book(self, startTime: int, endTime: int) -> bool:
+
         if not self.bookings_order:
             self.bookings_order.add([startTime, endTime])
             return True
+        
+        n = len(self.bookings_order)
+        idx = bisect_right(self.bookings_order, [startTime, 0])
 
-        idx = bisect_right(self.bookings_order, [startTime, -inf])
+        previous_end = self.bookings_order[idx - 1][1] if idx > 0 else -inf
+        after_start = self.bookings_order[idx][0] if idx < n else inf
 
-        if idx:
-            _, before_end = self.bookings_order[idx - 1]
-
-            if idx < len(self.bookings_order):
-                after_start, _ = self.bookings_order[idx]
-
-                if before_end <= startTime and endTime <= after_start:
-                    self.bookings_order.add([startTime, endTime])
-                    return True
-                
-            elif before_end <= startTime:
-                self.bookings_order.add([startTime, endTime])
-                return True
-
-        else:
-            after_start, _ = self.bookings_order[idx]
-            if endTime <= after_start:
-                self.bookings_order.add([startTime, endTime])
-                return True
-        # print(self.bookings_order)
+        if  previous_end <= startTime and endTime <= after_start:
+            self.bookings_order.add([startTime, endTime])
+            return True
 
         return False
 
