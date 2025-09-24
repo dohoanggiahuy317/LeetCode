@@ -8,10 +8,14 @@ class MyCalendar:
             self.bookings_order.add([startTime, endTime])
             return True
 
-        idx = bisect_right(self.bookings_order, [startTime, inf])
+        idx = bisect_right(self.bookings_order, [startTime, -inf])
 
         if idx:
             _, before_end = self.bookings_order[idx - 1]
+            if startTime == 18:
+                # print(self.bookings_order)
+                # print(idx)
+                # print(startTime, endTime)
 
             if idx < len(self.bookings_order):
                 after_start, _ = self.bookings_order[idx]
@@ -19,12 +23,17 @@ class MyCalendar:
                 if before_end <= startTime and endTime <= after_start:
                     self.bookings_order.add([startTime, endTime])
                     return True
-
                 
-            if before_end <= startTime:
+            elif before_end <= startTime:
                 self.bookings_order.add([startTime, endTime])
                 return True
-        print(self.bookings_order)
+
+        else:
+            after_start, _ = self.bookings_order[idx]
+            if endTime <= after_start:
+                self.bookings_order.add([startTime, endTime])
+                return True
+        # print(self.bookings_order)
 
         return False
 
