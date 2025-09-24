@@ -12,10 +12,6 @@ class MyCalendar:
 
         if idx:
             _, before_end = self.bookings_order[idx - 1]
-            if startTime == 18:
-                # print(self.bookings_order)
-                # print(idx)
-                # print(startTime, endTime)
 
             if idx < len(self.bookings_order):
                 after_start, _ = self.bookings_order[idx]
