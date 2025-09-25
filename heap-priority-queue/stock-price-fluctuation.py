@@ -8,20 +8,20 @@ class StockPrice:
     def update(self, timestamp: int, price: int) -> None:
         if timestamp in self.time2price:
             old_price = self.time2price[timestamp]
-            self.price_set.remove(old_price)
+            self.price_set.remove((old_price, timestamp))
 
         self.today = max(self.today, timestamp)
         self.time2price[timestamp] = price
-        self.price_set.add(price)
+        self.price_set.add((price, timestamp))
 
     def current(self) -> int:
         return self.time2price[self.today]
 
     def maximum(self) -> int:
-        return self.price_set[-1]
+        return self.price_set[-1][0]
 
     def minimum(self) -> int:
-        return self.price_set[0]
+        return self.price_set[0][0]
         
 
 
