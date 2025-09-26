@@ -6,7 +6,7 @@ class SegmentTree:
     def update(self, i, val):
         i += self.N
         self.tree[i] = val
-        while i > 0:
+        while i > 1:
             self.tree[i >> 1] = self.tree[i] + self.tree[i ^ 1]
             i >>= 1
 
@@ -56,13 +56,11 @@ class Solution:
 
 
         n = len(nums)
-        sorted_nums = sorted([(num, -i) for i, num in enumerate(nums)])
+        sorted_nums = sorted([(num, i) for i, num in enumerate(nums)])
         nums2k = {}
-        k_j = 0
         for k_i, (num, i) in enumerate(sorted_nums):
-            while k_j < k_i and sorted_nums[k_j][0] * 2 < num:
-                k_j += 1
-            nums2k[(num, -i)] = (k_i, k_j)
+            k_j = bisect_right(sorted_nums, ((num - 1) // 2, inf))
+            nums2k[(num, i)] = (k_i, k_j)
 
         ans = 0
         tree = SegmentTree(n)
