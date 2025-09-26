@@ -24,7 +24,7 @@ class DSU:
 class SummaryRanges:
 
     def __init__(self):
-        self.dsu = DSU(10)
+        self.dsu = DSU(10**4)
 
     def addNum(self, value: int) -> None:
         # check value - 1 and value + 1 next to it
