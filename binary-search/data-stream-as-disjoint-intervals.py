@@ -16,24 +16,31 @@ class DSU:
         if xr > yr:
             xr, yr = yr, xr
 
-        self.parents[yr] = xr
         self.size[xr] += self.size[yr]
         self.size[yr] = self.size[xr]
+        self.parents[yr] = xr
+        # print("SUB")
+        # print(self.size)
+        # print()
         return
 
 class SummaryRanges:
 
     def __init__(self):
-        self.dsu = DSU(10**4)
+        self.dsu = DSU(10)
 
     def addNum(self, value: int) -> None:
         # check value - 1 and value + 1 next to it
         # merge these if both already in a set
+        if self.dsu.size[value] != 0:
+            return
+        
         self.dsu.size[value] = 1
-        if self.dsu.size[value - 1] != 0:
-            self.dsu.union(value, value - 1)
         if self.dsu.size[value + 1] != 0:
             self.dsu.union(value, value + 1)
+
+        if self.dsu.size[value - 1] != 0:
+            self.dsu.union(value - 1, value)
 
     def getIntervals(self) -> List[List[int]]:
         i = 0
@@ -44,6 +51,7 @@ class SummaryRanges:
                 i += self.dsu.size[i]
             else:
                 i += 1
+        # print(self.dsu.size)
         return ans
         
 
