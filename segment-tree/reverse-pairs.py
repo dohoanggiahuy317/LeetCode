@@ -56,13 +56,13 @@ class Solution:
 
 
         n = len(nums)
-        sorted_nums = sorted([(num, i) for i, num in enumerate(nums)])
+        sorted_nums = sorted([(num, -i) for i, num in enumerate(nums)])
         nums2k = {}
         k_j = 0
         for k_i, (num, i) in enumerate(sorted_nums):
             while k_j < k_i and sorted_nums[k_j][0] * 2 < num:
                 k_j += 1
-            nums2k[(num, i)] = (k_i, k_j)
+            nums2k[(num, -i)] = (k_i, k_j)
 
         ans = 0
         tree = SegmentTree(n)
@@ -72,6 +72,4 @@ class Solution:
             ans += tree.query(0, k_j)
             tree.update(k_i, 1)
             
-
-
         return ans
