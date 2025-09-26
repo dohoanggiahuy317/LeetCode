@@ -50,17 +50,18 @@ class Solution:
 
 
         n = len(nums)
+        sorted_nums = sorted([(num, i) for i, num in enumerate(nums)])
         nums2k = {}
-        for k, num in enumerate(sorted(nums)):
-            nums2k[num] = k
+        for k, (num, i) in enumerate(sorted_nums):
+            nums2k[(num, i)] = k
 
-        ans = []
+        ans = [0] * n
         tree = SegmentTree(n)
 
         for i in range(n - 1, -1, -1):
             num = nums[i]
-            k = nums2k[num]
-            ans = [tree.query(0, k)] + ans
+            k = nums2k[(num, i)]
+            ans[i] = tree.query(0, k)
             tree.update(k, 1)
         
         return ans
