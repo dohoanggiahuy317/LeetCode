@@ -46,7 +46,7 @@ class Solution:
         n = len(baskets)
         sorted_baskets = sorted([(basket, i) for i, basket in enumerate(baskets)])
         tree = SegmentTree([i for _, i in sorted_baskets])
-        pos = {origin_idx: i for origin_idx, (_, i) in enumerate(sorted_baskets)}
+        pos = {origin_i: i for i, (_, origin_i) in enumerate(sorted_baskets)}
 
         ans = 0
         for f in fruits:
