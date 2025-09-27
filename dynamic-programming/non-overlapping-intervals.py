@@ -1,7 +1,8 @@
 class Solution:
     def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
         
-        sorted_intervals = SortedList(intervals)
+        sorted_intervals = SortedList(intervals, lambda x: (x[1], x[0]))
+        # print(sorted_intervals)
 
         idx = 1
         ans = 0
@@ -12,5 +13,6 @@ class Solution:
                 ans += 1
             else:
                 idx += 1
+            print(idx, sorted_intervals)
         
         return ans
