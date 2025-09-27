@@ -13,6 +13,6 @@ class Solution:
                 ans += 1
             else:
                 idx += 1
-            print(idx, sorted_intervals)
+            # print(idx, sorted_intervals)
         
         return ans
