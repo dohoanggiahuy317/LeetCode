@@ -12,7 +12,7 @@ class SegmentTree:
 
    def update(self, i, x):
        i += self.N
-       self.tree[i] = x
+       self.tree[i] += x
        while i > 1:
            self.tree[i >> 1] = self.tree[i] + self.tree[i ^ 1]
            i >>= 1
@@ -36,7 +36,8 @@ class SegmentTree:
 
 class Solution:
     def countRangeSum(self, nums: List[int], lower: int, upper: int) -> int:
-        prefixes = [(prefix, origin_i) for origin_i, prefix in enumerate([0] + list(accumulate(nums)))]
+        origin_prefixes = [0] + list(accumulate(nums))
+        prefixes = [(prefix, origin_i) for origin_i, prefix in enumerate(origin_prefixes)]
         prefixes.sort()
         pos = {origin_i: i for i, (_, origin_i) in enumerate(prefixes)}
         
@@ -52,16 +53,16 @@ class Solution:
         ans = 0
         tree = SegmentTree([0] * len(prefixes))
         tree.update(pos[0], 1)
-        for idx in range(1, len(prefixes)):
-            prefix, origin_index = prefixes[idx]
+        for origin_index in range(1, len(origin_prefixes)):
+            prefix = origin_prefixes[origin_index]
 
-            upper_target = prefix - upper
-            lower_target = prefix - lower
+            left = prefix - upper
+            right = prefix - lower
             
             # print(lower_target, upper_target)
 
-            r1 = bisect_left(prefixes, (upper_target, -inf))
-            r2 = bisect_right(prefixes, (lower_target, inf)) - 1
+            r1 = bisect_left(prefixes, (left, -inf))
+            r2 = bisect_right(prefixes, (right, inf)) - 1
 
             # print(r1, r2 + 1)
             # print(tree.query(r1, r2 + 1))
