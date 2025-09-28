@@ -1,17 +1,29 @@
 class Solution:
     def longestDupSubstring(self, s: str) -> str:
-        seen = {""}
-        endings = {""}
-        ans = ""
+        seen = {(0, 0)}   
+        endings = {(0, 0)}  
+        best = (0, 0)        
 
         for ch in s:
-            new_endings = {sub + ch for sub in endings} | {""}
+            val = ord(ch) - ord("a")
+            new_endings = {(0, 0)} 
+            for num, length in endings:
+                new_num = num * 26 + val
+                new_len = length + 1
 
-            for t in new_endings:
-                if t in seen and len(t) > len(ans):
-                    ans = t
+                if (new_num, new_len) in seen and new_len > best[1]:
+                    best = (new_num, new_len)
 
-            seen |= new_endings
-            endings = new_endings | {""}
+                new_endings.add((new_num, new_len))
+                seen.add((new_num, new_len))
 
-        return ans
+            endings = new_endings
+
+        def decode(num: int, length: int) -> str:
+            chars = []
+            for _ in range(length):
+                chars.append(chr(ord("a") + (num % 26)))
+                num //= 26
+            return "".join(reversed(chars))
+
+        return decode(best[0], best[1])
