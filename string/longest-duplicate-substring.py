@@ -19,7 +19,7 @@ class Solution:
 
             endings = new_endings
 
-        def decode(num: int, length: int) -> str:
+        def decode(num, length):
             chars = []
             for _ in range(length):
                 chars.append(chr(ord("a") + (num % 26)))
