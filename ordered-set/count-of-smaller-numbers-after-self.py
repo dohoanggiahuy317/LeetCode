@@ -5,9 +5,7 @@ class Solution:
         ans = [0] * n
 
         for i, num in enumerate(reversed(nums)):
-            
-            idx = bisect_left(seen, num)
-            ans[-i - 1] = idx
+            ans[-i - 1] = bisect_left(seen, num)
             seen.add(num)
 
         return ans
