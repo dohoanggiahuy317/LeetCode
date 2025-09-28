@@ -36,9 +36,10 @@ class SegmentTree:
 
 class Solution:
     def countRangeSum(self, nums: List[int], lower: int, upper: int) -> int:
-        prefixes = [0] + list(accumulate(nums))
-        prefixes2idx = {prefix: i for i, prefix in enumerate(prefixes)}
+        prefixes = [(prefix, origin_i) for origin_i, prefix in enumerate([0] + list(accumulate(nums)))]
         prefixes.sort()
+        pos = {origin_i: i for i, (_, origin_i) in enumerate(prefixes)}
+        
 
         # need to find R such that 
         # lower + pref_sum[L - 1] <= prefix_sum[R] <= upper + pref_sum[L - 1]
@@ -50,21 +51,21 @@ class Solution:
 
         ans = 0
         tree = SegmentTree([0] * len(prefixes))
-        for idx in range(len(prefixes) - 1, -1, -1):
-            prefix = prefixes[idx]
-            origin_index = prefixes2idx[prefix]
+        tree.update(pos[0], 1)
+        for idx in range(1, len(prefixes)):
+            prefix, origin_index = prefixes[idx]
 
             upper_target = prefix - upper
             lower_target = prefix - lower
             
             # print(lower_target, upper_target)
 
-            r1 = bisect_left(prefixes, upper_target)
-            r2 = bisect_right(prefixes, lower_target) - 1
+            r1 = bisect_left(prefixes, (upper_target, -inf))
+            r2 = bisect_right(prefixes, (lower_target, inf)) - 1
 
             # print(r1, r2 + 1)
-
+            # print(tree.query(r1, r2 + 1))
             ans += tree.query(r1, r2 + 1)
-            tree.update(origin_index, 1)
+            tree.update(pos[origin_index], 1)
 
         return ans
