@@ -1,29 +1,37 @@
 class Solution:
     def longestDupSubstring(self, s: str) -> str:
-        seen = {(0, 0)}   
-        endings = {(0, 0)}  
-        best = (0, 0)        
+        n = len(s)
+        char_ord = [ord(c) - 97 for c in s]
 
-        for ch in s:
-            val = ord(ch) - ord("a")
-            new_endings = {(0, 0)} 
-            for num, length in endings:
-                new_num = num * 26 + val
-                new_len = length + 1
+        def find_dup(length):
 
-                if (new_num, new_len) in seen and new_len > best[1]:
-                    best = (new_num, new_len)
+            h = 0
+            for i in range(length):
+                h = h * 26 + char_ord[i]
 
-                new_endings.add((new_num, new_len))
-                seen.add((new_num, new_len))
+            seen = {h}
+            for i in range(length, n):
+                h = h - (char_ord[i - length] * (26 ** (length - 1)))
+                h = h * 26 + char_ord[i]
 
-            endings = new_endings
+                if h in seen:
+                    return i - length + 1
+                seen.add(h)
+            # print(seen)
+            return -1
 
-        def decode(num, length):
-            chars = []
-            for _ in range(length):
-                chars.append(chr(ord("a") + (num % 26)))
-                num //= 26
-            return "".join(reversed(chars))
+        l, r = 1, n - 1
+        ans_idx = -1
+        ans_len = 0
+        while l <= r:
+            m = (l + r) // 2
+            idx = find_dup(m)
+            
+            if idx != -1:              
+                ans_idx = idx
+                ans_len = m
+                l = m + 1 
+            else:
+                r = m - 1
 
-        return decode(best[0], best[1])
+        return s[ans_idx:ans_idx + ans_len] if ans_idx != -1 else ""
