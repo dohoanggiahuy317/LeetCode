@@ -6,18 +6,24 @@
 #         self.right = right
 class Solution:
     def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
-        def parsing_node(curr_path, root):
+        
+        ans = []
+
+        def dfs(root, curr):
             nonlocal ans
-            
+
+            curr.append(root.val)
+
             if not root.left and not root.right:
-                ans.append(curr_path)
+                ans.append(curr[:])
             
             if root.left:
-                parsing_node(curr_path + "->" + str(root.left.val), root.left)
+                dfs(root.left, curr)
             if root.right:
-                parsing_node(curr_path + "->" + str(root.right.val), root.right)
+                dfs(root.right, curr)
+            
+            curr.pop()
 
+        dfs(root, [])
 
-        ans = []
-        parsing_node(str(root.val), root)
-        return ans
+        return [ "->".join(list(map(str, path))) for path in ans ]
