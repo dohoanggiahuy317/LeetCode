@@ -13,7 +13,7 @@ class Solution:
                     just_rotten.append((i, j))
 
         t = 0
-        while just_rotten or not num_fresh:
+        while just_rotten or num_fresh == 0:
             if num_fresh == 0:
                 return t
             for _ in range(len(just_rotten)):
