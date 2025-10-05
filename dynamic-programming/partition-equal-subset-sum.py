@@ -9,9 +9,10 @@ class Solution:
 
         dp[0] = True
         
-        for i in range(target + 1):
-            for num in nums:
+        for num in nums:
+            for i in range(target + 1, -1, -1):
                 if i + num < target + 1:
-                    dp[i + num] = dp[i + num] or dp[i]
+                    dp[i + num] = dp[i] or dp[i + num]
+            # print(dp)
 
         return dp[-1]
