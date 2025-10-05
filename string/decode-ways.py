@@ -19,7 +19,7 @@ class Solution:
                 elif s[i + 1] == "0":
                     dp[i] = dp[i + 2] if i + 2 < len(s) else 1
                 elif i + 2 < len(s) and s[i + 2] == "0":
-                    dp[i] =  [i + 2]
+                    dp[i] = dp[i + 1]
                 else:
                     dp[i] = dp[i + 1] + 1
             
