@@ -11,7 +11,7 @@ class Solution:
                 if s[i + 1] == "0" and i + 2 >= len(s):
                     dp[i] = 1
                 else:
-                    dp[i] = dp[i + 2]
+                    dp[i] = dp[i + 1]
 
             elif s[i] == "1":
                 if s[i + 1] == "0" and i + 2 >= len(s):
