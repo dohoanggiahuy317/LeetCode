@@ -16,15 +16,19 @@ class Solution:
             elif s[i] == "1":
                 if s[i + 1] == "0" and i + 2 >= len(s):
                     dp[i] = 1
-                elif s[i + 1] == "0" or (i + 2 < len(s) and s[i + 2] == "0"):
-                    dp[i] = dp[i + 1]
+                elif s[i + 1] == "0":
+                    dp[i] = dp[i + 2]
+                elif i + 2 < len(s) and s[i + 2] == "0":
+                    dp[i] =  [i + 2]
                 else:
                     dp[i] = dp[i + 1] + 1
             
             elif s[i] == "2":
                 if s[i + 1] == "0" and i + 2 >= len(s):
                     dp[i] = 1
-                elif s[i + 1] in "0789" or (i + 2 < len(s) and s[i + 2] == "0"):
+                elif s[i + 1] in "0789":
+                    dp[i] = dp[i + 2]
+                elif  (i + 2 < len(s) and s[i + 2] == "0"):
                     dp[i] = dp[i + 1]
                 else:
                     dp[i] = dp[i + 1] + 1
