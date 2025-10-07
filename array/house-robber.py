@@ -10,8 +10,9 @@ class Solution:
 
         for i in range(n):
             dp[i] = nums[i] + (pref_max[i - 2] if i - 2 >= 0 else 0)
-            pref_max[i] = max(dp[i], pref_max[i])
+            pref_max[i] = max(dp[i], pref_max[i - 1])
 
         # print(dp)
+        # print(pref_max)
         
         return max(dp[-1], dp[-2])
