@@ -6,11 +6,11 @@ class Solution:
             return nums[0]
 
         dp = [0] * n
+        pref_max = [0] * n
 
         for i in range(n):
-            dp[i] = nums[i]
-            for j in range(i - 1):
-                dp[i] = max(dp[j] + nums[i], dp[i])
+            dp[i] = nums[i] + (pref_max[i - 2] if i - 2 >= 0 else 0)
+            pref_max[i] = max(dp[i], pref_max[i])
 
         # print(dp)
         
