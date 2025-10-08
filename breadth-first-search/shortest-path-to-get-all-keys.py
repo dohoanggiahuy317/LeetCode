@@ -26,9 +26,12 @@ class Solution:
                             continue
                         if grid[nx][ny] == "#":
                             continue
+                        if (nx, ny) in visited:
+                            continue
                         if grid[nx][ny].isalpha() and grid[nx][ny].isupper():
                             if not key_found[grid[nx][ny]]:
                                 continue
+
 
                         q.append((nx, ny))
                         visited.add((nx, ny))
@@ -55,5 +58,6 @@ class Solution:
             ans += step
             if curr_start == (-1, -1):
                 return -1
+            # print(keys_set)
 
         return ans
