@@ -39,16 +39,17 @@ class Solution:
 
         keys_set = set()
         key_found = {}
+        curr_start = (0, 0)
         for i in range(m):
             for j in range(n):
                 if grid[i][j].isalpha() and grid[i][j].islower():
                     keys_set.add((i, j))
-                if grid[i][j].isalpha() and grid[i][j].isupper():
+                elif grid[i][j].isalpha() and grid[i][j].isupper():
                     key_found[grid[i][j]] = False
-        
-        curr_start = (0, 0)
-        ans = 0
+                elif grid[i][j] == "@":
+                    curr_start = (i, j)
 
+        ans = 0
         while keys_set:
             curr_start, step = bfs(curr_start)
             ans += step
