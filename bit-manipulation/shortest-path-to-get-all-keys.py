@@ -2,22 +2,28 @@ class Solution:
     def shortestPathAllKeys(self, grid: List[str]) -> int:
         m, n = len(grid), len(grid[0])
         DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        KEY_DICT = {
+            "a": 0,
+            "b": 1,
+            "c": 2,
+            "d": 3,
+            "e": 4,
+            "f": 5,
+        }
         
-        def bfs(src):
-            nonlocal keys_set, m, n
+        def bfs(i, j):
+            nonlocal m, n
 
-            q = deque([src])
+            q = deque([(i, j, 0)])
             visited = set(q)
             step = 0
 
             while q:
                 for _ in range(len(q)):
-                    x, y = q.popleft()
+                    x, y, cur_k = q.popleft()
 
-                    if (x, y) in keys_set:
-                        keys_set.remove((x, y))
-                        key_found[grid[x][y].upper()] = True
-                        return (x, y), step
+                    if cur_k == (1 << k) - 1:
+                        return step
 
                     for dx, dy in DIRECTIONS:
                         nx, ny = x + dx, y + dy
@@ -26,38 +32,31 @@ class Solution:
                             continue
                         if grid[nx][ny] == "#":
                             continue
-                        if (nx, ny) in visited:
-                            continue
+                        
                         if grid[nx][ny].isalpha() and grid[nx][ny].isupper():
-                            if not key_found[grid[nx][ny]]:
+                            if not (cur_k >> KEY_DICT[grid[nx][ny].lower()] & 1):
                                 continue
+                        
+                        new_k = cur_k
+                        if grid[nx][ny].isalpha() and grid[nx][ny].islower():
+                            new_k = cur_k | (1 << KEY_DICT[grid[nx][ny]])
+                        if (nx, ny, new_k) in visited:
+                            continue
 
-
-                        q.append((nx, ny))
-                        visited.add((nx, ny))
+                        q.append((nx, ny, new_k))
+                        visited.add((nx, ny, new_k))
 
                 step += 1
 
-            return (-1, -1), -1
+            return -1
 
-        keys_set = set()
-        key_found = {}
-        curr_start = (0, 0)
+        s_x, s_y = (0, 0)
+        k = 0
         for i in range(m):
             for j in range(n):
                 if grid[i][j].isalpha() and grid[i][j].islower():
-                    keys_set.add((i, j))
-                elif grid[i][j].isalpha() and grid[i][j].isupper():
-                    key_found[grid[i][j]] = False
+                   k += 1
                 elif grid[i][j] == "@":
-                    curr_start = (i, j)
+                    s_x, s_y = i, j
 
-        ans = 0
-        while keys_set:
-            curr_start, step = bfs(curr_start)
-            ans += step
-            if curr_start == (-1, -1):
-                return -1
-            # print(keys_set)
-
-        return ans
+        return bfs(s_x, s_y)
