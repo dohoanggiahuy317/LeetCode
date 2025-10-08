@@ -1,7 +1,7 @@
 class Solution:
     def shortestPathLength(self, graph: List[List[int]]) -> int:
         n = len(graph)
-        g = {i: neighs for i, neighs in enumerate(graph)}
+        adj_graph = {i: neighs for i, neighs in enumerate(graph)}
         
         def bfs(src):
             queue = deque([(src, 1 << src)])
@@ -15,7 +15,7 @@ class Solution:
                     if k == (1 << n) - 1: #
                         return step
 
-                    for neigh in g[node]: #
+                    for neigh in adj_graph[node]: #
                         new_k = k | (1 << neigh)
                         if (neigh, new_k) in visited:
                             continue
