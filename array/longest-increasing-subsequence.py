@@ -1,18 +1,10 @@
-class Solution(object):
-    def lengthOfLIS(self, nums):
-        tails = [0] * len(nums)
-        size = 0
-        for x in nums:
-            # print(tails)
-            i, j = 0, size
-            while i != j:
-                m = (i + j) // 2
-                if tails[m] < x:
-                    i = m + 1
-                else:
-                    j = m
-            tails[i] = x
-            size = max(i + 1, size)
-        return size
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        n = len(nums)
+        dp = [1] * n
 
+        for i in range(n):
+            for j in range(i):
+                dp[i] = max(dp[i], (dp[j] + 1) if nums[j] < nums[i] else 0)
         
+        return max(dp)
