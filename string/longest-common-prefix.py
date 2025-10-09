@@ -1,50 +1,37 @@
 class TrieNode:
-    def __init__(self, ch):
-        self.ch = ch
+    def __init__(self, char):
+        self.char = char
         self.children = {}
         self.exist = False
 
 class Trie:
     def __init__(self):
-        self.root = TrieNode("^")
-        self.lcp_idx = inf
+        self.tree = TrieNode("^")
 
-    def get_prefix_by_insert(self, word):
-        node = self.root
-        prefix_idx, still_prefix, empty = 0, True, len(node.children) == 0
+    def insert(self, word):
+        curr = self.tree
+        for char in word:
+            if char not in curr.children:
+                curr.children[char] = TrieNode(char)
+            curr = curr.children[char]
+        curr.exist = True
+
+    def get_pref(self):
+        curr = self.tree
+        ans = ""
+        while len(curr.children) == 1:
+            char = list(curr.children.keys())[0]
+            ans += char
+            curr = curr.children[char]
+
+        return ans
 
 
-        for ch in word:
-            if ch in node.children and still_prefix:
-                prefix_idx += 1
-            elif ch not in node.children:
-                node.children[ch] = TrieNode(ch)
-                still_prefix = False
-                        
-            node = node.children[ch]
-        
-        self.lcp_idx = len(word) if empty else min(self.lcp_idx, prefix_idx)
-
-    def get_lcp(self):
-        node = self.root
-
-        lcp = ""
-        lcp_idx = 0 if self.lcp_idx == inf else self.lcp_idx
-        for _ in range(lcp_idx):
-            ch, = node.children
-            lcp += ch
-            node, = node.children.values()
-
-        return lcp        
-            
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        
-        trie = Trie()
-        
+        tree = Trie()
+
         for s in strs:
-            if not s:
-                return ""
-            word_prefix_len = trie.get_prefix_by_insert(s)
-        
-        return trie.get_lcp()
+            tree.insert(s)
+
+        return tree.get_pref()
