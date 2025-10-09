@@ -2,21 +2,21 @@ class Solution:
     def repairCars(self, ranks: List[int], cars: int) -> int:
         
         def fixable(m):
-            c = cars
+            unfix_car = cars
 
             for r in ranks:
-                c -= int(math.sqrt(m // r))
+                unfix_car -= int(math.sqrt(m // r))
 
-            return not (c > 0)
+            return not (unfix_car > 0)
 
-        mi, ma = 0, max(ranks) * (cars ** 2)
+        l, r = 0, max(ranks) * (cars ** 2)
         ans = 0
-        while mi <= ma:
-            m = (mi + ma) // 2 
+        while l <= r:
+            m = (l + r) // 2 
             if fixable(m):
                 ans = m
-                ma = m - 1
+                r = m - 1
             else:
-                mi = m + 1
+                l = m + 1
 
         return ans
