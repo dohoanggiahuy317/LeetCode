@@ -1,22 +1,22 @@
 class Solution:
     def repairCars(self, ranks: List[int], cars: int) -> int:
         
-        def check(k):
-            nonlocal ranks, cars
-            temp = cars
-            for rank in ranks:
-                temp -= int(math.sqrt(k/rank))
+        def fixable(m):
+            c = cars
 
-            return temp <= 0
+            for r in ranks:
+                c -= int(math.sqrt(m // r))
 
-        l, r = 1, min(ranks) * (cars ** 2)
-        ans = -1
-        while l <= r:
-            m = (l + r) // 2
-            if check(m):
+            return not (c > 0)
+
+        mi, ma = 0, max(ranks) * (cars ** 2)
+        ans = 0
+        while mi <= ma:
+            m = (mi + ma) // 2 
+            if fixable(m):
                 ans = m
-                r = m - 1
+                ma = m - 1
             else:
-                l = m + 1
-        
+                mi = m + 1
+
         return ans
