@@ -4,7 +4,7 @@ class Solution:
         use_count = {i: 0 for i in range(n)}
         rooms_state = SortedList()
 
-        for start, end in meetings:
+        for start, end in sorted(meetings):
             duration = end - start
             while rooms_state and rooms_state[0][0] <= start:
                 _, room = rooms_state.pop(0)
