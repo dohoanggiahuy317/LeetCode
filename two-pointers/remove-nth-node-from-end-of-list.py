@@ -8,13 +8,14 @@ class Solution:
         mask = ListNode()
         mask.next = head
 
-        prev, cur = mask, head
+        prev, after = mask, head
 
         for _ in range(n):
-            cur = cur.next
-        while cur:
-            cur = cur.next
+            after = after.next
+
+        while after:
             prev = prev.next
-            
+            after = after.next
+
         prev.next = prev.next.next
         return mask.next
