@@ -34,7 +34,7 @@ class Solution:
             curr_word.append(char)
             next_node = node.children[char]
             if next_node.exist:
-                ans.append("".join(curr_word))
+                ans.add("".join(curr_word))
 
             for dx, dy in DIRECTIONS:
                 nx, ny = x + dx, y + dy
@@ -48,13 +48,13 @@ class Solution:
             visited[(x, y)] = False
             curr_word.pop()
 
-        ans = []
+        ans = set()
         for i in range(m):
             for j in range(n):
                 visited = defaultdict(bool)
                 dfs(i, j, [], trie.root)
 
-        return ans
+        return list(ans)
             
 
             
