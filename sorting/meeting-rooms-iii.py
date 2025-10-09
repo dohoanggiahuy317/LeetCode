@@ -1,41 +1,31 @@
 class Solution:
     def mostBooked(self, n: int, meetings: List[List[int]]) -> int:
-        meetings.sort()
-        meets_num = len(meetings)
+        rooms = SortedList([i for i in range(n)])
+        use_count = {i: 0 for i in range(n)}
+        rooms_state = SortedList()
 
-        occups_pq = [] # -> (end_time, room_idx)
-        avail_pq = [i for i in range(n)] # -> room_idx
-        i = curr_time = 0
-        room_count = Counter()
-
-        # while còn meeting chưa được vô
-        while occups_pq or i < meets_num:
-            # Lấy ra hết các room end meeting và add vào available list
-            while occups_pq and occups_pq[0][0] <= curr_time:
-                _, room_idx = heapq.heappop(occups_pq)
-                heapq.heappush(avail_pq, room_idx)
-
-            # add meetings đang chờ vào room cho đến khi hết available room, cập nhất occup_room
-            while i < meets_num and meetings[i][0] <= curr_time and avail_pq:
-                room_idx = heapq.heappop(avail_pq)
-                start, end = meetings[i]
-                
-                duration = end - start
-                heapq.heappush(occups_pq, (curr_time + duration, room_idx))
-                room_count[room_idx] += 1
-                i += 1
+        for start, end in meetings:
+            duration = end - start
+            while rooms_state and rooms_state[0][0] <= start:
+                _, room = rooms_state.pop(0)
+                rooms.add(room)
             
-            # Có free room cho next meeting, nhảy đến curr_time đó và loop sẽ remove các meeting done
-            if avail_pq and i < meets_num:
-                curr_time = meetings[i][0]
-            # nếu ko có room nào avail, xét curr_time mà room tiếp theo avail
-            elif occups_pq:
-                curr_time = occups_pq[0][0]
+            if not rooms:
+                prev_end, room = rooms_state.pop(0)
+                rooms.add(room)
+                start = prev_end
             
+            room = rooms.pop(0)
+            rooms_state.add((start + duration, room))
+            use_count[room] += 1
 
-        rooms = [(-c, idx) for idx, c in room_count.items()]
-        rooms.sort()
+        ans = 0
+        cur_max = 0    
+        for i in range(n):
+            if use_count[i] > cur_max:
+                cur_max = use_count[i]
+                ans = i
 
-        return rooms[0][1]
+        return ans
 
-        
+
