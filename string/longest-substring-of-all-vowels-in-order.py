@@ -1,17 +1,20 @@
 class Solution:
     def longestBeautifulSubstring(self, word: str) -> int:
-        left = 0
+        n = len(word)
+        l, r = 0, 0
+        num_vowel = 1
         ans = 0
-        count = 1
-        for right in range(len(word)):
-            if right == left:
-                continue
-            elif word[right] >= word[right - 1]:
-                count += int(word[right] != word[right - 1])
-                if count == 5:
-                    ans = max(ans, right - left + 1)
+        
+        for r in range(n):
+            if r > l and ord(word[r]) >= ord(word[r - 1]):
+                if ord(word[r]) > ord(word[r - 1]):
+                    num_vowel += 1
+                if num_vowel == 5:
+                    ans = max(ans, r - l + 1)
             else:
-                count = 1
-                left = right
+                l = r
+                num_vowel = 1
+
         return ans
-            
+
+        
