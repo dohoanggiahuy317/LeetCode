@@ -6,14 +6,13 @@ class Solution:
         ans = inf
 
         for l, num in enumerate(nums):
-            if curr_sum >= target:
-                ans = min(ans, r - l + 1)
-                curr_sum -= nums[l]
-            else:
-                while r < len(nums) - 1 and curr_sum < target:
-                    r += 1
-                    curr_sum += nums[r]
+            curr_sum -= nums[l - 1] if l - 1 >= 0 else 0
 
-            # print(l, r, curr_sum)
+            while r < len(nums) and curr_sum < target:
+                curr_sum += nums[r]
+                r += 1
+            
+            if curr_sum >= target:
+                ans = min(ans, r - l )
 
         return 0 if ans == inf else ans
