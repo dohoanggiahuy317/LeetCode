@@ -1,12 +1,9 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        d = Counter()
+        nums2idx = {num: idx for idx, num in enumerate(nums)}
 
-        for i in range(len(nums)):
-            d[nums[i]] = i
-
-        for i in range(len(nums)):
-            if target - nums[i] in d and i != d[target - nums[i]]:
-                return [i, d[target - nums[i]]]
+        for i, num in enumerate(nums):
+            if target - num in nums2idx and nums2idx[target - num] != i:
+                return [i, nums2idx[target - num] ]
 
         return []
