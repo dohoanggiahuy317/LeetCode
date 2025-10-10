@@ -7,20 +7,22 @@
 class Solution:
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
         sl, fa = head, head
+
         while fa and fa.next:
             fa = fa.next.next
+
             if fa:
                 sl = sl.next
+
             if fa == sl:
                 break
+
         else:
             return None
 
         ot = head
-        while ot != sl:
-            sl = sl.next
+        while ot != fa:
             ot = ot.next
+            fa = fa.next
 
-        return sl
-
-        
+        return ot
