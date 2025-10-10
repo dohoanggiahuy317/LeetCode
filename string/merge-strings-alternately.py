@@ -8,10 +8,12 @@ class Solution:
             word.append(word2[j])
             i += 1
             j += 1
-        
+        # print(i, j, word2[j:], word1[i:])
         if i < len(word1):
-            word.append(word2[j:])
-        if j < len(word2):
             word.append(word1[i:])
+        if j < len(word2):
+            word.append(word2[j:])
+
+        # print(word)
 
         return "".join(word)
