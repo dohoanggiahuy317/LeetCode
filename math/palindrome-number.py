@@ -1,3 +1,9 @@
 class Solution:
     def isPalindrome(self, x: int) -> bool:
-        return True if str(x) == str(x)[::-1] else False
+        temp = x
+        reverse = 0
+        while temp > 0:
+            reverse = reverse * 10 + temp % 10
+            temp //= 10
+
+        return reverse == x
