@@ -14,7 +14,7 @@ class Solution:
                 for j in range(4, -1, -1):
                     if ch == sub_s[j]:
                         dp[j + 1] = (dp[j + 1] + dp[j]) % MOD
-            return dp[m]
+            return dp[5]
 
         ans = 0
         for a in '0123456789':
