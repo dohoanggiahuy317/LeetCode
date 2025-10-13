@@ -1,31 +1,25 @@
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        distance = 0
-        memoir = [[False] * len(s) for _ in range(len(s))]
-        ans = ''
+        n = len(s)
+        dp = [[False] * n for _ in range(n)]
+        ans = (0, 0)
 
-        while distance < len(s):
-            # for x in memoir:
-            #     print(x)
-            # print(distance)
-            # print()
-            for i in range(len(s) - distance):
-                if distance == 0:
-                    memoir[i][i+distance] = True
-                    ans = s[i:i+distance+1]
+        for i in range(n):
+            dp[i][i] = True
 
-                if distance == 1:
-                    if s[i] == s[i+distance]:
-                        memoir[i][i+distance] = True
-                        ans = s[i:i+distance+1]
+        for i in range(n - 1):
+            if s[i] == s[i + 1]:
+                dp[i][i + 1] = True
+                # dp[i + 1][i] = True
+                ans = (i, i + 1)
 
-                if distance > 1:
-                    if s[i] == s[i+distance] and memoir[i+1][i + distance-1]:
-                        memoir[i][i+distance] = True
-                        ans = s[i:i+distance+1]
+        for diff in range(2, n):
+            for i in range(n - diff):
+                j = i + diff
+                if s[i] == s[j] and dp[i + 1][j - 1]:
+                    dp[i][j] = True
+                    ans = (i, j)
 
-            distance += 1
 
-        return ans
 
-        
+        return s[ans[0]: ans[1] + 1]
