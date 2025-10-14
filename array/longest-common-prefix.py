@@ -35,5 +35,7 @@ class Solution:
 
         for word in strs:
             trie.insert(word)
+            if word == "":
+                return ""
 
         return trie.get_common_prefix()
