@@ -3,14 +3,14 @@ class Solution:
         n = len(s)
         dp = [[False] * n for _ in range(n)]
         ans = (0, 0)
-
+        
         for i in range(n):
             dp[i][i] = True
+            ans = (i, i)
 
         for i in range(n - 1):
             if s[i] == s[i + 1]:
                 dp[i][i + 1] = True
-                # dp[i + 1][i] = True
                 ans = (i, i + 1)
 
         for diff in range(2, n):
@@ -20,6 +20,5 @@ class Solution:
                     dp[i][j] = True
                     ans = (i, j)
 
-
-
-        return s[ans[0]: ans[1] + 1]
+        i, j = ans
+        return s[i: j + 1]
