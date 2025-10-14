@@ -1,22 +1,15 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
         n = len(height)
-        stack = []
+        prefix_max = [height[0]] * n
+        for i in range(1, n):
+            prefix_max[i] = max(prefix_max[i - 1], height[i])
+
+        suffix_max = height[-1]
         ans = 0
-
-        for i, this_height in enumerate(height):
-            while stack and height[stack[-1]] < this_height:
-                top = stack.pop()
-            
-                if not stack:
-                    break
-                    
-                dist = i - stack[-1] - 1
-                h = min(this_height, height[stack[-1]]) - height[top]
-
-                ans += dist * h
-                
-            stack.append(i)
+        for i in range(n - 1, -1, -1):
+            suffix_max = max(suffix_max, height[i])
+            ans += min(suffix_max, prefix_max[i]) - height[i]
 
         return ans
-                
+            
