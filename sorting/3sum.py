@@ -1,18 +1,21 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        cnums = Counter(nums)
-        nums = []
-        for num, freq in cnums.items():
-            nums.extend([num] * min(freq, 3))
-
-        ans = set()
-        num2pos = {num: i for i, num in enumerate(nums)}
-
+        nums.sort()
+        triplet = []
         for i in range(len(nums)):
-            for j in range(i + 1, len(nums)):
+            if not (i == 0 or nums[i] != nums[i - 1]):
+                continue
+            j = i + 1
+            seen = set()
+            while j < len(nums):
                 target = - nums[i] - nums[j]
 
-                if target in num2pos and num2pos[target] > j:
-                    ans.add(tuple(sorted([nums[i], nums[j], target])))
+                if target in seen:
+                    triplet.append([nums[i], nums[j], target])
+                    while j < len(nums) - 1 and nums[j] == nums[j + 1]:
+                        j += 1
+                
+                seen.add(nums[j])
+                j += 1
 
-        return [list(sub) for sub in ans]
+        return triplet
