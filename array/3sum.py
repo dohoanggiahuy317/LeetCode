@@ -1,5 +1,10 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
+        cnums = Counter(nums)
+        nums = []
+        for num, freq in cnums.items():
+            nums.extend([num] * min(freq, 3))
+
         ans = set()
         num2pos = {num: i for i, num in enumerate(nums)}
 
