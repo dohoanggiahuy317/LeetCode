@@ -17,6 +17,9 @@ class Solution:
                 nums1[i1] = nums2[i2]
                 i1 += 1
                 i2 += 1
+                m += 1
+            # print(nums1)
+        
         if i2 == n:
             return
         for j in range(i2, n):
