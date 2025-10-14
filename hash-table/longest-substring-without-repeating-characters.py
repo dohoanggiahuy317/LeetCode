@@ -1,7 +1,7 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         if len(s) == 0:
-            return ""
+            return 0
 
         ans = 1
         counter = Counter(s[0])
