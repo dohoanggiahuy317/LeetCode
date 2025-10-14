@@ -23,6 +23,9 @@ class Trie:
         ans = ""
 
         while curr and len(curr.children) == 1:
+            if curr.exist:
+                return ans
+                
             char = list(curr.children.keys())[0]
             ans += char
             curr = curr.children[char]
