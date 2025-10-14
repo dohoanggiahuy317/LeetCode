@@ -1,37 +1,39 @@
 class TrieNode:
-    def __init__(self, char):
-        self.char = char
+    def __init__(self, ch):
+        self.ch = ch
         self.children = {}
         self.exist = False
 
 class Trie:
     def __init__(self):
-        self.tree = TrieNode("^")
+        self.root = TrieNode("^")
 
     def insert(self, word):
-        curr = self.tree
+        curr = self.root
+
         for char in word:
             if char not in curr.children:
                 curr.children[char] = TrieNode(char)
             curr = curr.children[char]
+        
         curr.exist = True
 
-    def get_pref(self):
-        curr = self.tree
+    def get_common_prefix(self):
+        curr = self.root
         ans = ""
-        while len(curr.children) == 1:
+
+        while curr and len(curr.children) == 1:
             char = list(curr.children.keys())[0]
             ans += char
             curr = curr.children[char]
 
         return ans
 
-
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        tree = Trie()
+        trie = Trie()
 
-        for s in strs:
-            tree.insert(s)
+        for word in strs:
+            trie.insert(word)
 
-        return tree.get_pref()
+        return trie.get_common_prefix()
