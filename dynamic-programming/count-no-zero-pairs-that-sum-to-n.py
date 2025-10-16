@@ -14,7 +14,6 @@ class Solution:
                 rem = n - num
                 if rem > 0 and "0" not in str(rem):
                     ans += 1
-                return
 
             for i in range(len(INT_LIST)):
                 numl.append(INT_LIST[i])
