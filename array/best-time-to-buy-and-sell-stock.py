@@ -6,7 +6,9 @@ class Solution:
         prefix_min[0] = prices[0]
 
         ans = 0
-        for i, price in enumerate(prices[1:]):
+        for i, price in enumerate(prices):
+            if i == 0:
+                continue
             ans = max(ans, price - prefix_min[i - 1])
             prefix_min[i] = min(price, prefix_min[i - 1])
 
