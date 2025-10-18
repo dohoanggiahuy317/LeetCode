@@ -3,7 +3,7 @@ class Solution:
         n = len(s)
         dp = [[False] * n for _ in range(n)]
         ans = (0, 0)
-        
+
         for i in range(n):
             dp[i][i] = True
             ans = (i, i)
@@ -17,8 +17,8 @@ class Solution:
             for i in range(n - diff):
                 j = i + diff
                 if s[i] == s[j] and dp[i + 1][j - 1]:
-                    dp[i][j] = True
                     ans = (i, j)
 
         i, j = ans
-        return s[i: j + 1]
+        return s[i:j + 1]
+        
