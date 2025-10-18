@@ -1,12 +1,27 @@
 class Solution:
     def isMatch(self, s: str, p: str) -> bool:
 
-        if not p:
-            return not s
+        ls = len(s)
+        lp = len(p)
 
-        first_match = len(s) > 0 and (p[0] == "." or p[0] == s[0])
+        dp = defaultdict()
 
-        if len(p) > 1 and p[1] == "*":
-            return self.isMatch(s, p[2:]) or (first_match and self.isMatch(s[1:], p))
+        def match(i, j):
+            if (i, j) in dp:
+                return dp[(i, j)]
+
+            if j == lp:
+                return i == ls
+
+            char_match = i < ls and (p[j] == "." or p[j] == s[i])
+
+            if j < lp - 1 and p[j + 1] == "*":
+                dp[(i, j)] = match(i, j + 2) or (char_match and match(i + 1, j))
+            else:
+                dp[(i, j)] = char_match and match(i + 1, j + 1)
         
-        return first_match and self.isMatch(s[1:], p[1:])
+            return dp[(i, j)]
+        
+        match(0, 0)
+
+        return dp[(0, 0)]
