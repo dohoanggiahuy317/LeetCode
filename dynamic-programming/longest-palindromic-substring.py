@@ -17,6 +17,7 @@ class Solution:
             for i in range(n - diff):
                 j = i + diff
                 if s[i] == s[j] and dp[i + 1][j - 1]:
+                    dp[i][j] = True
                     ans = (i, j)
 
         i, j = ans
