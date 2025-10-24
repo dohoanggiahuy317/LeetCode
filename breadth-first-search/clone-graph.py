@@ -8,29 +8,28 @@ class Node:
 
 from typing import Optional
 class Solution:
-
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        
         if not node:
             return None
+        
 
-        # BFS
-        copy_node = Node(node.val)
-        tree_map = {node: copy_node}
-        queue = deque([(node, copy_node)])
+        def dfs(node, node_copy):
+            if node.val in visited:
+                return
+            
+            visited.add(node.val)
 
-        while queue:
-            for _ in range(len(queue)):
-                curr, copy_curr = queue.popleft() # get the current node
+            for neighbor in node.neighbors:
+                if neighbor.val not in copy_vertices:
+                    copy_vertices[neighbor.val] = Node(neighbor.val)
 
-                for neigh in curr.neighbors:
+                node_copy.neighbors.append(copy_vertices[neighbor.val])
+                
+                dfs(neighbor, copy_vertices[neighbor.val])
 
-                    # only add the queue the node that is just created
-                    if neigh not in tree_map:
-                        tree_map[neigh] = Node(neigh.val)
-                        queue.append((neigh, tree_map[neigh]))
+        node_copy = Node(node.val)
+        visited = set()
+        copy_vertices = {node.val: node_copy}
+        dfs(node, node_copy)
 
-                    # copy the neighbor to the current node
-                    copy_curr.neighbors.append(tree_map[neigh])
-
-        return copy_node
+        return node_copy
