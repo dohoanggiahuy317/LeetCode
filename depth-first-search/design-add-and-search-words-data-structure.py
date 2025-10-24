@@ -1,6 +1,6 @@
 class TrieNode:
-    def __init__(self, ch):
-        self.ch = ch
+    def __init__(self, char):
+        self.char = char
         self.children = {}
         self.exist = False
 
@@ -10,33 +10,40 @@ class WordDictionary:
         self.root = TrieNode("^")
 
     def addWord(self, word: str) -> None:
-        node = self.root
-        for ch in word:
-            if ch not in node.children:
-                node.children[ch] = TrieNode(ch)
-            node = node.children[ch]
+        curr = self.root
 
-        node.exist = True
+        for char in word:
+            if char not in curr.children:
+                curr.children[char] = TrieNode(char)
+            curr = curr.children[char]
+        
+        curr.exist = True
 
     def search(self, word: str) -> bool:
-        queue = deque([self.root])
+        curr = self.root
+        queue = deque([curr])
 
-        for i, ch in enumerate(word):
-
+        for char in word:
             for _ in range(len(queue)):
-                node = queue.popleft()
+                curr = queue.popleft()
 
-                if ch != "." and ch not in node.children:
-                    continue 
+                if curr.exist:
+                    return True
 
-                if ch != "." and ch in node.children:
-                    queue.append(node.children[ch])
+                if char != "." and char not in curr.children:
+                    return False
+                elif char != ".":
+                    queue.append(curr.children[char])
+                else:
+                    for _, neigh in curr.children.items():
+                        queue.append(neigh)
 
-                if ch == ".":
-                    queue.extend(list(node.children.values()))
+        for node in queue:
+            if node.exist:
+                return True
 
- 
-        return True if not all([not leaf.exist for leaf in queue]) else False
+        return False
+
 
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
