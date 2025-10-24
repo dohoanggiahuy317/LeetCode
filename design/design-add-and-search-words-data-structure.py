@@ -28,7 +28,7 @@ class WordDictionary:
                 curr = queue.popleft()
 
                 if char != "." and char not in curr.children:
-                    return False
+                    continue
                 elif char != ".":
                     queue.append(curr.children[char])
                 else:
