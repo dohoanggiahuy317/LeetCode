@@ -1,46 +1,42 @@
-DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        
-        def word_search(x, y, i):
-            nonlocal word, found, s, m, n, visited
+        m, n = len(board), len(board[0])
+        DIRS = [(0, 1), (0, -1), (-1, 0), (1, 0)]
 
-            if i == len(word):
-                return True
-
-            visited[x][y] = True 
-                        
-            for dx, dy in DIRECTIONS:
-                nx, ny = x + dx, y + dy
-                if not (0 <= nx < m and 0 <= ny < n):
-                    continue
-                
-                if visited[nx][ny]:
-                    continue
-
-                if board[nx][ny] != word[i]:
-                    continue
-                
-                if word_search(nx, ny, i + 1):
-                    return True
+        def bfs(i, j):
             
-            visited[x][y] = False
+            queue = deque([(i, j, 0)])
+            visited = set(queue)
+
+            while queue:
+                for _ in range(len(queue)):
+                    x, y, curr_idx = queue.popleft()
+
+                    if curr_idx == len(word) - 1:
+                        return True
+
+                    for dx, dy in DIRS:
+                        nx, ny = x + dx, y + dy
+
+                        if not (0 <= nx < m and 0 <= ny < n):
+                            continue
+
+                        if (nx, ny) in visited:
+                            continue
+
+                        next_idx = curr_idx + 1
+                        if board[nx][ny] != word[next_idx]:
+                            continue
+
+                        queue.append((nx, ny, next_idx))
+                        visited.add((nx, ny))
 
             return False
 
-        m, n = len(board), len(board[0])
-        s = len(word)
-        found = False
-        visited = [[False] * n for _ in range(m)]
-
-        for x in range(m):
-            for y in range(n):
-
-                if board[x][y] != word[0]:
-                    continue
-
-                if word_search(x, y, 1):
-                    return True
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == word[0]:
+                    if bfs(i, j):
+                        return True
 
         return False
