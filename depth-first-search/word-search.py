@@ -6,7 +6,7 @@ class Solution:
         def bfs(i, j):
             
             queue = deque([(i, j, 0)])
-            visited = set(queue)
+            visited = set([(i, j)])
 
             while queue:
                 for _ in range(len(queue)):
