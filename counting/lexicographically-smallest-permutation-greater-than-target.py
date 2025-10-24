@@ -5,7 +5,7 @@ class Solution:
             nonlocal holder, ans
             # print(s_li, holder, g)
 
-            if ans != "":
+            if ans != "": # terminate if answer is determined
                 return
 
             if i == len(s):
