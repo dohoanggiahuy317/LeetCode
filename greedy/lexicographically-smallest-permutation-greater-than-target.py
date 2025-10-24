@@ -1,30 +1,49 @@
 class Solution:
     def lexGreaterPermutation(self, s: str, target: str) -> str:
-        
-        perm = list()
 
-        sList = SortedList(key = lambda x: -x)
-        sList.update(map(ord, s))
-        target = list(map(ord, target))
- 
-        for i, tChr in enumerate(target):
-            if tChr in sList:
-                sList.remove(tChr)
-               
-                if sList <= target[i+1:]:
-                    sList.add(tChr)
-                else: 
-                    perm.append(tChr)
-                    continue   
-                    
-            for sChr in reversed(sList):
-                if sChr <= tChr: continue
+        def dfs(i, g):
+            nonlocal holder, ans
+            # print(s_li, holder, g)
 
-                sList.remove(sChr)
-                perm.append(sChr)
-                perm.extend(sList[::-1])
-                break
+            if ans != "":
+                return
 
-            return ''.join(map(chr, perm))
+            if i == len(s):
+                if g:
+                    ans = "".join(holder)
+                return
+
+            if g:
+                holder.extend(s_li)
+                ans = "".join(holder)
+                return
             
-        return ''
+            t_char = target[i]
+
+            # Get the equal value if possible
+            idx = bisect.bisect_left(s_li, t_char)
+            if idx == len(s_li):
+                return
+            
+            s_char = s_li.pop(idx)
+            holder.append(s_char)
+            dfs(i + 1, s_char > t_char)
+
+            # if not possible then we have to take strictly larget
+            s_li.insert(idx, s_char)
+            holder.pop()
+
+            idx = bisect.bisect_right(s_li, t_char)
+            if idx == len(s_li):
+                return
+            s_char = s_li.pop(idx)
+            holder.append(s_char)
+            dfs(i + 1, True)
+
+        s_li = sorted(s)
+        holder = []
+        ans = ""
+        dfs(0, False)
+
+        return ans
+
