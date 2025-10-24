@@ -3,40 +3,41 @@ class Solution:
         m, n = len(board), len(board[0])
         DIRS = [(0, 1), (0, -1), (-1, 0), (1, 0)]
 
-        def bfs(i, j):
+        def dfs(x, y, i):
+            nonlocal found, visited, board
             
-            queue = deque([(i, j, 0)])
-            visited = set([(i, j)])
+            if i == len(word) - 1:
+                found = True
+                return 
 
-            while queue:
-                for _ in range(len(queue)):
-                    x, y, curr_idx = queue.popleft()
+            visited.add((x, y))
 
-                    if curr_idx == len(word) - 1:
-                        return True
+            for dx, dy in DIRS:
+                nx, ny = x + dx, y + dy
+                
 
-                    for dx, dy in DIRS:
-                        nx, ny = x + dx, y + dy
+                if not (0 <= nx < m and 0 <= ny < n):
+                    continue
+                if (nx, ny) in visited:
+                    continue
 
-                        if not (0 <= nx < m and 0 <= ny < n):
-                            continue
+                if board[nx][ny] != word[i + 1]:
+                    continue
 
-                        if (nx, ny) in visited:
-                            continue
+                dfs(nx, ny, i + 1)
+            
+            visited.remove((x, y))
+            return 
 
-                        next_idx = curr_idx + 1
-                        if board[nx][ny] != word[next_idx]:
-                            continue
-
-                        queue.append((nx, ny, next_idx))
-                        visited.add((nx, ny))
-
-            return False
 
         for i in range(m):
             for j in range(n):
                 if board[i][j] == word[0]:
-                    if bfs(i, j):
+                    visited = set()
+                    found = False
+                    dfs(i, j, 0)
+                    
+                    if found:
                         return True
 
         return False
