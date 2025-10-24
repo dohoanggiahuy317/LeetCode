@@ -27,9 +27,6 @@ class WordDictionary:
             for _ in range(len(queue)):
                 curr = queue.popleft()
 
-                if curr.exist:
-                    return True
-
                 if char != "." and char not in curr.children:
                     return False
                 elif char != ".":
