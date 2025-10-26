@@ -3,7 +3,7 @@ class Solution:
         m, n = len(grid), len(grid[0])
         DIRS = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
-        def dfs(x, y, char, i):
+        def dfs(px, py, x, y, char):
             nonlocal m, n, grid, visited, si, sj, found
 
             if (x, y) in visited:
@@ -23,27 +23,26 @@ class Solution:
                 if grid[nx][ny] != char:
                     continue
 
-                if nx == si and ny == sj and i > 2:
+                if (nx, ny) in visited and nx != px and ny != py:
                     found = True
-                    # print(char, x, y, nx, ny)
                     return
 
                 if (nx, ny) in visited:
                     continue
 
-                dfs(nx, ny, char, i + 1)
+                dfs(x, y, nx, ny, char)
 
-            visited.remove((x, y))                
 
+
+        visited = set()
         for i in range(m):
             for j in range(n):
                 char = grid[i][j]
 
                 si, sj = i, j
                 found = False
-                visited = set()
 
-                dfs(i, j, char, 0)
+                dfs(None, None, i, j, char)
 
                 if found:
                     return True
