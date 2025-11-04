@@ -6,25 +6,32 @@
 #         self.right = right
 class BSTIterator:
 
-    def transversal(self, node):
-        if not node:
-            return
-        
-        self.transversal(node.left)
-        self.l.append(node.val)
-        self.transversal(node.right)
-
     def __init__(self, root: Optional[TreeNode]):
-        self.l = []
-        self.transversal(root)
-        self.i = -1
+        
+        ptr = root
+        self.stack = []
+        while ptr:
+            self.stack.append(ptr)
+            ptr = ptr.left
 
     def next(self) -> int:
-        self.i += 1
-        return self.l[self.i]
+        if not self.stack:
+            return inf
+        
+        ptr = self.stack.pop()
+
+        temp = ptr.right
+        while temp:
+            self.stack.append(temp)
+            temp = temp.left
+
+        return ptr.val
 
     def hasNext(self) -> bool:
-        return self.i != len(self.l) - 1
+        if not self.stack:
+            return False
+
+        return True
 
 
 # Your BSTIterator object will be instantiated and called as such:
