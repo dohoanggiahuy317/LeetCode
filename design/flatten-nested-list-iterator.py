@@ -25,24 +25,27 @@ class NestedIterator:
         self.stack = [(nestedList, 0)]
     
     def next(self) -> int:
-        ans = None
+        num = self.stack.pop()
+        return num.getInteger()
+    
+    def hasNext(self) -> bool:
 
-        while ans == None:
+        while self.stack:
             li, idx = self.stack.pop()
 
             if idx + 1 < len(li):
                 self.stack.append((li, idx + 1))
 
             if li[idx].isInteger():
-                ans = li[idx].getInteger()
-            else:
+                self.stack.append(li[idx])
+                break
+
+            elif li[idx].getList():
                 self.stack.append((li[idx].getList(), 0))
 
-        return ans
-    
-    def hasNext(self) -> bool:
         if self.stack:
             return True
+
         return False
          
 
