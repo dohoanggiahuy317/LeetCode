@@ -1,26 +1,25 @@
 class MyCalendar:
 
     def __init__(self):
-        self.bookings_order = SortedList()
+        self.events = SortedList()
 
     def book(self, startTime: int, endTime: int) -> bool:
-
-        if not self.bookings_order:
-            self.bookings_order.add([startTime, endTime])
+        if not self.events:
+            self.events.add((startTime, endTime))
             return True
+
+        idx = bisect.bisect_left(self.events, (endTime, -1))
+        prev_idx = idx - 1
+
+        if idx == len(self.events) or idx != 0:
+            if self.events[prev_idx][1] <= startTime:
+                self.events.add((startTime, endTime))
+                return True
+            return False
         
-        n = len(self.bookings_order)
-        idx = bisect_right(self.bookings_order, [startTime, 0])
-
-        previous_end = self.bookings_order[idx - 1][1] if idx > 0 else -inf
-        after_start = self.bookings_order[idx][0] if idx < n else inf
-
-        if  previous_end <= startTime and endTime <= after_start:
-            self.bookings_order.add([startTime, endTime])
-            return True
-
-        return False
-
+        self.events.add((startTime, endTime))
+        return True
+  
 
 # Your MyCalendar object will be instantiated and called as such:
 # obj = MyCalendar()
