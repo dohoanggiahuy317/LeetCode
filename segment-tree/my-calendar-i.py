@@ -8,7 +8,16 @@ class MyCalendar:
             self.events.add((startTime, endTime))
             return True
 
-        idx = bisect.bisect_left(self.events, (endTime, -1))
+        l, r = 0, len(self.events) - 1
+        idx = len(self.events)
+        while l <= r:
+            m = (l + r) // 2
+            if endTime <= self.events[m][0]:
+                idx = m
+                r = m - 1
+            else:
+                l = m + 1
+
         prev_idx = idx - 1
 
         if idx == len(self.events) or idx != 0:
