@@ -23,38 +23,27 @@
 class NestedIterator:
     def __init__(self, nestedList: [NestedInteger]):
         self.stack = [(nestedList, 0)]
-        
     
     def next(self) -> int:
-        # last element in stack always pointing to an int
-        nested_li, idx = self.stack.pop()
-        return nested_li[idx].getInteger()
+        ans = None
+
+        while ans == None:
+            li, idx = self.stack.pop()
+
+            if idx + 1 < len(li):
+                self.stack.append((li, idx + 1))
+
+            if li[idx].isInteger():
+                ans = li[idx].getInteger()
+            else:
+                self.stack.append((li[idx].getList(), 0))
+
+        return ans
     
     def hasNext(self) -> bool:
-
-        if not self.stack:
-            return False
-        
-        while self.stack:
-            nested_li, idx = self.stack.pop()
-            
-            if len(nested_li) == 0: # skip if this nested list is empty
-                continue
-            
-            # keep finding the most nested sublist
-            sub_elem = nested_li[idx]
-            if idx + 1 < len(nested_li): # remember the list if we still can iterate
-                self.stack.append((nested_li, idx + 1))
-
-            # make sure the last elemnt is an int while remember new found sublist
-            if not sub_elem.isInteger():
-                self.stack.append((sub_elem.getList(), 0))
-            else:
-                self.stack.append((nested_li, idx))
-                break
-
-        return not len(self.stack) == 0
-
+        if self.stack:
+            return True
+        return False
          
 
 # Your NestedIterator object will be instantiated and called as such:
