@@ -23,9 +23,6 @@ class WordDictionary:
         for char in word:
             for _ in range(len(queue)):
                 node = queue.popleft()
-
-                if node.exist:
-                    return True
                 
                 if char == ".":
                     for _, child in node.children.items():
