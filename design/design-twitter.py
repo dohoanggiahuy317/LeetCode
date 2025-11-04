@@ -39,7 +39,8 @@ class Twitter:
         self.graph[followerId].add(followeeId)
 
     def unfollow(self, followerId: int, followeeId: int) -> None:
-        self.graph[followerId].remove(followeeId)
+        if followeeId in self.graph[followerId]:
+            self.graph[followerId].remove(followeeId)
         
 
 
