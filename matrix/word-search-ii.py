@@ -1,44 +1,64 @@
+class TrieNode:
+    def __init__(self, char):
+        self.char = char
+        self.children = {}
+        self.exist = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode("^")
+    
+    def insert(self, word):
+        curr = self.root
+        for char in word:
+            if char not in curr.children:
+                curr.children[char] = TrieNode(char)
+            curr = curr.children[char]
+        curr.exist = True
+
 class Solution:
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
         m, n = len(board), len(board[0])
         DIRS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
-        def dfs(x, y, i):
-            nonlocal m, n, board, word, found, visited, DIRS
+        trie = Trie()
+        for word in words:
+            trie.insert(word)
 
-            if i == len(word) - 1:
-                found = True
-                return 
+        def dfs(x, y, node):
+            nonlocal m, n, board, trie, path
 
+            if board[x][y] not in node.children:
+                return
+
+            if node.children[board[x][y]].exist:
+                path.append(board[x][y])
+                ans.add("".join(path))
+                path.pop()
+
+            path.append(board[x][y])
             visited.add((x, y))
+
             for dx, dy in DIRS:
                 nx, ny = x + dx, y + dy
+                new_node = node.children[board[x][y]]
 
                 if not (0 <= nx < m and 0 <= ny < n):
                     continue
                 if (nx, ny) in visited:
                     continue
-                if board[nx][ny] != word[i + 1]:
-                    continue
+                
+                dfs(nx, ny, new_node)
 
-                dfs(nx, ny, i + 1)
-
+            path.pop()
             visited.remove((x, y))
-            
+            return
 
-
-
-        ans = []
-        for word in words:
-            found = False
-            visited = set()
-            for i in range(m):
-                if not found:
-                    for j in range(n):
-                        if board[i][j] == word[0]:
-                            dfs(i, j, 0)
-                        if found:
-                            ans.append(word)
-                            break
+        ans = set()
+        path = []
+        visited = set()
+        for i in range(m):
+            for j in range(n):
+                dfs(i, j, trie.root)
         
-        return ans
+        return list(ans)
