@@ -44,8 +44,9 @@ class DSU:
                 continue
             
             neighbor_idx = self.recover[xr][0]
-            self.turn_up(x)
+            # self.turn_up(x)
             return neighbor_idx
+        
         return -1
 
 class Solution:
