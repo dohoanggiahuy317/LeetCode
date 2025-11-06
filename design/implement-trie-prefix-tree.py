@@ -1,4 +1,3 @@
-
 class TrieNode:
     def __init__(self, ch):
         self.ch = ch
@@ -12,32 +11,26 @@ class Trie:
 
     def insert(self, word: str) -> None:
         node = self.root
-
-        for char in word:
-            if char not in node.children:
-                node.children[char] = TrieNode(char)
-            node = node.children[char]
-        
-        node.exist = True        
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode(ch)
+            node = node.children[ch]
+        node.exist = True
 
     def search(self, word: str) -> bool:
         node = self.root
-        for char in word:
-            if char not in node.children:
+        for ch in word:
+            if ch not in node.children:
                 return False
-            node = node.children[char]
+            node = node.children[ch]
         return node.exist
-        
 
     def startsWith(self, prefix: str) -> bool:
         node = self.root
-
-        for char in prefix:
-            if char in node.children:
-                node = node.children[char]
-            else:
+        for ch in prefix:
+            if ch not in node.children:
                 return False
-        
+            node = node.children[ch]
         return True
 
 
