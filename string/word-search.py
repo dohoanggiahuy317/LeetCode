@@ -10,6 +10,8 @@ class Solution:
                 found = True
                 return
 
+            visited.add((x, y))
+
             for dx, dy in DIRS:
                 nx, ny = x + dx, y + dy
 
@@ -20,9 +22,9 @@ class Solution:
                 if (nx, ny) in visited:
                     continue
 
-                visited.add((nx, ny))
                 dfs(nx, ny, i + 1)
-                visited.remove((nx, ny))
+
+            visited.remove((x, y))
 
 
         found = False
