@@ -27,6 +27,9 @@ class Solution:
         ans = []
         dfs(root, 0, 0)
 
+        if not root:
+            return []
+            
         for i in range(min_x, max_x + 1):
             ans.append([x[2] for x in sorted(columns[i])])
 
