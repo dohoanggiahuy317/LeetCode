@@ -6,26 +6,27 @@
 #         self.right = right
 class Solution:
     def verticalTraversal(self, root: Optional[TreeNode]) -> List[List[int]]:
-        
+        columns = defaultdict(list)
+        min_x, max_x = inf, -inf
+
         def dfs(root, x, y):
-            nonlocal columns, mi, ma
+            nonlocal min_x, max_x, columns
 
             if not root:
-                return None
+                return
 
-            mi = min(mi, y)
-            ma = max(ma, y)
-            columns[y].append((x, root.val))
+            columns[x].append((y, root.val))
+            min_x = min(x, min_x)
+            max_x = max(x, max_x)
 
-            dfs(root.left, x + 1, y - 1)
+            dfs(root.left, x - 1, y + 1)
             dfs(root.right, x + 1, y + 1)
 
-        columns = defaultdict(list)
-        mi = ma = 0
         dfs(root, 0, 0)
-        
         ans = []
-        for i in range(mi, ma + 1):
-            ans.append([v[1] for v in sorted(columns[i])])
+        for i in range(min_x, max_x + 1):
+            # print(sorted(columns[i]))
+            ans.append([ x[1] for x in sorted(columns[i]) ])
+        # print(ans)
 
         return ans
