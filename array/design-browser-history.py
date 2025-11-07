@@ -1,26 +1,36 @@
 class BrowserHistory:
+
     def __init__(self, homepage: str):
-        self.history = [homepage]
-        self.cur_page = 0
-        
+        self.back_li = [homepage]
+        self.forw_li = []
+
     def visit(self, url: str) -> None:
-        while self.cur_page < len(self.history) - 1:
-            self.history.pop()
-        self.history.append(url)
-        self.cur_page += 1
+        self.back_li.append(url)
+        self.forw_li = []
+        return self.back_li[-1]
 
     def back(self, steps: int) -> str:
-        x = max(0,self.cur_page - steps)
-        self.cur_page = x
-        return self.history[self.cur_page]
+        shift = min(steps, len(self.back_li) - 1)
+
+        for _ in range(shift):
+            url = self.back_li.pop()
+            self.forw_li.append(url)
+
+        return self.back_li[-1]
 
     def forward(self, steps: int) -> str:
-        x = min(len(self.history) - 1 , self.cur_page + steps)
-        self.cur_page = x
-        return self.history[self.cur_page]
+        shift = min(steps, len(self.forw_li))
+
+        for _ in range(shift):
+            url = self.forw_li.pop()
+            self.back_li.append(url)
+
+        return self.back_li[-1]
+        
+
 
 # Your BrowserHistory object will be instantiated and called as such:
 # obj = BrowserHistory(homepage)
 # obj.visit(url)
 # param_2 = obj.back(steps)
-# param_3 = obj.forward(steps)
+# param_3 = obj.forw_li(steps)
