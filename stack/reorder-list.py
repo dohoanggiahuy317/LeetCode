@@ -9,7 +9,7 @@ class Solution:
         Do not return anything, modify head in-place instead.
         """
 
-        stack = []
+        stack = deque()
         node = head.next
         while node:
             mask = node
@@ -28,10 +28,10 @@ class Solution:
             ptr.next = nxt
             ptr = ptr.next
 
-            rev_stack = []
-            while stack:
-                rev_stack.append(stack.pop())
-            stack = rev_stack
+            if stack:
+                nxt = stack.popleft()
+                ptr.next = nxt
+                ptr = ptr.next
         
         return ans
 
