@@ -8,38 +8,30 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
-        def reverse(head):
-            prev = None
-            it = head
-            nextnode = None
 
-            while it:
-                nextnode = it.next
-                it.next = prev
-                prev = it
-                it = nextnode
+        stack = []
+        node = head.next
+        while node:
+            mask = node
+            node = node.next
 
-            return prev
+            mask.next = None
+            stack.append(mask)
+            
 
-        if head is None:
-            return None
+        ans = head
+        ptr = ans
 
+        while stack:
+            
+            nxt = stack.pop()
+            ptr.next = nxt
+            ptr = ptr.next
+
+            rev_stack = []
+            while stack:
+                rev_stack.append(stack.pop())
+            stack = rev_stack
         
-        fast = head.next
-        slow = head
+        return ans
 
-
-        while fast and fast.next:
-            fast = fast.next.next
-            slow = slow.next
-
-        rev = reverse(slow.next)
-        slow.next = None
-
-        while rev:
-            h_next = head.next
-            r_next = rev.next
-            head.next = rev
-            rev.next = h_next
-            rev = r_next
-            head = h_next
