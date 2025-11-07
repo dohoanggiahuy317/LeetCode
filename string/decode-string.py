@@ -1,25 +1,25 @@
-class Solution(object):
-    def decodeString(self, s):
+class Solution:
+    def decodeString(self, s: str) -> str:
         stack = []
-        curNum = 0
-        curString = ''
 
-        for c in s:
-            if c == '[':
-                stack.append(curString)
-                stack.append(curNum)
-                curString = ''
-                curNum = 0
+        mul = 0
+        prefix = ""
+        for char in s:
+            if char.isalpha():
+                prefix += char
             
-            elif c == ']':
-                num = stack.pop()
-                prevString = stack.pop()
-                curString = prevString + num*curString
+            elif char.isdigit():
+                mul = mul * 10 + int(char)
             
-            elif c.isdigit():
-                curNum = curNum*10 + int(c)
+            elif char == "[":
+                stack.append([mul, prefix])
+                mul = 0
+                prefix = ""
+
+            elif char == "]":
+                prev_mul, prev_prefix = stack.pop()
+                prefix = prev_prefix + prefix * prev_mul
+
+        return prefix
+
             
-            else:
-                curString += c
-        
-        return curString
