@@ -1,70 +1,73 @@
-SWAP_DIRECTIONS = {
-                0: [1, 3], 1: [0, 2, 4], 2: [1, 5], 
-                3: [0, 4], 4: [1, 3, 5], 5: [2, 4], 
-            }
-
 class Solution:
     def slidingPuzzle(self, board: List[List[int]]) -> int:
-        # CONSTANT
         m, n = len(board), len(board[0])
-        length = m * n
-        MASK = (1 << 3) - 1
+        DIRS = {
+            0: [1, 3],
+            1: [0, 2, 4],
+            2: [1, 5],
+            3: [0, 4],
+            4: [3, 1, 5],
+            5: [2, 4],
+        }
 
         def pack_3bit(values):
-            pack_num = 0
+            num_pack = 0
             x0 = -1
-            for i, v in enumerate(values):
-                pack_num = (pack_num << 3) | v
-                if v == 0:
-                    x0 = i
-            return pack_num, x0
 
-        def tile_swap(board_1d, x0):
-            nonlocal length
-            
-            neighs = []
-            x0_shift = (length - 1 - x0) * 3
+            for i, num in enumerate(values):
+                num_pack = (num_pack << 3) | num
+                if num == 0:
+                    x0 = 5 - i
 
-            for di in SWAP_DIRECTIONS[x0]:
-                
-                di_shift = (length - 1 - di) * 3
-                di_pack = (board_1d >> di_shift) & MASK
+            return num_pack, x0
 
-                # Clear the 3-bit at the postion that will be swapped with 0
-                neigh = board_1d & ~(MASK << di_shift)
+        def tile_swap(num_pack, x0):
+            ALL_ONE = 7
+            BIT_LENGTH = 3
+            x0_shift = x0 * BIT_LENGTH
 
-                # Set the 3-bit at postion that used to 0 to current pack 
-                neigh = neigh | (di_pack << x0_shift)
-                
-                neighs.append((neigh, di))
+            neigh_packs = []
+            for neigh_idx in DIRS[x0]:
+                neigh_shift = neigh_idx * BIT_LENGTH
+                bit_neigh = (num_pack >> neigh_shift) & ALL_ONE  
 
-            return neighs
+                neigh_pack = num_pack & ~(ALL_ONE << neigh_shift)
+                neigh_pack = neigh_pack | (bit_neigh << x0_shift)
 
-        TARGET, _ = pack_3bit([1, 2, 3, 4, 5, 0])
-        board_1d, x0 = pack_3bit(cell for row in board for cell in row)
+                neigh_packs.append((neigh_pack, neigh_idx))
 
-        # BFS
-        queue = deque( [(board_1d, x0)] )
-        reachable = set()
-        step = 0
+            return neigh_packs
+        
+        TARGET, _ = pack_3bit([1,2,3,4,5,0])
+        start = pack_3bit(board[0] + board[1])
+
+        queue = deque([start])
+        visited = set(queue)
+        steps = 0
 
         while queue:
             for _ in range(len(queue)):
-                curr_board_1d, curr_x0 = queue.popleft()
+                num_pack, x0_idx = queue.popleft()
 
-                if curr_board_1d == TARGET:
-                    return step
+                if num_pack == TARGET:
+                    return steps
 
-                for neigh, new_x0 in tile_swap(curr_board_1d, curr_x0):
-                    if (neigh, new_x0) in reachable:
+                neigh_packs = tile_swap(num_pack, x0_idx)
+                for neigh_pack, neigh_idx in neigh_packs:
+                    if neigh_pack in visited:
                         continue
-                    
-                    queue.append((neigh, new_x0))
-                    reachable.add((neigh, new_x0))
+                
+                    queue.append((neigh_pack, neigh_idx))
+                    visited.add(neigh_pack)
 
-            step += 1
-
+            steps += 1
+        
         return -1
 
         
+
+
+
+        
+
 
