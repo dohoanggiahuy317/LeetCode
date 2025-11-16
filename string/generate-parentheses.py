@@ -1,21 +1,25 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         
-        def addParen(close_need, num_pair):
-            nonlocal ans, candidate
-            if num_pair == n and close_need == 0:
-                ans.append("".join(candidate))
+        def generate(open_paren, total_pair_form):
+            nonlocal n
+            if total_pair_form == n:
+                ans.append("".join(paren_li))
                 return
             
-            if not num_pair == n:
-                candidate.append("(")
-                addParen(close_need + 1, num_pair + 1)
-                candidate.pop()
-            if close_need > 0:
-                candidate.append(")")
-                addParen(close_need - 1, num_pair)
+            if open_paren < n:
+                paren_li.append("(")
+                generate(open_paren + 1, total_pair_form)
+                paren_li.pop()
+            
+            if open_paren > total_pair_form:
+                paren_li.append(")")
+                generate(open_paren, total_pair_form + 1)
+                paren_li.pop()
 
+        paren_li = []
         ans = []
-        candidate = []
-        addParen(0, 0)
+        generate(0, 0)
+        
         return ans
+
