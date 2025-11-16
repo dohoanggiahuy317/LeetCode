@@ -23,17 +23,17 @@ class Trie:
                 return []
             node = node.children[char]
         
-        queue = [(node.ch, node, word) for node in list(node.children.values())]
+        queue = deque([(node.ch, node, word) for node in list(node.children.values())])
         ans = [word] if node.exist else []
         while queue:
-            curr_char, curr_node, curr_word = heapq.heappop(queue)
+            curr_char, curr_node, curr_word = queue.popleft()
 
             next_word = curr_word + curr_char
             if curr_node.exist:
                 ans.append(next_word)
 
             for next_char, next_node in curr_node.children.items():
-                heapq.heappush(queue, (next_char, next_node, next_word))
+                queue.append((next_char, next_node, next_word))
 
         return sorted(ans)[:3]
 
