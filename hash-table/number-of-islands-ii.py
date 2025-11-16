@@ -16,7 +16,7 @@ class DSU:
         xr2, yr2 = self.parent[x2][y2]
 
         if (xr1, yr1) == (xr2, yr2):
-            return True
+            return False
 
         if yr1 > yr2:
             xr1, xr2 = xr2, xr1
@@ -27,7 +27,7 @@ class DSU:
             yr1, yr2 = yr2, yr1
 
         self.parent[xr2][yr2] = (xr1, yr1)
-        return False
+        return True
         
 class Solution:
     def numIslands2(self, m: int, n: int, positions: List[List[int]]) -> List[int]:
@@ -36,9 +36,10 @@ class Solution:
         DIRS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
         ans = []
-
+        island_num = 0
         for x, y in positions:
             board[x][y] = 1
+            island_num += 1
 
             for dx, dy in DIRS:
                 nx, ny = x + dx, y + dy
@@ -49,17 +50,10 @@ class Solution:
                 if board[nx][ny] != 1:
                     continue
 
-                dsu.union(x, y, nx, ny)
+                if dsu.union(x, y, nx, ny):
+                    island_num -= 1
 
-            islands = set()
-            for x in range(m):
-                for y in range(n):
-                    if board[x][y] == 1:
-                        islands.add(dsu.find(x, y))
-
-
-
-            ans.append(len(islands))
+            ans.append(island_num)
 
         return ans
 
