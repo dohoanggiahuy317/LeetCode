@@ -9,4 +9,10 @@ class Solution:
 
         prefix_tracker = list(accumulate(tracker))
         # print(prefix_tracker)
-        return [prefix_tracker[person] for person in people]
+        ans = []
+        for person in people:
+            if 0 <= person <= MAX_DAY + 1:
+                ans.append(prefix_tracker[person])
+            else:
+                ans.append(0)
+        return ans
