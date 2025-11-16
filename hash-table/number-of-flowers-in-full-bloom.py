@@ -12,4 +12,4 @@ class Solution:
             this_end = bisect.bisect_left(ends, person)
             ans.append(this_start - this_end)
 
-        return res
+        return ans
