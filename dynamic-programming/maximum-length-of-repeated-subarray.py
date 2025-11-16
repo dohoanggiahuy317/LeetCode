@@ -1,35 +1,13 @@
 class Solution:
     def findLength(self, nums1: List[int], nums2: List[int]) -> int:
-        
+        m, n = len(nums1), len(nums2)
+        dp = [[0] * m for _ in range(n)]
+
         ans = 0
-        for i in range(len(nums1)):
-            temp = 0
-
-            j1 = i
-            j2 = 0
-            while j1 < len(nums1) and j2 < len(nums2):
-                if nums1[j1] == nums2[j2]:
-                    j1 += 1
-                    j2 += 1
-                    temp += 1
-                else:
-                    break
-
-            ans = max(ans, temp)
-
-        for i in range(len(nums2)):
-            temp = 0
-
-            j2 = i
-            j1 = 0
-            while j1 < len(nums1) and j2 < len(nums2):
-                if nums1[j1] == nums2[j2]:
-                    j1 += 1
-                    j2 += 1
-                    temp += 1
-                else:
-                    break
-
-            ans = max(ans, temp)
+        for i in range(m):
+            for j in range(n):
+                if nums1[i] == nums2[j]:
+                    dp[i][j] = 1 + (dp[i - 1][j - 1] if i > 0 and j > 0 else 0)
+                    ans = max(ans, dp[i][j])
 
         return ans
