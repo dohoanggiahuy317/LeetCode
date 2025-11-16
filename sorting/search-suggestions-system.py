@@ -6,46 +6,53 @@ class TrieNode:
 
 class Trie:
     def __init__(self):
-        self.tree = TrieNode("^")
-
-    def insert(self, word):
-        node = self.tree
-        for char in word:
-            if char not in node.children:
-                node.children[char] = TrieNode(char)
-            node = node.children[char]
-        node.exist = True
+        self.root = TrieNode("^")
     
-    def suggest(self, word):
-        node = self.tree
-        for char in word:
-            if char not in node.children:
-                return []
-            node = node.children[char]
+    def add_node(self, word):
+        node = self.root
+
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode(ch)
+            node = node.children[ch]
         
-        queue = deque([(node.ch, node, word) for node in list(node.children.values())])
-        ans = [word] if node.exist else []
-        while queue:
-            curr_char, curr_node, curr_word = queue.popleft()
+        node.exist = True
 
-            next_word = curr_word + curr_char
-            if curr_node.exist:
-                ans.append(next_word)
+    def find_word(self, word):
+        
+        # Find the node that contain the word
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                return []
+            node = node.children[ch]
+        
+        # find the node that exist starting from node
+        queue = [(word, node)]
+        words = []
 
-            for next_char, next_node in curr_node.children.items():
-                queue.append((next_char, next_node, next_word))
+        while queue and len(words) < 3:
+            full_word, node = heapq.heappop(queue)
+            
+            if node.exist:
+                words.append(full_word)
+            
+            for child_char, child_node in node.children.items():
+                heapq.heappush(queue, (full_word + child_char, child_node))
 
-        return sorted(ans)[:3]
-
+        return words
 
 class Solution:
     def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
-        trie = Trie()
-        for product in products:
-            trie.insert(product)
         
+        trie = Trie()
+
+        for prod in products:
+            trie.add_node(prod)
+
         ans = []
         for i in range(1, len(searchWord) + 1):
-            ans.append(trie.suggest(searchWord[:i]))
-
+            t = trie.find_word(searchWord[:i])
+            ans.append(t)
+        
         return ans
