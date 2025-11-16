@@ -1,7 +1,7 @@
 class Solution:
     def findLength(self, nums1: List[int], nums2: List[int]) -> int:
         m, n = len(nums1), len(nums2)
-        dp = [[0] * m for _ in range(n)]
+        dp = [[0] * n for _ in range(m)]
 
         ans = 0
         for i in range(m):
