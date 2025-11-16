@@ -6,30 +6,17 @@ class Solution:
             tracker[start] += 1
             tracker[end + 1] -= 1
 
-        prefix_tracker = []
-        MIN_DAY = inf
-        MAX_DAY = -inf
-        for day in sorted(tracker.keys()):
-            freq = tracker[day] + (prefix_tracker[-1][1] if prefix_tracker else 0)
-            prefix_tracker.append((day, freq))
-            MIN_DAY = min(MIN_DAY, day)
-            MAX_DAY = max(MAX_DAY, day)
+        days = sorted(tracker.keys())
+        ans = [0] * len(people)
+        sorted_people = sorted([(person, i) for i, person in enumerate(people)])
         
-        ans = []
-        for person in people:
-            if not (MIN_DAY <= person <= MAX_DAY):
-                ans.append(0)
-            else:
-                l, r = 0, len(prefix_tracker) - 1
-                temp = -1
-                while l <= r:
-                    m = (l + r) // 2
-                    if person >= prefix_tracker[m][0]:
-                        temp = m
-                        l = m + 1
-                    else:
-                        r = m - 1
-
-                ans.append(prefix_tracker[temp][1])
+        day_ptr = 0
+        num_flower = 0
+        for person, i in sorted_people:
+            while day_ptr < len(days) and days[day_ptr] <= person:
+                num_flower += tracker[ days[day_ptr] ]
+                day_ptr += 1
+                
+            ans[i] = num_flower
                 
         return ans
