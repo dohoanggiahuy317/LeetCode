@@ -15,7 +15,7 @@ class SegmentTree:
     def query(self, l, r):
         l += self.N
         r += self.N
-        ans = -inf
+        ans = 0
         while l < r:
             if l % 2 == 1:
                 ans = max(ans, self.tree[l])
