@@ -1,7 +1,7 @@
 class SegmentTree:
     def __init__(self, n):
         self.N = n
-        self.tree = [1] * (self.N * 2)
+        self.tree = [0] * (self.N * 2)
         self.tree[self.N:]
 
     def insert(self, i, val):
@@ -17,10 +17,10 @@ class SegmentTree:
         r += self.N
         ans = 0
         while l < r:
-            if l % 2 == 1:
+            if l & 1:
                 ans = max(ans, self.tree[l])
                 l += 1
-            if r % 2 == 1:
+            if r & 1:
                 r -= 1
                 ans = max(ans, self.tree[r])
             l >>= 1
@@ -43,14 +43,14 @@ class Solution:
         """
 
         sorted_nums = sorted([(num, i) for i, num in enumerate(nums)])
-        pos = {(num, i): idx for idx, (num, i) in enumerate(sorted_nums)}
+        pos = {num: k for k, (num, i) in enumerate(sorted_nums)}
 
-
-        ans = 1
+        ans = 0
         n = len(nums)
         segment_tree = SegmentTree(n)
+
         for i, num in enumerate(nums):
-            k = pos[(num, i)]
+            k = pos[num]
             lis = segment_tree.query(0, k) + 1
             ans = max(ans, lis)
             segment_tree.insert(k, lis)
