@@ -1,15 +1,8 @@
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        dic = {}
-
-        for x in nums:
-            if x in dic.keys():
-                dic[x] += 1
-            else:
-                dic[x] = 1
-
-        
-        dic_sorted = list(sorted(dic.items(), key=lambda x: x[1], reverse=True))
-
-        # print(dic_sorted)
-        return list(map(lambda x: x[0], dic_sorted[:k]))
+        bucket = [[] for _ in range(len(nums) + 1)]
+        Count = Counter(nums).items()  
+        for num, freq in Count: 
+            bucket[freq].append(num) 
+        flat_list = [item for sublist in bucket for item in sublist]
+        return flat_list[::-1][:k]
