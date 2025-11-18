@@ -5,18 +5,21 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-
-    def _is_valid_bst(self, root):
-        if not root:
-            return -inf, inf, True
-
-        max_left, min_left, is_left_bst = self._is_valid_bst(root.left)
-        max_right, min_right, is_right_bst = self._is_valid_bst(root.right)
-
-        check_order = max_left < root.val < min_right
-        is_bst = check_order and is_left_bst and is_right_bst
-
-        return max(max_right, root.val), min(min_left, root.val), is_bst
-
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        return self._is_valid_bst(root)[2]
+
+
+        def transversal(root):
+            if not root:
+                return True, inf, -inf
+
+            valid_left, min_left, max_left = transversal(root.left)
+            valid_right, min_right, max_right = transversal(root.right)
+
+            # print(root.val, valid_left, valid_right, max_left, min_right)
+
+            return (max_left < root.val < min_right and valid_left and valid_right, 
+                    min_left if root.left else root.val, 
+                    max_right if root.right else root.val)
+
+        
+        return transversal(root)[0]
