@@ -1,27 +1,27 @@
-from collections import defaultdict
-import heapq
-
 class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
-        graph = defaultdict(dict)
+        
 
+        transmit_cost = [inf] * (n + 1)
+        graph = defaultdict(list)
         for u, v, w in times:
-            graph[u][v] = w
+            graph[u].append((v, w))
 
-
-        queue = []
-        heapq.heappush(queue, (0, k))
-
-        dist = [float("INF")] * n
-        dist[k-1] = 0
-
+        queue = [(0, k)]
+        transmit_cost[k] = 0
+        
         while queue:
-            curr, node = heapq.heappop(queue)
+            cost, node = heapq.heappop(queue)
 
-            for neigh, weight in graph[node].items():
-                if dist[neigh-1] > dist[node-1] + weight:
-                    dist[neigh-1] = dist[node-1] + weight
-                    heapq.heappush(queue, (dist[neigh-1], neigh))
+            if cost > transmit_cost[node]:
+                continue
 
-        dist.pop(k-1)
-        return max(dist) if float("INF") not in dist else -1
+            for neigh, neigh_cost in graph[node]:
+                new_cost = cost + neigh_cost
+                if new_cost < transmit_cost[neigh]:
+                    transmit_cost[neigh] = new_cost
+                    heapq.heappush(queue, (new_cost, neigh))
+
+        return max(transmit_cost[1:]) if all(cost != inf for cost in transmit_cost[1:]) else -1
+
+
