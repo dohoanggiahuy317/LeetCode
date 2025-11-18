@@ -24,9 +24,8 @@ class Solution:
 
             for neigh_city, neigh_cost in graph[city]:
                 new_cost = cost + neigh_cost
-                if (step, neigh_city) not in best:
-                    
-                    best[(step, neigh_city)] = new_cost
+                if new_cost < best[(step + 1, neigh_city)]:
+                    best[(step + 1, neigh_city)] = new_cost
                     heapq.heappush(queue, (new_cost, step + 1, neigh_city))
 
 
