@@ -1,30 +1,35 @@
 class Solution:
     def maxProfitAssignment(self, difficulty: List[int], profit: List[int], worker: List[int]) -> int:
-        diff_prof = zip(difficulty, profit)
-        diff_prof = sorted(diff_prof)
+        n = len(difficulty)
 
-        prefMax = [0] * len(diff_prof)
-        for i, (diff, prof) in enumerate(diff_prof):
-            prefMax[i] = max(prefMax[i - 1] if i > 0 else 0, diff_prof[i][1])
+        def hardest_job(w):
+            nonlocal n
 
-        ans = 0
-        for w in worker:
-            l, r = 0, len(diff_prof) - 1
-            best = -1
+            l, r = 0, n - 1
+            idx = 0
 
             while l <= r:
                 m = (l + r) // 2
-
-                if w < diff_prof[m][0]:
-                    r = m - 1
-                else:
-                    best = m
+                if diff_prof[m][0] <= w:
+                    idx = m
                     l = m + 1
-                
-                
+                else:
+                    r = m - 1
+
+            return idx
+            
         
-            ans += prefMax[best] if best != -1 else 0
+        diff_prof = list(zip(difficulty, profit))
+        diff_prof.sort()
+        
+        prof_prefix_max = list(accumulate([prof for _, prof in diff_prof], max))
+
+        ans = 0
+        for w in worker:
+            if w < diff_prof[0][0]:
+                continue
+
+            idx = hardest_job(w)
+            ans += prof_prefix_max[idx]
 
         return ans
-
-                    
