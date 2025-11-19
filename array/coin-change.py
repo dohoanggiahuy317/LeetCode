@@ -3,10 +3,11 @@ class Solution:
         dp = [inf] * (amount + 1)
         dp[0] = 0
 
-        for coin in coins:
-            for i in range(amount + 1):
-                if amount + 1 > i - coin >= 0:
-                    dp[i] = min(dp[i], dp[i - coin] + 1)
-        
-        return dp[-1] if dp[-1] != inf else -1
+        for value in range(1, amount + 1):
+            for coin in coins:
+                prev_value = value - coin
+                if prev_value >= 0:
+                    dp[value] = min(dp[value], dp[prev_value] + 1)
 
+
+        return dp[amount] if dp[amount] != inf else -1
