@@ -19,20 +19,22 @@ class WordDictionary:
         node.exist = True
 
     def search(self, word: str) -> bool:
-        queue = deque([self.root])
 
-        for ch in word:
-            for _ in range(len(queue)):
-                node = queue.popleft()
+        def dfs(node, i):
+            if node.exist:
+                return True
 
-                if ch.isalpha() and ch in node.children:
-                    queue.append(node.children[ch])
+            ch = word[i]
 
-                elif ch == ".":
-                    for child in node.children.values():
-                        queue.append(child)
+            if ch.isalpha() and ch in node.children:
+                return dfs(node.children[ch], i + 1)
+            elif ch == ".":
+                for child in node.children.values():
+                    return dfs(child, i + 1)
 
-        return any([node.exist for node in queue])
+            return False
+
+        return dfs(self.root, 0)
 
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
