@@ -1,51 +1,45 @@
-DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-
 class Solution:
     def swimInWater(self, grid: List[List[int]]) -> int:
-        # Constant
-        m, n = len(grid), len(grid[0])
-        
-        # can_swim
-        def can_swim(target_time):
-            queue = deque([ (0, 0) ])
-            reachable = set(queue)
+        n = len(grid)
+        DIRS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+        def swimmable(t):
+            nonlocal n
+            queue = deque([(0, 0)])
+            visited = set(queue)
 
             while queue:
-                for _ in range(len(queue)):
-                    cx, cy = queue.popleft()
+                x, y = queue.popleft()
+                
+                if x == n - 1 and y == n - 1:
+                    return True
 
-                    for i, j in DIRECTIONS:
-                        nx, ny = cx + i, cy + j
+                for dx, dy in DIRS:
+                    nx, ny = x + dx, y + dy
 
-                        if not(0 <= nx < m and 0 <= ny < n):
-                            continue
-                        
-                        if grid[nx][ny] > target_time:
-                            continue
-                        
-                        if (nx, ny) in reachable:
-                            continue
-                        
-                        if nx == m - 1 and ny == n - 1:
-                            return True
+                    if not (0 <= nx < n and 0 <= ny < n):
+                        continue 
+                    
+                    if (nx, ny) in visited:
+                        continue
 
-                        queue.append( (nx, ny) )
-                        reachable.add((nx, ny))
+                    if grid[nx][ny] > t:
+                        continue
+
+                    queue.append((nx, ny))
+                    visited.add((nx, ny))
 
             return False
 
-        # START SWIMING
-        l = grid[0][0]
-        r = max(max(row) for row in grid)
-        ans = 0
-        
+        l, r = 0, max([max(row) for row in grid])
+        best_t = -1
         while l <= r:
-            m_target_time = (l + r) // 2
+            m = (l + r) >> 1
 
-            if can_swim(m_target_time):
-                ans = m_target_time
-                r = m_target_time - 1
+            if swimmable(m):
+                best_t = m
+                r = m - 1
             else:
-                l = m_target_time + 1
+                l = m + 1
 
-        return ans
+        return best_t
