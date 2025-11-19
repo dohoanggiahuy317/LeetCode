@@ -1,34 +1,43 @@
 class MyCalendar:
 
     def __init__(self):
-        self.events = SortedList()
+        self.calender = SortedList()
 
     def book(self, startTime: int, endTime: int) -> bool:
-        if not self.events:
-            self.events.add((startTime, endTime))
+        if not self.calender:
+            self.calender.add((startTime, endTime))
             return True
 
-        l, r = 0, len(self.events) - 1
-        idx = len(self.events)
+        n = len(self.calender)
+        l, r = 0, n - 1
+        idx = -1
         while l <= r:
-            m = (l + r) // 2
-            if endTime <= self.events[m][0]:
+            m = (l + r) >> 1
+            if self.calender[m][0] <= startTime:
                 idx = m
-                r = m - 1
-            else:
                 l = m + 1
-
-        prev_idx = idx - 1
-
-        if idx == len(self.events) or idx != 0:
-            if self.events[prev_idx][1] <= startTime:
-                self.events.add((startTime, endTime))
-                return True
-            return False
+            else:
+                r = m - 1 
         
-        self.events.add((startTime, endTime))
-        return True
-  
+        if idx == len(self.calender) - 1:
+            if self.calender[idx][1] <= startTime:
+                self.calender.add((startTime, endTime))
+                return True
+
+        if idx == -1:
+            if self.calender[idx + 1][0] >= endTime:
+                self.calender.add((startTime, endTime))
+                return True
+
+        after_idx = idx + 1
+        if self.calender[idx][1] <= startTime and endTime <=  self.calender[after_idx][1]:
+            self.calender.add((startTime, endTime))
+            return True
+
+        return False
+        
+
+
 
 # Your MyCalendar object will be instantiated and called as such:
 # obj = MyCalendar()
