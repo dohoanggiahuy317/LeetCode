@@ -33,10 +33,9 @@ class WordDictionary:
             if ch.isalpha() and ch in node.children:
                 return dfs(node.children[ch], i + 1)
             elif ch == ".":
-                word_found = False
                 for child in node.children.values():
-                    word_found = word_found or dfs(child, i + 1)
-                return word_found
+                    if dfs(child, i + 1):
+                        return True
 
             return False
 
