@@ -32,12 +32,7 @@ class WordDictionary:
                     for child in node.children.values():
                         queue.append(child)
 
-        for node in queue:
-            if node.exist:
-                return True
-
-        return False
-
+        return any([node.exist for node in queue])
 
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
