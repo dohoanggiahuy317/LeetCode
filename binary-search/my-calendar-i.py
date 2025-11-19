@@ -19,18 +19,18 @@ class MyCalendar:
             else:
                 r = m - 1 
         
-        if idx == len(self.calender) - 1:
+        if idx == len(self.calender) - 1: # add to the end of the calendar
             if self.calender[idx][1] <= startTime:
                 self.calender.add((startTime, endTime))
                 return True
 
-        if idx == -1:
-            if self.calender[idx + 1][0] >= endTime:
+        if idx == -1: # add to head of calendar
+            if self.calender[0][0] >= endTime:
                 self.calender.add((startTime, endTime))
                 return True
 
         after_idx = idx + 1
-        if self.calender[idx][1] <= startTime and endTime <=  self.calender[after_idx][1]:
+        if self.calender[idx][1] <= startTime and endTime <= self.calender[after_idx][0]:
             self.calender.add((startTime, endTime))
             return True
 
