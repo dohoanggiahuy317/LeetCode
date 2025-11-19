@@ -23,16 +23,20 @@ class WordDictionary:
         def dfs(node, i):
             nonlocal word
 
-            if node.exist and i == len(word):
-                return True
-            # print(node.ch, i)
+            if i == len(word):
+                if node.exist:
+                    return True
+                return False
+
             ch = word[i]
 
             if ch.isalpha() and ch in node.children:
                 return dfs(node.children[ch], i + 1)
             elif ch == ".":
+                word_found = False
                 for child in node.children.values():
-                    return dfs(child, i + 1)
+                    word_found = word_found or dfs(child, i + 1)
+                return word_found
 
             return False
 
