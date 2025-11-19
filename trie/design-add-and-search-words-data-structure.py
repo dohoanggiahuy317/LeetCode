@@ -21,9 +21,11 @@ class WordDictionary:
     def search(self, word: str) -> bool:
 
         def dfs(node, i):
-            if node.exist:
-                return True
+            nonlocal word
 
+            if node.exist and i == len(word):
+                return True
+            # print(node.ch, i)
             ch = word[i]
 
             if ch.isalpha() and ch in node.children:
