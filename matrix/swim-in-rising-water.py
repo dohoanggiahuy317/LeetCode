@@ -31,7 +31,7 @@ class Solution:
 
             return False
 
-        l, r = 0, max([max(row) for row in grid])
+        l, r = grid[0][0], max([max(row) for row in grid])
         best_t = -1
         while l <= r:
             m = (l + r) >> 1
