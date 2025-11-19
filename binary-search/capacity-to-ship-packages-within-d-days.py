@@ -1,32 +1,27 @@
 class Solution:
     def shipWithinDays(self, weights: List[int], days: int) -> int:
         
-        def canShip(m):
-            nonlocal weights, days
+        def can_ship(c):
+            idx = 0
+            for _ in range(days):
+                today_c = c
+                while idx < len(weights) and today_c - weights[idx] >= 0:
+                    today_c -= weights[idx]
+                    idx += 1
 
-            curr_sum = 0
-            day_need = 1
-            for weight in weights:
-                curr_sum += weight
-                if curr_sum > m:
-                    curr_sum = weight
-                    day_need += 1
-                
-                # print(curr_sum)
+            return idx == len(weights)
 
-            # day_need += 1 if curr_sum > m else 0
+        
+        l, r = 0, sum(weights)
+        best_c = -1
 
-            return day_need <= days
-
-        l, r = max(weights), sum(weights)
-        ans = 0
         while l <= r:
-            m = (l + r) // 2
-            print(l, r, m)
-            if canShip(m):
-                ans = m
+            m = (l + r) >> 1
+
+            if can_ship(m):
+                best_c = m
                 r = m - 1
             else:
-                l = m + 1
-
-        return ans
+                l += 1
+        
+        return best_c
