@@ -22,6 +22,6 @@ class Solution:
                 best_c = m
                 r = m - 1
             else:
-                l += 1
+                l = m + 1
         
         return best_c
