@@ -1,13 +1,6 @@
 class Solution:
-    def findErrorNums(self, nums):
-        dup, missing = -1, -1
+    def findErrorNums(self, nums: List[int]) -> List[int]:
+        for i, num in enumerate(nums):
+            if num != i + 1:
+                return [i, i + 1]
         
-        for i in range(1, len(nums) + 1):
-            count = nums.count(i)
-            if count == 2:
-                dup = i
-            elif count == 0:
-                missing = i
-        
-        return [dup, missing]
-
