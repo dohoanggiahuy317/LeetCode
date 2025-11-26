@@ -10,6 +10,8 @@ class Solution:
         
 
         def transversal(root):
+            nonlocal found
+            
             if not root:
                 return root
 
@@ -32,7 +34,6 @@ class Solution:
             
             return is_left if is_left else is_right
 
-        
         found = False
         ans = transversal(root)
 
