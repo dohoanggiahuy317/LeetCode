@@ -6,31 +6,32 @@
 #         self.right = None
 
 class Solution:
-    qFound, pFound = False, False
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        def dfs(node):
-            nonlocal found
-            if not node:
-                return None
+        
+        def transversal(root):
+            nonlocal condition, found
             
-            left = dfs(node.left)
-            right = dfs(node.right)
+            if not root:
+                return root
+
+            is_left = transversal(root.left)
+            is_right = transversal(root.right)
 
             condition = 0
-            if node in (p, q):
-                condition +=1
-            if left:
+            if root == p or root == q:
                 condition += 1
-            if right:
+            if is_left:
+                condition += 1
+            if is_right:
                 condition += 1
             if condition == 2:
                 found = True
             
-            if (left and right) or (node in (p, q)):
-                return node
+            if (is_left and is_right) or (root == p or root == q):
+                return root
             
-            return left if left else right
-        
-        found = False
-        ans = dfs(root)
+            return is_left if is_left else is_right
+
+        found, condition = False, 0
+        ans = transversal(root)
         return ans if found else None
