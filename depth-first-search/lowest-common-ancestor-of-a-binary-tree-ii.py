@@ -8,9 +8,8 @@
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         
+
         def transversal(root):
-            nonlocal condition, found
-            
             if not root:
                 return root
 
@@ -24,14 +23,17 @@ class Solution:
                 condition += 1
             if is_right:
                 condition += 1
+            
             if condition == 2:
                 found = True
-            
+
             if (is_left and is_right) or (root == p or root == q):
                 return root
             
             return is_left if is_left else is_right
 
-        found, condition = False, 0
+        
+        found = False
         ans = transversal(root)
+
         return ans if found else None
