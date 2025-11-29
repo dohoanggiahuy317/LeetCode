@@ -20,7 +20,7 @@ class Solution:
             
             ans = -inf
             for i, s in enumerate(pref_sum):
-                ans = max(ans, max(s, (s - pref_min[i])))
+                ans = max(ans, max(s, s - pref_min[i]))
             
             return ans % MOD
                 
