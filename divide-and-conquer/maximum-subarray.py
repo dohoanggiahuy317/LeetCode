@@ -1,18 +1,13 @@
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        prefix_sum = list(accumulate(nums))
-        # prefix_max = [nums[0]] * len(nums)
-        prefix_min = [nums[0]] * len(nums)
+        pref_sum = list(accumulate(nums))
+        pref_min = []
 
-        for i in range(1, len(nums)):
-            # prefix_max[i] = max(prefix_max[i - 1], prefix_sum[i])
-            prefix_min[i] = min(prefix_min[i - 1], prefix_sum[i])
-        # print(prefix_sum)
-        # print(prefix_max)
-        # print(prefix_min)
-        ans = -inf
-        for i in range(len(nums)):
-            ans = max(ans, prefix_sum[i])
-            ans = max(ans, prefix_sum[i] - (prefix_min[i - 1] if i > 0 else 0))
-
+        for i, s in enumerate(pref_sum):
+            pref_min.append(s if i == 0 else min(s, pref_min[-1]))
+        
+        ans = 0
+        for i, s in enumerate(pref_sum):
+            ans = max(ans, max(s, s - pref_min[i]))
+        
         return ans
