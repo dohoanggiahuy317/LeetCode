@@ -9,10 +9,10 @@ class Solution:
         s2 = max(suff_sum)
 
         if s >= 0:
-            return ((((k - 2) % MOD) * (s % MOD)) % MOD + (s1 % MOD + s2 % MOD) % MOD) % MOD
+            return (((max(0, (k - 2) % MOD)) * (s % MOD)) % MOD + (s1 % MOD + s2 % MOD) % MOD) % MOD
 
         else:
-            pref_sum = list(accumulate(arr + arr))
+            pref_sum = list(accumulate((arr + arr) if k >= 2 else arr))
             pref_min = []
 
             for i, s in enumerate(pref_sum):
