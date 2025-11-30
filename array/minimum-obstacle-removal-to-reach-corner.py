@@ -14,7 +14,7 @@ class Solution:
 
             if (x, y) == (m - 1, n - 1):
                 ans = min(ans, cost[x][y])
-                continue
+                return ans
 
             for dx, dy in DIRS:
                 nx, ny = x + dx, y + dy
