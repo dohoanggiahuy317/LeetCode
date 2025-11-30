@@ -31,8 +31,6 @@ class Solution:
                 
                 board[i][j] = (new_status << 1) + curr_status
 
-        for x in board:
-            print([bin(cell) for cell in x])
         
         for i in range(m):
             for j in range(n):
