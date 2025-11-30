@@ -1,22 +1,20 @@
 class Solution:
     def decodeString(self, s: str) -> str:
-
-        prefix, freq = "", 0
+        prefix, k = "", 0
+        curr_word = ""
         stack = []
 
-        for char in s:
-            if char.isdigit():
-                freq = freq * 10 + int(char)
-            elif char == "[":
-                stack.append((prefix, freq))
-                freq = 0
+        for ch in s:
+            if ch.isdigit():
+                k = k * 10 + int(ch)
+            elif ch == "[":
+                stack.append((prefix, k))
+                k = 0
                 prefix = ""
-            elif char == "]":
-                prev_prefix, prev_freq = stack.pop()
-                prefix = prev_prefix + prev_freq * prefix
-            else:
-                prefix += char
+            elif ch.isalpha():
+                prefix += ch
+            elif ch == "]":
+                prev_prefix, prev_k = stack.pop()
+                prefix = prev_prefix + prev_k * prefix
 
         return prefix
-
-            
