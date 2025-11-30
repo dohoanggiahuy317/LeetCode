@@ -2,46 +2,41 @@ class NeighborSum:
 
     def __init__(self, grid: List[List[int]]):
         self.m, self.n = len(grid), len(grid[0])
-        self.val2coor = {}
-        self.coor2val = {}
+        self.ADJ = [(0, 1), (1, 0), (-1, 0), (0, -1)]
+        self.DIA = [(1, 1), (1, -1), (-1, -1), (-1, 1)]
+
+        self.grid = [row[:] for row in grid]
+        self.value2coor = defaultdict()
 
         for i in range(self.m):
             for j in range(self.n):
-                val = grid[i][j]
-                self.val2coor[val] = (i, j)
-                self.val2coor[(i, j)] = val
-        
+                val = self.grid[i][j]
+                self.value2coor[val] = (i, j)
 
     def adjacentSum(self, value: int) -> int:
-        i, j = self.val2coor[value]
+        x, y = self.value2coor[value]
+        ans = 0
 
-        s = 0
-        if i > 0:
-            s += self.val2coor[(i - 1, j)]
-        if i < self.m - 1:
-            s += self.val2coor[(i + 1, j)]
-        if j > 0:
-            s += self.val2coor[(i, j - 1)]
-        if j < self.n - 1:
-            s += self.val2coor[(i, j + 1)]
-
-        return s
+        for dx, dy in self.ADJ:
+            nx, ny = x + dx, y + dy
+            if not (0 <= nx < self.m and 0 <= ny < self.n):
+                continue
+            ans += self.grid[nx][ny]
         
+        return ans
 
     def diagonalSum(self, value: int) -> int:
-        i, j = self.val2coor[value]
+        x, y = self.value2coor[value]
+        ans = 0
 
-        s = 0
-        if i > 0 and j > 0:
-            s += self.val2coor[(i - 1, j - 1)]
-        if i < self.m - 1 and j > 0:
-            s += self.val2coor[(i + 1, j - 1)]
-        if j < self.n - 1 and i < self.m - 1:
-            s += self.val2coor[(i + 1, j + 1)]
-        if j < self.n - 1 and i > 0:
-            s += self.val2coor[(i - 1, j + 1)]
+        for dx, dy in self.DIA:
+            nx, ny = x + dx, y + dy
+            if not (0 <= nx < self.m and 0 <= ny < self.n):
+                continue
 
-        return s
+            ans += self.grid[nx][ny]
+        
+        return ans
 
 
 # Your NeighborSum object will be instantiated and called as such:
