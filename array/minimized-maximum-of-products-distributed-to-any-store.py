@@ -12,7 +12,7 @@ class Solution:
 
             return cnt <= n
 
-        l, r = 0, max(quantities)
+        l, r = 1, max(quantities)
         ans = inf
 
         while l <= r:
