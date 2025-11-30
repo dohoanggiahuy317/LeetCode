@@ -6,11 +6,11 @@ class Solution:
         cost = [[inf] * n for _ in range(m)]
         cost[0][0] = 0
 
-        queue = deque([(0, 0)])
+        queue = [(0, 0)]
         ans = inf
 
         while queue:
-            x, y = queue.pop()
+            x, y = heapq.heappop(queue)
 
             if (x, y) == (m - 1, n - 1):
                 ans = min(ans, cost[x][y])
@@ -28,7 +28,7 @@ class Solution:
                 
                 if new_cost < cost[nx][ny]:
                     cost[nx][ny] = new_cost
-                    queue.append((nx, ny))
+                    heapq.heappush(queue, (nx, ny))
 
         return ans
             
