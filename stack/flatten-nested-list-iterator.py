@@ -16,8 +16,8 @@ class NestedIterator:
             new_elem = elem_li[0]
             rest_elems = elem_li[1:]
 
-            for rest_elem in rest_elems:
-                self.stack.append(rest_elem)
+            for i in range(len(rest_elems)-1, -1, -1):
+                self.stack.append(rest_elems[i])
 
             elem = new_elem
 
