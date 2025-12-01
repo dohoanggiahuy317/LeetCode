@@ -21,13 +21,15 @@ class NestedIterator:
         while not elem.isInteger():
             elem_li = elem.getList()
             
-            if len(elem_li) == 0:
+            if len(elem_li) > 0:
+                for i in range(len(elem_li)-1, -1, -1):
+                    self.stack.append(elem_li[i])
+
+            if not self.stack:
                 return False
-
-            for i in range(len(elem_li)-1, -1, -1):
-                self.stack.append(elem_li[i])
-
+            
             elem = self.stack.pop()
 
         self.stack.append(elem)
+        # print(self.stack)
         return True
