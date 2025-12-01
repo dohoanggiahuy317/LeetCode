@@ -10,18 +10,24 @@ class NestedIterator:
     
     def next(self) -> int:
         elem = self.stack.pop()
-
-        while not elem.isInteger():
-            elem_li = elem.getList()
-            new_elem = elem_li[0]
-            rest_elems = elem_li[1:]
-
-            for i in range(len(rest_elems)-1, -1, -1):
-                self.stack.append(rest_elems[i])
-
-            elem = new_elem
-
         return elem.getInteger()
     
     def hasNext(self) -> bool:
-        return len(self.stack) > 0
+        if len(self.stack) == 0:
+            return False
+
+        elem = self.stack.pop()
+
+        while not elem.isInteger():
+            elem_li = elem.getList()
+            
+            if len(elem_li) == 0:
+                return False
+
+            for i in range(len(elem_li)-1, -1, -1):
+                self.stack.append(elem_li[i])
+
+            elem = self.stack.pop()
+
+        self.stack.append(elem)
+        return True
