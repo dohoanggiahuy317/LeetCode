@@ -1,30 +1,34 @@
 class Solution:
-    def __init__(self):
-        self.pre_index = 0
-        self.post_index = 0
+    def constructFromPrePost(self, preorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+        n = len(preorder)
+        tree_map = defaultdict()
+        
+        while len(preorder) > 2:
+            for i in range(n - 2):
+                if sorted(preorder[i:i + 3]) == sorted(postorder[i:i+3]):
+                    if preorder[i] not in tree_map:
+                        tree_map[preorder[i]] = TreeNode(preorder[i])
+                    if preorder[i+1] not in tree_map:
+                        tree_map[preorder[i+1]] = TreeNode(preorder[i+1])
+                    if preorder[i+2] not in tree_map:
+                        tree_map[preorder[i+2]] = TreeNode(preorder[i+2])
+                    
+                    tree_map[preorder[i]].left = tree_map[preorder[i+1]]
+                    tree_map[preorder[i]].right = tree_map[preorder[i+2]]
 
-    # Helper function to recursively build the tree
-    def constructFromPrePost(
-        self, preorder: List[int], postorder: List[int]
-    ) -> Optional[TreeNode]:
-        return self._construct_tree(preorder, postorder)
+                    preorder.pop(i + 1)
+                    preorder.pop(i + 2)
 
-    def _construct_tree(
-        self, preorder: List[int], postorder: List[int]
-    ) -> Optional[TreeNode]:
-        root = TreeNode(preorder[self.pre_index])
-        self.pre_index += 1
+                    postorder.pop(i)
+                    postorder.pop(i + 1)
 
-        # Recursively construct the left subtree if the root is not the last of
-        # its subtree
-        if root.val != postorder[self.post_index]:
-            root.left = self._construct_tree(preorder, postorder)
+        if len(preorder) == 2:
+            tree_map[preorder[0]].left = tree_map[preorder[1]]
 
-        # Recursively construct the right subtree if the root is not the last of
-        # its subtree
-        if root.val != postorder[self.post_index]:
-            root.right = self._construct_tree(preorder, postorder)
+        return tree_map[preorder[0]] 
 
-        # Mark this node and its subtree as fully processed
-        self.post_index += 1
-        return root
+
+
+
+
+
