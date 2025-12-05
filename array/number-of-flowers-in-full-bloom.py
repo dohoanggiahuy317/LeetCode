@@ -1,18 +1,22 @@
 class Solution:
     def fullBloomFlowers(self, flowers: List[List[int]], people: List[int]) -> List[int]:
-        line = defaultdict(int)
+        DESTROY = -1
+        BLOOM = 1
+        VISIT = 0
 
-        for start, end in flowers:
-            line[start] += 1
-            line[end + 1] -= 1
-        
+        lines = defaultdict(int)
+
+        for s, e in flowers:
+            lines[s] += BLOOM
+            lines[e + 1] += DESTROY
+
         for person in people:
-            line[person] += 0
+            lines[person] += VISIT
 
-        count = defaultdict(int)
-        num_flow = 0
-        for day in sorted(line.keys()):
-            num_flow += line[day]
-            count[day] = num_flow
-                
-        return [count[person] for person in people]
+        blooms = defaultdict()
+        num = 0
+        for t in sorted(lines.keys()):
+            num += lines[t]
+            blooms[t] = num
+
+        return [blooms[person] for person in people]
