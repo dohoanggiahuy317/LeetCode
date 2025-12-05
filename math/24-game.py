@@ -1,27 +1,49 @@
-class Solution(object):
-    def judgePoint24(self, cards):
-        """
-        :type cards: List[int]
-        :rtype: bool
-        """
-        def pc(a, b):    
-            x = [a + b, a - b, b - a, a * b]
-            if a:
-                x.append(b/a)
-            if b:
-                x.append(a/b)
-            return x
-        
-        def check(cards):   
+class Solution:
+    def judgePoint24(self, cards: List[int]) -> bool:
+
+        def backtrack():
+            nonlocal found
+            print(cards)
+
+            if found:
+                return
+            
             if len(cards) == 1:
-                return abs(cards[0] - 24) <= 0.1
-            for i in range(len(cards)):
-                for j in range(i+1, len(cards)):
-                    newList = [number for k, number in enumerate(cards) if (k != i and k != j)]
-                    for x in pc(float(cards[i]), float(cards[j])):
-                        newList.append(x)
-                        if check(newList):
-                            return True
-                        newList.pop()
-            return False
-        return check(cards)
+                if cards[0] == 24:
+                    found = True
+                return 
+
+            for i1 in range(len(cards)):
+                num1 = cards[i1]
+                for j in range(len(cards)):
+                    i = i1
+                    if i1 == j:
+                        continue
+
+                    if i1 > j:
+                        i -= 1
+
+                    num2 = cards[j]
+
+                    cards.pop(j)
+
+                    cards[i] = num1 - num2
+                    backtrack()
+
+                    cards[i] = num1 * num2
+                    backtrack()
+
+                    cards[i] = num1 + num2
+                    backtrack()
+
+                    if num2 != 0:
+                        cards[i] = num1 / num2
+                        backtrack()
+
+                    cards[i] = num1
+                    cards.insert(j, num2)
+
+
+        found = False
+        backtrack()
+        return found
