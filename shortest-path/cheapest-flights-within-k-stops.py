@@ -1,30 +1,34 @@
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
-        graph = [[] for _ in range(n)]
-
-        for fr, to, price in flights:
-            graph[fr].append((to, price))
-
-        best = defaultdict(lambda: inf)
         
-        best[(0, src)] = 0
-        queue = [(0, 0, src)]
+        graph = defaultdict(list)
+        for ori, to, price in flights:
+            graph[ori].append((to, price))
+
+        queue = deque([(0, src, 0)])
+        best = defaultdict(lambda: inf)
+        best[(src, 0)] = 0
+        visited = set()
+        ans = inf
 
         while queue:
-            curr_cost, curr_step, city = heapq.heappop(queue)
+            curr_price, city, curr_k = queue.popleft()
 
-            if city == dst and curr_step <= k + 1:
-                return curr_cost
-
-            if curr_cost > best[(curr_step, city)]:
+            if city == dst:
+                ans = min(curr_price, ans)
                 continue
 
-            if curr_step == k + 1:
+            if curr_k == k + 1:
                 continue
 
             for neigh, price in graph[city]:
-                if best[(curr_step + 1, neigh)] > curr_cost + price:
-                    best[(curr_step + 1, neigh)] = curr_cost + price
-                    heapq.heappush(queue, (curr_cost + price, curr_step + 1, neigh))
+                new_k = curr_k + 1
+                new_price = curr_price + price
 
-        return -1
+                if best[(neigh, new_k)] > new_price:
+                    best[(neigh, new_k)] = new_price
+                    queue.append((new_price, neigh, new_k))
+
+        return -1 if ans == inf else ans
+
+
