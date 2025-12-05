@@ -5,18 +5,15 @@ class Solution:
         for ori, to, price in flights:
             graph[ori].append((to, price))
 
-        queue = deque([(0, src, 0)])
+        queue = [(0, 0, src)]
         best = defaultdict(lambda: inf)
         best[(src, 0)] = 0
-        visited = set()
-        ans = inf
 
         while queue:
-            curr_price, city, curr_k = queue.popleft()
+            curr_price, curr_k, city = heapq.heappop(queue)
 
-            if city == dst:
-                ans = min(curr_price, ans)
-                continue
+            if city == dst and curr_k <= k + 1:
+                return curr_price
 
             if curr_k == k + 1:
                 continue
@@ -27,8 +24,8 @@ class Solution:
 
                 if best[(neigh, new_k)] > new_price:
                     best[(neigh, new_k)] = new_price
-                    queue.append((new_price, neigh, new_k))
+                    heapq.heappush(queue, (new_price, new_k, neigh))
 
-        return -1 if ans == inf else ans
+        return -1
 
 
