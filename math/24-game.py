@@ -3,7 +3,6 @@ class Solution:
 
         def backtrack():
             nonlocal found
-            print(cards)
 
             if found:
                 return
