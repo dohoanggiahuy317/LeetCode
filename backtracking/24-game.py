@@ -15,8 +15,6 @@ class Solution:
             for i in range(len(cards)):
                 num1 = cards[i]
                 for j in range(i + 1, len(cards)):
-                    if i == j:
-                        continue
 
                     num2 = cards[j]
                     cards.pop(j)
@@ -43,9 +41,6 @@ class Solution:
                     
                     cards.insert(j, num2)
                     cards[i] = num1
-                    
-                    
-
 
         found = False
         backtrack()
