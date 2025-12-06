@@ -64,7 +64,7 @@ class Solution:
             for j in group2:
                 dist_group2 = min(dist_group2, cal_dist(i, j))
 
-        return min(dist_group1, dist_group2)
+        return min(dist_group1, dist_group2) if min(dist_group1, dist_group2) != inf else 0
 
 
 
