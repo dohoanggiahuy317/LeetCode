@@ -1,75 +1,51 @@
 class Solution:
     def maxPartitionFactor(self, points: List[List[int]]) -> int:
-        n = len(points)
 
-        def cal_dist(i, j):
-            if i == j:
-                return inf
+        def dist(A, B):
+            return abs(A[0] - B[0]) + abs(A[1] - B[1])
 
-            return abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1])
-        
-        graph = defaultdict()
-        for i in range(n):
-            for j in range(i + 1, n):
-                graph[(i, j)] = cal_dist(i, j)
+        def splitable(m):
+            l1, l2 = [], []
 
-        group1, group2 = set(), set()
-        edges = sorted([(dist, x, y) for (x, y), dist in graph.items()], reverse = True)
+            def distribute(i):
+                if i >= len(points):
+                    if (len(l1) > 0 and len(l2) > 0) and (len(l1) > 1 or len(l2) > 1):
+                        return True
+                    return False
 
-        _, a, b = edges.pop()
-        group1.add(a)
-        group2.add(b)
+                this_point = points[i]
+                is_l1 = len(l1) == 0 or all(dist(this_point, point1) >= m for point1 in l1)
+                is_l2 = len(l2) == 0 or all(dist(this_point, point2) >= m for point2 in l2)
 
-        while edges:
-            _, x, y = edges.pop()
-            x_in = (x in group1 or x in group2)
-            y_in = (y in group1 or y in group2)
+                sub1 = sub2 = False
+                if is_l1:
+                    l1.append(this_point)
+                    sub1 = distribute(i + 1)
+                    l1.pop()
+                if is_l2:
+                    l2.append(this_point)
+                    sub2 = distribute(i + 1)
+                    l2.pop()
 
-            if x_in and y_in:
-                continue
+                # print(l1, l2, sub1, sub2)
 
-            if x_in:
-                if x in group1:
-                    group2.add(y)
-                else:
-                    group1.add(y)
-                continue
-
-            if y_in:
-                if y in group1:
-                    group2.add(x)
-                else:
-                    group1.add(x)
-                continue
-
-            dist_x_1 = min([cal_dist(x, i) for i in group1])
-            dist_x_2 = min([cal_dist(x, i) for i in group2])
-            dist_y_1 = min([cal_dist(y, i) for i in group1])
-            dist_y_2 = min([cal_dist(y, i) for i in group2])
-
-            if min(dist_x_1, dist_y_2) > min(dist_x_2, dist_y_1):
-                group1.add(y)
-                group2.add(x)
-            else:
-                group2.add(y)
-                group1.add(x)
-
-        dist_group1 = inf
-        for i in group1:
-            for j in group1:
-                dist_group1 = min(dist_group1, cal_dist(i, j))
-
-        dist_group2 = inf
-        for i in group2:
-            for j in group2:
-                dist_group2 = min(dist_group2, cal_dist(i, j))
-
-
-        return min(dist_group1, dist_group2) if min(dist_group1, dist_group2) != inf else 0
-
-
-
+                return (sub1 or sub2)
             
-
-
-
+            return distribute(0)
+                
+                        
+        
+        l = 0
+        r = 10 ** 9
+        ans = 0
+        while l <= r:
+            m = (l + r) // 2
+            if splitable(m):
+                # print(ans, m)
+                ans = m
+                l = m + 1
+            else:
+                r = m - 1
+        return ans
+                
+        
