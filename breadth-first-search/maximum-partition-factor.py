@@ -47,7 +47,7 @@ class Solution:
             dist_y_1 = min([cal_dist(y, i) for i in group1])
             dist_y_2 = min([cal_dist(y, i) for i in group2])
 
-            if min(dist_x_1, dist_y_2) < min(dist_x_2, dist_y_1):
+            if min(dist_x_1, dist_y_2) > min(dist_x_2, dist_y_1):
                 group1.add(y)
                 group2.add(x)
             else:
@@ -63,6 +63,7 @@ class Solution:
         for i in group2:
             for j in group2:
                 dist_group2 = min(dist_group2, cal_dist(i, j))
+
 
         return min(dist_group1, dist_group2) if min(dist_group1, dist_group2) != inf else 0
 
