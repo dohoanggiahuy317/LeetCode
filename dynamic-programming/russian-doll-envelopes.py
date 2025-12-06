@@ -18,12 +18,14 @@ class Solution:
                     while l <= r:
                         m = (l + r) // 2
 
-                        if ans[m] > num:
+                        if ans[m] >= num:
                             idx = m
                             r = m - 1
                         else:
                             l = m + 1
                     ans[idx] = num
+
+            print(ans)
             
             return len(ans)
 
