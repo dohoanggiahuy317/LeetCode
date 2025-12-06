@@ -28,13 +28,7 @@ class Solution:
             return len(ans)
 
         envelopes.sort(key = lambda x: (x[0], -x[1]))
-        curr_width = 0
-        heights = []
-
-        for w, h in envelopes:
-            if w > curr_width:
-                curr_width = w
-                heights.append(h)
+        heights = [x[1] for x in envelopes]
 
         return finding_lis(heights)
 
