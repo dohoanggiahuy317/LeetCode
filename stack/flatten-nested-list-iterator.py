@@ -1,35 +1,56 @@
+# """
+# This is the interface that allows for creating nested lists.
+# You should not implement it, or speculate about its implementation
+# """
+#class NestedInteger:
+#    def isInteger(self) -> bool:
+#        """
+#        @return True if this NestedInteger holds a single integer, rather than a nested list.
+#        """
+#
+#    def getInteger(self) -> int:
+#        """
+#        @return the single integer that this NestedInteger holds, if it holds a single integer
+#        Return None if this NestedInteger holds a nested list
+#        """
+#
+#    def getList(self) -> [NestedInteger]:
+#        """
+#        @return the nested list that this NestedInteger holds, if it holds a nested list
+#        Return None if this NestedInteger holds a single integer
+#        """
+
 class NestedIterator:
     def __init__(self, nestedList: [NestedInteger]):
-        
         self.stack = []
-
-        n = len(nestedList)
-        for i in range(n-1, -1, -1):
+        for i in range(len(nestedList) - 1, -1, -1):
             self.stack.append(nestedList[i])
-
     
     def next(self) -> int:
-        elem = self.stack.pop()
-        return elem.getInteger()
+        return self.stack.pop().getInteger()
+        
     
     def hasNext(self) -> bool:
-        if len(self.stack) == 0:
+        if not self.stack:
             return False
+        
+        while self.stack:
+            last_elem = self.stack.pop()
 
-        elem = self.stack.pop()
-
-        while not elem.isInteger():
-            elem_li = elem.getList()
+            if last_elem.isInteger():
+                self.stack.append(last_elem)
+                return True
             
-            if len(elem_li) > 0:
-                for i in range(len(elem_li)-1, -1, -1):
-                    self.stack.append(elem_li[i])
+            last_elem_li = last_elem.getList()
 
-            if not self.stack:
-                return False
-            
-            elem = self.stack.pop()
+            for i in range(len(last_elem_li) - 1, -1, -1):
+                self.stack.append(last_elem_li[i])
 
-        self.stack.append(elem)
-        # print(self.stack)
-        return True
+        return False
+
+
+         
+
+# Your NestedIterator object will be instantiated and called as such:
+# i, v = NestedIterator(nestedList), []
+# while i.hasNext(): v.append(i.next())
