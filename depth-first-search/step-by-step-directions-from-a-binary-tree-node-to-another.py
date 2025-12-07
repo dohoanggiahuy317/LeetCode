@@ -7,26 +7,31 @@
 class Solution:
     def getDirections(self, root: Optional[TreeNode], startValue: int, destValue: int) -> str:
         
-
-        def transversal(node, path, target):
-            nonlocal startValue, destValue
+        path = []
+        def transversal(node):
+            nonlocal startValue, destValue, to_start, to_dest
 
             if not node:
-                return False, ""
+                return
 
-            if node.val == target:
-                return True, path
+            if node.val == startValue:
+                to_start = "".join(path)
 
-            is_left, path_left = transversal(node.left, path + "L", target)
-            is_right, path_right = transversal(node.right, path + "R", target)
+            if node.val == destValue:
+                to_dest = "".join(path)
 
-            if is_left:
-                return is_left, path_left
-            
-            return is_right, path_right
+            path.append("L")
+            transversal(node.left)
+            path.pop()
 
-        to_start = transversal(root, "", startValue)[1]
-        to_dest = transversal(root, "", destValue)[1]
+            path.append("R")
+            is_right = transversal(node.right)
+            path.pop()
+
+
+        path = []
+        to_start, to_dest = "", ""
+        transversal(root)
 
         i = 0
         while i < min(len(to_start), len(to_dest)) and to_start[i] == to_dest[i]:
