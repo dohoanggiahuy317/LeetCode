@@ -29,7 +29,7 @@ class Solution:
         to_dest = transversal(root, "", destValue)[1]
 
         i = 0
-        while i < len(to_start) and to_start[i] == to_dest[i]:
+        while i < min(len(to_start), len(to_dest)) and to_start[i] == to_dest[i]:
             i += 1
         
         return "U" * (len(to_start) - i) + to_dest[i:]
