@@ -8,39 +8,29 @@ class Solution:
     def getDirections(self, root: Optional[TreeNode], startValue: int, destValue: int) -> str:
         
 
-        def transversal(node):
+        def transversal(node, path, target):
             nonlocal startValue, destValue
 
             if not node:
-                return None
-
-            if node.val == startValue or node.val == destValue:
-                return node
-
-            is_left = transversal(node.left)
-            is_right = transversal(node.right)
-
-            if is_left and is_right:
-                return node
-            if is_left:
-                return is_left
-            return is_right
-
-        lca = transversal(root)
-
-        def find_node(node, path, f):
-            if not node:
                 return False, ""
 
-            if node.val == f:
+            if node.val == target:
                 return True, path
 
-            left_status, left_path = find_node(node.left, path + "L", f)
-            right_status, right_path = find_node(node.right, path + "R", f)
-            
-            if left_status:
-                return left_status, left_path
-            return right_status, right_path
+            is_left, path_left = transversal(node.left, path + "L", target)
+            is_right, path_right = transversal(node.right, path + "R", target)
 
-        return "U" * len(find_node(lca, "", startValue)[1]) + find_node(lca, "", destValue)[1]
+            if is_left:
+                return is_left, path_left
+            
+            return is_right, path_right
+
+        to_start = transversal(root, "", startValue)[1]
+        to_dest = transversal(root, "", destValue)[1]
+
+        i = 0
+        while i < len(to_start) and to_start[i] == to_dest[i]:
+            i += 1
+        
+        return "U" * (len(to_start) - i) + to_dest[i:]
 
