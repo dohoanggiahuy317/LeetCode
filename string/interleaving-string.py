@@ -1,33 +1,27 @@
+from typing import List
+
 class Solution:
     def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
-        found = False
-        
-        def backtrack(i1, i2, i3):
-            nonlocal s1, s2, s3, found
-            
-            if found:
-                return
+        n1, n2, n3 = len(s1), len(s2), len(s3)
 
-            if i1 == len(s1) and i2 == len(s2) and i3 == len(s3):
-                found = True
-                return True
+        if n1 + n2 != n3:
+            return False
 
-            if i3 == len(s3):
-                return False
+        dp = [[False] * (n2 + 1) for _ in range(n1 + 1)]
+        dp[0][0] = True
 
-            is_s1, is_s2 = False, False
+        for i in range(1, n1 + 1):
+            dp[i][0] = dp[i - 1][0] and s1[i - 1] == s3[i - 1]
 
-            if i1 < len(s1) and s1[i1] == s3[i3]:
-                is_s1 = backtrack(i1 + 1, i2, i3 + 1)
+        for j in range(1, n2 + 1):
+            dp[0][j] = dp[0][j - 1] and s2[j - 1] == s3[j - 1]
 
-            if i2 < len(s2) and s2[i2] == s3[i3]:
-                is_s2 = backtrack(i1, i2 + 1, i3 + 1)
+        for i in range(1, n1 + 1):
+            for j in range(1, n2 + 1):
+                k = i + j - 1
+                dp[i][j] = (
+                    (dp[i - 1][j] and s1[i - 1] == s3[k]) or
+                    (dp[i][j - 1] and s2[j - 1] == s3[k])
+                )
 
-            return is_s1 or is_s2
-
-        return backtrack(0, 0, 0)
-            
-        
-
-
-            
+        return dp[n1][n2]
