@@ -1,50 +1,46 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
-    def getDirections(
-        self, root: TreeNode, startValue: int, destValue: int
-    ) -> str:
-        start_path = []
-        dest_path = []
+    def getDirections(self, root: Optional[TreeNode], startValue: int, destValue: int) -> str:
+        
 
-        # Find paths from root to start and destination nodes
-        self._find_path(root, startValue, start_path)
-        self._find_path(root, destValue, dest_path)
+        def transversal(node):
+            nonlocal startValue, destValue
 
-        directions = []
-        common_path_length = 0
+            if not node:
+                return None
 
-        # Find the length of the common path
-        while (
-            common_path_length < len(start_path)
-            and common_path_length < len(dest_path)
-            and start_path[common_path_length] == dest_path[common_path_length]
-        ):
-            common_path_length += 1
+            if node.val == startValue or node.val == destValue:
+                return node
 
-        # Add "U" for each step to go up from start to common ancestor
-        directions.extend("U" * (len(start_path) - common_path_length))
+            is_left = transversal(node.left)
+            is_right = transversal(node.right)
 
-        # Add directions from common ancestor to destination
-        directions.extend(dest_path[common_path_length:])
+            if is_left and is_right:
+                return node
+            if is_left:
+                return is_left
+            return is_right
 
-        return "".join(directions)
+        lca = transversal(root)
 
-    def _find_path(self, node: TreeNode, target: int, path: List[str]) -> bool:
-        if node is None:
-            return False
+        def find_node(node, path, f):
+            if not node:
+                return False, ""
 
-        if node.val == target:
-            return True
+            if node.val == f:
+                return True, path
 
-        # Try left subtree
-        path.append("L")
-        if self._find_path(node.left, target, path):
-            return True
-        path.pop()  # Remove last character
+            left_status, left_path = find_node(node.left, path + "L", f)
+            right_status, right_path = find_node(node.right, path + "R", f)
+            
+            if left_status:
+                return left_status, left_path
+            return right_status, right_path
 
-        # Try right subtree
-        path.append("R")
-        if self._find_path(node.right, target, path):
-            return True
-        path.pop()  # Remove last character
+        return "U" * len(find_node(lca, "", startValue)[1]) + find_node(lca, "", destValue)[1]
 
-        return False
