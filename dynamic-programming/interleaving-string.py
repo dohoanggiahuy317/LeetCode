@@ -4,8 +4,12 @@ class Solution:
         def backtrack(i1, i2, i3):
             nonlocal s1, s2, s3
 
+
             if i1 == len(s1) and i2 == len(s2) and i3 == len(s3):
                 return True
+
+            if i3 == len(s3):
+                return False
 
             is_s1, is_s2 = False, False
 
