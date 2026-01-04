@@ -1,21 +1,22 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        
-        def dfs(curr_sum, idx):
+        ans = []
+        curr = []
+
+        def backtrack(i, s):
             nonlocal target
 
-            if curr_sum >= target:
-                if curr_sum == target:
-                    ans.append(comb[:])
+            if s >= target:
+                if s == target:
+                    ans.append(curr[:])
                 return
 
-            for i in range(idx, len(candidates)):
-                comb.append(candidates[i])
-                dfs(curr_sum + candidates[i], i)
-                comb.pop()
+            for j in range(i, len(candidates)):
+                x = candidates[j]
+                
+                curr.append(x)
+                backtrack(j, s + x)
+                curr.pop()
 
-        ans = []
-        comb = []
-        dfs(0, 0)
-
+        backtrack(0, 0)
         return ans

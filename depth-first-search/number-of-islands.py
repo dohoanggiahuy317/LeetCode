@@ -2,32 +2,35 @@ class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         m, n = len(grid), len(grid[0])
         DIRS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-        
-        def span_island(x, y):
-            nonlocal m, n, DIRS, grid
+    
+        def bfs(i, j):
+            queue = deque([(i, j)])
 
-            visited.add((x, y))
+            while queue:
+                x, y = queue.popleft()
 
-            for dx, dy in DIRS:
-                nx, ny = x + dx, y + dy
+                for dx, dy in DIRS:
+                    nx, ny = x + dx, y + dy
 
-                if not (0 <= nx < m and 0 <= ny < n):
-                    continue
-                if grid[nx][ny] == "0":
-                    continue
-                if (nx, ny) in visited:
-                    continue
+                    if not (0 <= nx < m and 0 <= ny < n):
+                        continue
+                    if grid[nx][ny] != "1":
+                        continue
+                    if (nx, ny) in visited:
+                        continue
 
-                span_island(nx, ny)
-                
-        visited = set()
+                    queue.append((nx, ny))
+                    visited.add((nx, ny))
+            
         ans = 0
+        visited = set()
         for i in range(m):
             for j in range(n):
-                if grid[i][j] == "0":
+                if grid[i][j] != "1":
                     continue
-                if (i, j) not in visited:
-                    ans += 1
-                    span_island(i, j)
+                if (i, j) in visited:
+                    continue
+                bfs(i, j)
+                ans += 1
 
         return ans

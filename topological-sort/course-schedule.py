@@ -1,45 +1,24 @@
-from collections import defaultdict
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-
+        indegree = [0] * numCourses
         graph = defaultdict(list)
 
-        for preq in prerequisites:
-            graph[preq[1]].append(preq[0])
+        for a, b in prerequisites:
+            indegree[a] += 1
+            graph[b].append(a)
 
-        # for u, v in graph.items():
-        #     print(u, v)
+        queue = deque([course for course in range(numCourses) if indegree[course] == 0])
 
-        def dfs(curr_node, visited):
-            nonlocal graph, cyc, checked
+        count = 0
+        while queue:
+            course = queue.popleft()
+            count += 1
 
-            if checked[curr_node]:
-                return
+            for child in graph[course]:
+                indegree[child] -= 1
 
-            if cyc:
-                return
+                if indegree[child] == 0:
+                    queue.append(child)
 
-            if visited[curr_node]:
-                cyc = True
-                return
-
-            visited[curr_node] = True
-            
-            for neigh in graph[curr_node]:
-                dfs(neigh, visited)
-
-            visited[curr_node] = False
-            checked[curr_node] = True
-
-        for start in range(numCourses):
-            checked = [False] * numCourses
-            visited = [False] * numCourses
-            cyc = False
-
-            dfs(start, visited)
-
-            if cyc:
-                return False
-
-        return True
+        return count == numCourses
 

@@ -1,19 +1,20 @@
 class Solution:
     def findRepeatedDnaSequences(self, s: str) -> List[str]:
-        di = {
-            "A": 1, "C": 2, "G": 3, "T": 4
-        }
+        DNA_MAP = {"A": 3, "C": 2, "G": 1, "T": 0}
+        MASK = 4 ** 9 # Can use binary lifting for optimize here (?)
 
-        curr_s = 0
-        for i, val in enumerate(s[:10]):
-            curr_s += 4 ** (9-i) * di[val]
-        freq_set = {curr_s}
-        ans = set()
+        seq = 0
+        for char in s[:10]:
+            seq = seq * 4 + DNA_MAP[char]
 
-        for right in range(10, len(s)):
-            curr_s = (curr_s - di[s[right-10]] * (4 ** 9)) * 4 + di[s[right]]
-            if curr_s in freq_set:
-                ans.add(s[right-9:right+1]) 
-            freq_set.add(curr_s)
-        
+        visited, ans = set([seq]), set()
+
+        for r in range(10, len(s)):
+            l = r - 9
+
+            seq = (seq - DNA_MAP[s[l - 1]] * MASK) * 4 + DNA_MAP[s[r]]
+            if seq in visited:
+                ans.add(s[l: r + 1])
+            visited.add(seq)
+
         return list(ans)

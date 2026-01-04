@@ -1,17 +1,15 @@
 class Solution:
     def findAnagrams(self, s: str, p: str) -> List[int]:
-        
-        k = len(p)
+        k, n = len(p), len(s)
         freq_p = Counter(p)
-        freq = Counter(s[:k])
-        ans = [0] if freq == freq_p else []
+        freq_sub_s = Counter(s[:k])
+        ans = [0] if freq_p == freq_sub_s else []
 
-        for r in range(k, len(s)):
+        for r in range(k, n):
+            freq_sub_s[s[r]] += 1
+            freq_sub_s[s[r - k]] -= 1
 
-            freq[s[r]] += 1
-            freq[s[r - k]] -= 1
-
-            if freq == freq_p:
+            if freq_sub_s == freq_p:
                 ans.append(r - k + 1)
-            
+
         return ans
