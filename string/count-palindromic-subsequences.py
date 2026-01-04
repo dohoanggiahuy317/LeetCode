@@ -6,27 +6,21 @@ class Solution:
         if n < 5:
             return 0
 
-        def count_subseq(S, T):
-            n, m = len(S), len(T)
-            dp = [[0]*m for _ in range(n)]
-
-            dp[0][0] = 1 if S[0] == T[0] else 0
-            for i in range(1, n):
-                dp[i][0] = dp[i-1][0] + (1 if S[i] == T[0] else 0)
-
-            for i in range(1, n):
-                for j in range(1, m):
-                    dp[i][j] = dp[i-1][j]
-                    if S[i] == T[j]:
-                        dp[i][j] = (dp[i][j] + dp[i-1][j-1]) % MOD
-
-            return dp[n-1][m-1]
+        def count_subseq(sub_s):
+            # dp[js
+            dp = [0] * 6
+            dp[0] = 1
+            for ch in s:
+                for j in range(4, -1, -1):
+                    if ch == sub_s[j]:
+                        dp[j + 1] = (dp[j + 1] + dp[j]) % MOD
+            return dp[5]
 
         ans = 0
         for a in '0123456789':
             for b in '0123456789':
                 for c in '0123456789':
                     t = a + b + c + b + a
-                    ans = (ans + count_subseq(s, t)) % MOD
+                    ans = (ans + count_subseq(t)) % MOD
 
         return ans
