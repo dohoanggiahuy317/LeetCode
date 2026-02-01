@@ -7,11 +7,12 @@ class Solution:
         pos_idx = 0
         squares = []
 
-        for pos_idx, pos_square in enumerate(pos_squares):
-            while neg_idx >= 0 and pos_square > neg_squares[neg_idx]:
+        while neg_idx >= 0 and pos_idx < len(pos_squares):
+            while neg_idx >= 0 and pos_squares[pos_idx] > neg_squares[neg_idx]:
                 squares.append(neg_squares[neg_idx])
                 neg_idx -= 1
 
-            squares.append(pos_square)
+            squares.append(pos_squares[pos_idx])
+            pos_idx += 1
 
         return squares
