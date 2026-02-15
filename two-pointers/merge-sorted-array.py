@@ -4,20 +4,15 @@ class Solution:
         Do not return anything, modify nums1 in-place instead.
         """
 
-        m_idx = m - 1
-        n_idx = n - 1
-        curr_idx = m + n - 1
-        
-        while n_idx >= 0:
-            if m_idx >= 0 and nums1[m_idx] > nums2[n_idx]:
-                nums1[curr_idx] = nums1[m_idx]
-                m_idx -= 1
+        i = m - 1          # last real in nums1
+        j = n - 1          # last in nums2
+        k = m + n - 1      # write pointer at end
+
+        while j >= 0:
+            if i >= 0 and nums1[i] > nums2[j]:
+                nums1[k] = nums1[i]
+                i -= 1
             else:
-                nums1[curr_idx] = nums2[n_idx]
-                n_idx -= 1
-
-            curr_idx -= 1
-
-            
-
-        
+                nums1[k] = nums2[j]
+                j -= 1
+            k -= 1
