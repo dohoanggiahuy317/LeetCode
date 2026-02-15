@@ -17,6 +17,7 @@ class Solution:
                 
                 cost += special[special_idx][n]
                 needs = remain_needs[:]
+                remain_needs = []
             else:
                 special_idx += 1
 
