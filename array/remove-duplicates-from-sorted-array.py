@@ -1,10 +1,10 @@
 class Solution:
-    def removeDuplicates(self, nums):
-        anchor_idx = 0
+    def removeDuplicates(self, nums: List[int]) -> int:
+        curr_idx = 0
 
         for i, num in enumerate(nums):
-            if nums[anchor_idx] != num:
-                anchor_idx += 1
-                nums[anchor_idx] = nums[i]
-
-        return anchor_idx + 1
+            if num != nums[curr_idx]:
+                curr_idx += 1
+                nums[curr_idx] = num
+        
+        return curr_idx + 1
