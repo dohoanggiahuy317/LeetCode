@@ -2,28 +2,29 @@ class Solution:
     def shoppingOffers(self, price: List[int], special: List[List[int]], needs: List[int]) -> int:
         n = len(price)
 
-        buy_all = sum(need * price[i] for i, need in enumerate(needs))
+        good = []
+        for offer in special:
+            items, offer_price = offer[:n], offer[n]
+            buy_all = sum(items[i] * price[i] for i in range(n))
+            if offer_price < buy_all:
+                good.append(offer)
 
-        special = sorted(special, reverse = True, key = lambda x: x[n])
-        special_idx = 0
+        dp = {}
 
-        remain_needs = []
-        cost = 0
+        def explore_buy(rem_needs: Tuple[int, ...]) -> int:
+            if rem_needs in dp:
+                return dp[rem_needs]
 
-        while special_idx < len(special):
-            if all(need >= special[special_idx][i] for i, need in enumerate(needs)):
-                for i, need in enumerate(needs):
-                    remain_needs.append(need - special[special_idx][i])
-                
-                cost += special[special_idx][n]
-                needs = remain_needs[:]
-                remain_needs = []
-            else:
-                special_idx += 1
+            best = sum(rem_needs[i] * price[i] for i in range(n))
 
+            for offer in good:
+                items, offer_price = offer[:n], offer[n]
 
-        for i, need in enumerate(needs):
-            if need > 0:
-                cost += need * price[i]
+                if all(items[i] <= rem_needs[i] for i in range(n)):
+                    nxt_needs = tuple(rem_needs[i] - items[i] for i in range(n))
+                    best = min(best, offer_price + explore_buy(nxt_needs))
 
-        return min(cost, buy_all)
+            dp[rem_needs] = best
+            return best
+
+        return explore_buy(tuple(needs))
