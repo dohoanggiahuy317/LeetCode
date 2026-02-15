@@ -1,6 +1,9 @@
 class Solution:
     def shoppingOffers(self, price: List[int], special: List[List[int]], needs: List[int]) -> int:
         n = len(price)
+
+        buy_all = sum(need * price[i] for i, need in enumerate(needs))
+
         special = sorted(special, reverse = True, key = lambda x: x[n])
         special_idx = 0
 
@@ -22,4 +25,4 @@ class Solution:
             if need > 0:
                 cost += need * price[i]
 
-        return cost
+        return min(cost, buy_all)
