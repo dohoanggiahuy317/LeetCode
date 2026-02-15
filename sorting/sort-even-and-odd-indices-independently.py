@@ -1,5 +1,8 @@
 class Solution:
     def sortEvenOdd(self, nums: List[int]) -> List[int]:
+        even = sorted(nums[::2])              # ascending
+        odd  = sorted(nums[1::2], reverse=True)  # descending
+
         i = j = 0
         out = []
 
