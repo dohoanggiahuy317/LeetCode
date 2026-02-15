@@ -2,7 +2,8 @@ class Solution:
     def findNumbers(self, nums: List[int]) -> int:
         count = 0
         for num in nums:
-            if len(str(num)) % 2 == 0:
+            digits = int(math.log10(num)) + 1
+            if digits % 2 ==  0:
                 count += 1
 
         return count
