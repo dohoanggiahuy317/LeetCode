@@ -9,7 +9,7 @@ class Solution:
         
         for i, num in enumerate(digits):
             if num != "0":
-                digits[i], digits[0] = digits[0], digits[1]
+                digits[i], digits[0] = digits[0], digits[i]
                 break
 
         smallest = "".join(digits)
