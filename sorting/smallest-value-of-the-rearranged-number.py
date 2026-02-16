@@ -1,56 +1,18 @@
 class Solution:
     def smallestNumber(self, num: int) -> int:
-        if num == 0:
-            return 0
-        
-        if num > 0:
-            all_digits = list(str(num))
-            digit_non_zero = []
-            zeros = 0
-            res = ""
+        digits = list(str(abs(num)))
+        digits.sort()
 
-            for digit in all_digits:
-                if digit != "0":
-                    digit_non_zero.append(int(digit))
-                else:
-                    zeros += 1
-
-            digit_non_zero.sort()
-
-            res += str(digit_non_zero[0]) 
-
-            if zeros != 0:
-                res += "0" * zeros
-
-            if len(digit_non_zero) > 1: 
-                for digit in digit_non_zero[1:]:
-                    res += str(digit)
-
-            return int(res)
-        
         if num < 0:
-            all_digits = list(str(num)[1:])
-            digit_non_zero = []
-            zeros = 0
-            res = ""
+            smallest = "".join(digits[::-1])
+            return - int(smallest)
+        
+        for i, num in enumerate(digits):
+            if num != "0":
+                digits[i], digits[0] = digits[0], digits[1]
+                break
 
-            for digit in all_digits:
-                if digit != "0":
-                    digit_non_zero.append(int(digit))
-                else:
-                    zeros += 1
+        smallest = "".join(digits)
+        return int(smallest)
 
-            digit_non_zero.sort(reverse = True)
-
-            res += str(digit_non_zero[0]) 
-
-
-            if len(digit_non_zero) > 1: 
-                for digit in digit_non_zero[1:]:
-                    res += str(digit)
-            
-            if zeros != 0:
-                res += "0" * zeros
-
-            return int("-"+res)
         
