@@ -1,7 +1,8 @@
 class Solution:
     def sortedSquares(self, nums: List[int]) -> List[int]:
         positive = [x*x for x in nums if x >= 0]
-        negative = [x*x for x in nums if x < 0][::-1]
+        negative = [x*x for x in nums if x < 0]
+        negative.sort()
 
         i = j = 0
         out = []
