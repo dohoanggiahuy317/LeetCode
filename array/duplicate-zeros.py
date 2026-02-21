@@ -3,13 +3,12 @@ class Solution:
         """
         Do not return anything, modify arr in-place instead.
         """
-        zeros = arr.count(0)
+        i = 0 
 
-        for i in range(len(arr) - 1, -1, -1):
-            if i + zeros < len(arr):
-                arr[i + zeros] = arr[i]
-            
+        while i < len(arr):
             if arr[i] == 0:
-                zeros -= 1
-                if i + zeros < len(arr):
-                    arr[i + zeros] = 0
+                arr.insert(i, 0)
+                arr.pop()
+                i += 2
+            else:
+                i += 1   
