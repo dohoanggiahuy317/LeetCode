@@ -3,12 +3,16 @@ class Solution:
         """
         Do not return anything, modify arr in-place instead.
         """
-        i = 0 
+        zeros = arr.count(0)
 
-        while i < len(arr):
+        # i + zeros means “how many zeros remain to the left” 
+        # or “how many shifts still apply” for positions at/left of i
+
+        for i in range(len(arr) - 1, -1, -1):
+            if i + zeros < len(arr):
+                arr[i + zeros] = arr[i]
+            
             if arr[i] == 0:
-                arr.insert(i, 0)
-                arr.pop()
-                i += 2
-            else:
-                i += 1   
+                zeros -= 1
+                if i + zeros < len(arr):
+                    arr[i + zeros] = 0
