@@ -1,16 +1,17 @@
 class Solution:
     def smallestNumber(self, num: int) -> int:
-        res = 0
         if num > 0:
-            arr = sorted([int(x) for x in str(num) if x != '0'])
-            main_num = arr[0] * (10 ** (len(str(num)) - 1))
-            res = main_num + int(''.join(str(x) for x in arr[1:]) if len(arr) > 1 else '0')
-               
-        elif num < 0:
-            num = abs(num)
-            arr = sorted([int(x) for x in str(num)])
-            arr = arr[::-1]
-            res = ''.join(str(x) for x in arr)
-            res = int(res) * -1
+            non_zero = [x for x in str(num) if x != '0']
+            sorted_digit = sorted(non_zero)
+            
+            n = len(str(num))
+            rounded_leading_digit = int(sorted_digit[0]) * (10 ** (n - 1))
+            no_leading_digit = int(''.join(sorted_digit[1:])) if len(sorted_digit) > 1 else 0
 
-        return res
+            return rounded_leading_digit + no_leading_digit
+               
+        num = abs(num)
+        sorted_digit = sorted(str(num), reverse = True)
+        smallest = ''.join(str(x) for x in sorted_digit)
+        return -int(smallest)
+
