@@ -1,22 +1,20 @@
 class Solution:
     def findDiagonalOrder(self, mat: List[List[int]]) -> List[int]:
+    
         m, n = len(mat), len(mat[0])
-        ans = []
+        zigzag = []
 
         for diag in range(m + n - 1):
-            if diag % 2 == 1:
-                for i in range(diag + 1):
-                    j = diag - i
-
-                    if not (0 <= i < m and 0 <= j < n):
-                        continue
-                    ans.append(mat[i][j])
-            else:
-                for i in range(diag, -1, -1):
-                    j = diag - i
-
-                    if not (0 <= i < m and 0 <= j < n):
-                        continue
-                    ans.append(mat[i][j])
+            for i in range(diag + 1):
                 
-        return ans
+                if diag % 2 == 0:
+                    i = diag - i
+
+                j = diag - i
+                
+                if not (0 <= i <= n - 1 and 0 <= j <= m - 1):
+                    continue
+
+                zigzag.append(mat[i][j])
+
+        return zigzag
