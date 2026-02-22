@@ -12,9 +12,9 @@ class Solution:
 
                 j = diag - i
                 
-                if not (0 <= i <= n - 1 and 0 <= j <= m - 1):
+                if not (0 <= i <= m - 1 and 0 <= j <= n - 1):
                     continue
-
+                    
                 zigzag.append(mat[i][j])
 
         return zigzag
