@@ -1,18 +1,15 @@
 class Solution:
     def numSpecial(self, mat: List[List[int]]) -> int:
-        ans = 0
-        row_sum = list(map(sum, mat))
-        
-        for i in range(len(mat[0])):
-            s_i = 0
+        m, n = len(mat), len(mat[0])
+        count = 0
 
-            for j in range(len(mat)):
-                s_i += mat[j][i]
+        for i, row in enumerate(mat):
+            if sum(row) != 1:
+                continue
 
-            for j in range(len(mat)):
-                new_s = s_i + row_sum[j]
+            j = row.index(1)
 
-                if new_s == 2 and mat[j][i] == 1:
-                    ans += 1
+            if sum([mat[k][j] for k in range(n)]) == 1:
+                count += 1
 
-        return ans
+        return count
