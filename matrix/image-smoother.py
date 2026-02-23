@@ -1,18 +1,27 @@
 class Solution:
     def imageSmoother(self, img: List[List[int]]) -> List[List[int]]:
-        rows, cols = len(img), len(img[0])
-        result = [[0] * cols for _ in range(rows)]
+        DIRS = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
 
-        for i in range(rows):
-            for j in range(cols):
-                total_sum = 0
-                count = 0
+        m, n = len(img), len(img[0])
+        smooth = [[0] * n for _ in range(m)]
 
-                for x in range(max(0, i-1), min(rows, i+2)):
-                    for y in range(max(0, j-1), min(cols, j+2)):
-                        total_sum += img[x][y]
-                        count += 1
+        for x in range(m):
+            for y in range(n):
+                surrounding_sum = img[x][y]
+                surrounding_count = 1
 
-                result[i][j] = total_sum // count
+                for dx, dy in DIRS:
+                    nx, ny = x + dx, y + dy
 
-        return result
+                    if not (0 <= nx < m and 0 <= ny < n):
+                        continue
+                    
+                    surrounding_sum += img[nx][ny]
+                    surrounding_count += 1
+                
+                
+                smooth[x][y] = surrounding_sum // surrounding_count
+
+        return smooth
+
+
