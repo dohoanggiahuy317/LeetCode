@@ -3,8 +3,8 @@ class Solution:
         
 
         m, n = len(grid), len(grid[0])
-        for x in range(m - 1):
-            for y in range(n - 1):
+        for i in range(m - 1):
+            for j in range(n - 1):
                 cells = [grid[i][j], 
                          grid[i + 1][j], 
                          grid[i][j + 1], 
