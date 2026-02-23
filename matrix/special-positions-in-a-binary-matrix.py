@@ -9,7 +9,7 @@ class Solution:
 
             j = row.index(1)
 
-            if sum([mat[k][j] for k in range(n)]) == 1:
+            if sum([mat[k][j] for k in range(m)]) == 1:
                 count += 1
 
         return count
