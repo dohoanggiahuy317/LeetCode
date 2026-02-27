@@ -1,29 +1,25 @@
 class Solution:
     def numSpecial(self, mat: List[List[int]]) -> int:
         m, n = len(mat), len(mat[0])
-        count = 0
-        seen_x = {}
-        seen_y = {}
 
+        row_sum = [0] * m
+        col_sum = [0] * n
+
+        # count the number of 1 for each row and column
         for i in range(m):
             for j in range(n):
-                if mat[i][j] != 1:
-                    continue
+                if mat[i][j] == 1:
+                    row_sum[i] += 1
+                    col_sum[j] += 1
 
-                if i in seen_x or j in seen_y:
-                    if i in seen_x and not seen_x[i]:
-                        seen_x[i] = True
-                        count -= 1
-                    if j in seen_y and not seen_y[j]:
-                        seen_y[j] = True
-                        count -= 1
-                else:
-                    seen_x[i] = False
-                    seen_y[j] = False
+        # only consider pair of i, j where the sum of both
+        # column and row is 1, and the value itself is 1
+        count = 0
+        for i in range(m):
+            if row_sum[i] != 1:
+                continue
+            for j in range(n):
+                if mat[i][j] == 1 and col_sum[j] == 1:
                     count += 1
-                
-                # print(seen_x)
-                # print(seen_y)
-                # print()
-            
+
         return count
