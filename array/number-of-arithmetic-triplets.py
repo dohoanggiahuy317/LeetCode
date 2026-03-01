@@ -1,12 +1,13 @@
 class Solution:
     def arithmeticTriplets(self, nums: List[int], diff: int) -> int:
         n = len(nums)
-        triplet_count = 0
+        pair_count = defaultdict(int)
+        triplet = 0
 
-        for i in range(n):
-            for j in range(i + 1, n):
-                for k in range(j + 1, n):
-                    if nums[k] - nums[j] == diff and nums[j] - nums[i] == diff:
-                        triplet_count += 1
+        for k in range(n):
+            for j in range(k):
+                if nums[k] - nums[j] == diff:
+                    pair_count[k] += 1
+                    triplet += pair_count[j]
 
-        return triplet_count
+        return triplet
