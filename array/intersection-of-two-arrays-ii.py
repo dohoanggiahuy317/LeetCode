@@ -5,7 +5,7 @@ class Solution:
 
         for num in nums2:
             if c_nums1[num] > 0:
-                result.append(num)
+                ans.append(num)
                 c_nums1[num] -= 1
 
         return ans
