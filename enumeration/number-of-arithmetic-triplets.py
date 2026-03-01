@@ -1,15 +1,12 @@
 class Solution:
     def arithmeticTriplets(self, nums: List[int], diff: int) -> int:
-        ans = 0
-        d = Counter()
+        n = len(nums)
+        triplet_count = 0
 
-        for i in range(1, len(nums)):
-            for j in range(i):
-                if nums[i] - nums[j] == diff:
-                    d[i] += 1
-                    ans += d[j]
+        for i in range(n):
+            for j in range(i + 1, n):
+                for k in range(j + 1, n):
+                    if nums[k] - nums[j] == diff and nums[j] - nums[i] == diff:
+                        triplet_count += 1
 
-        return ans
-
-
-
+        return triplet_count
