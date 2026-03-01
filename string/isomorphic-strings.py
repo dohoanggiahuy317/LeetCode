@@ -4,12 +4,16 @@ class Solution:
         if len(s) != len(t): # constraint
             return False
 
-        char_map = {}
+        s2t_map = {}
+        t2s_map = {}
 
         for char_s, char_t in zip(s, t):
-            if char_s in char_map and char_map[char_s] != char_t:
+            if char_t in t2s_map and t2s_map[char_t] != char_s:
+                return False
+            if char_s in s2t_map and s2t_map[char_s] != char_t:
                 return False
 
-            char_map[char_s] = char_t
+            t2s_map[char_t] = char_s
+            s2t_map[char_s] = char_t
 
         return True
