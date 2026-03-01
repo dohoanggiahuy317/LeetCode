@@ -1,11 +1,10 @@
 class Solution:
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        d1 = Counter(nums1)
+        c_nums1 = Counter(nums1)
+        c_nums2 = Counter(nums2)
 
         ans = []
-        for x in nums2:
-            if d1[x] > 0:
-                ans.append(x)
-                d1[x] -= 1
+        for num, freq in c_nums1.items():
+            ans.extend([num] * min(freq, c_nums2[num]) )
 
         return ans
