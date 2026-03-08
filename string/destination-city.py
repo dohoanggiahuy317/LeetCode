@@ -1,7 +1,13 @@
 class Solution:
     def destCity(self, paths: List[List[str]]) -> str:
-        in_li = set(map(lambda x: x[0], paths))
+        connection = defaultdict(int)
+        cities = set()
 
-        for i in paths:
-            if i[1] not in in_li:
-                return i[1]
+        for u, v in paths:
+            connection[u] += 1
+            cities.add(u)
+            cities.add(v)
+
+        for city in cities:
+            if connection[city] == 0:
+                return city
