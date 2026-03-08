@@ -1,9 +1,11 @@
 class Solution:
     def findLucky(self, arr: List[int]) -> int:
-        t = [(x, y) for x, y in Counter(arr).items()]
-        t = sorted(t, reverse= True, key=lambda x: x[0])
-        for x, y in t:
-            if x == y:
-                return x
+        arr_counter = Counter(arr)
+        ans = -1
+
+        for num, freq in arr:
+            if num == freq:
+                ans = num
+
+        return ans
         
-        return -1
