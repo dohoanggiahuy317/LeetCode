@@ -1,9 +1,10 @@
 class Solution:
     def findTheDifference(self, s: str, t: str) -> str:
-        letter_li = list(s)
-        for letter in t:
-            if letter in letter_li:
-                letter_li.remove(letter)
-                continue
-            if letter not in letter_li:
-                return letter
+        s_counter = Counter(s)
+        t_counter = Counter(t)
+
+        for char, freq in t_counter.items():
+            if freq != s_counter[char]:
+                return char
+
+        return ""
