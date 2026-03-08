@@ -1,13 +1,12 @@
 class Solution:
     def destCity(self, paths: List[List[str]]) -> str:
-        connection = defaultdict(lambda: False)
+        direct_to = defaultdict(lambda: False)
         cities = set()
 
         for u, v in paths:
-            connection[u] = True
-            cities.add(u)
-            cities.add(v)
+            direct_to[u] = True
+            direct_to[v]
 
         for city in cities:
-            if connection[city] == False:
+            if direct_to[city] == False:
                 return city
