@@ -3,7 +3,7 @@ class Solution:
         arr_counter = Counter(arr)
         ans = -1
 
-        for num, freq in arr.items():
+        for num, freq in arr_counter.items():
             if num == freq:
                 ans = num
 
