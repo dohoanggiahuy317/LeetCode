@@ -1,13 +1,13 @@
 class Solution:
     def destCity(self, paths: List[List[str]]) -> str:
-        connection = defaultdict(int)
+        connection = defaultdict(lambda: False)
         cities = set()
 
         for u, v in paths:
-            connection[u] += 1
+            connection[u] = True
             cities.add(u)
             cities.add(v)
 
         for city in cities:
-            if connection[city] == 0:
+            if connection[city] == False:
                 return city
