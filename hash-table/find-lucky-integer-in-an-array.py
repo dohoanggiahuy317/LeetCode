@@ -4,7 +4,7 @@ class Solution:
         ans = -1
 
         for num, freq in arr_counter.items():
-            if num == freq:
+            if num == freq and num > ans:
                 ans = num
 
         return ans
