@@ -6,7 +6,7 @@ class Solution:
             return True
 
         for num in s_arr:
-            if num * 2 in s_arr:
+            if num * 2 in s_arr and num != 0:
                 return True
         
         return False
