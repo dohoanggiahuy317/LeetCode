@@ -1,15 +1,13 @@
 class Solution:
     def relativeSortArray(self, arr1: List[int], arr2: List[int]) -> List[int]:
-        d1 = Counter(arr1)
+        arr1_counter = Counter(arr1)
         ans = []
 
-        for u in arr2:
-            ans += [u] * d1[u]
-            del d1[u]
-
-        res = []
-        for u, v in d1.items():
-            res += [u] * v
-        ans += sorted(res)
+        for value in arr2:
+            ans.extend([value] * arr1_counter[value])
+            del arr1_counter[value]
+            
+        remaining = sorted(arr1_counter.elements())
+        ans.extend(remaining)
 
         return ans
