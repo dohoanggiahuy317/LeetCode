@@ -1,12 +1,7 @@
 class Solution:
     def maxNumberOfBalloons(self, text: str) -> int:
-        d = Counter()
-
-        for x in list(text):
-            d[x] += 1
-
-        # print(d)
-
+        d = Counter(text)
+        
         return min([
                     d["b"],
                     d["a"],
