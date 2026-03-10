@@ -3,7 +3,7 @@ class Solution:
         RULE_KEY_MAP = {
             "type": 0, 
             "color": 1,
-            "value": 2
+            "name": 2
         }
 
         rule_value_idx = RULE_KEY_MAP[ruleKey]
