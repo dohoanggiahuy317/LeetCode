@@ -1,9 +1,18 @@
 class Solution:
     def countLargestGroup(self, n: int) -> int:
-        hashMap = collections.Counter()
+        groups = defaultdict(int)
+        max_len = 0
+
         for i in range(1, n + 1):
-            key = sum([int(x) for x in str(i)])
-            hashMap[key] += 1
-        maxValue = max(hashMap.values())
-        count = sum(1 for v in hashMap.values() if v == maxValue)
-        return count
+            digits = list(str(i))
+            sum_digits = sum(list(map(int, digits)))
+
+            groups[sum_digits] += 1
+            max_len = max(max_len, groups[sum_digits])
+
+        ans = 0
+        for group_len in groups.values():
+            ans += 1 if group_len == max_len else 0
+
+        return ans
+            
