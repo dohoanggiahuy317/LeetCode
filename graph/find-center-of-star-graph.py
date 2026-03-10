@@ -1,6 +1,7 @@
 class Solution:
     def findCenter(self, edges: List[List[int]]) -> int:
-        nodes = [0] * n
+        n = len(edges) + 1
+        nodes = [0] * (n + 1)
         center, max_edges = 0, 0
 
         for u, v in edges:
