@@ -1,3 +1,18 @@
 class Solution:
     def findCenter(self, edges: List[List[int]]) -> int:
-        return edges[0][0] if (edges[0][0] == edges[1][0] or edges[0][0] == edges[1][1] ) else edges[0][1] 
+        n = len(edges) + 1
+        nodes = defaultdict(int)
+        center, max_edges = 0, 0
+
+        for u, v in edges:
+            nodes[u] += 1
+            nodes[v] += 1
+
+            if nodes[u] > max_edges:
+                center, max_edges = u, nodes[u]
+            
+            if nodes[v] > max_edges:
+                center, max_edges = v, nodes[v]
+        
+        return center
+            
