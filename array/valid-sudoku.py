@@ -1,32 +1,44 @@
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        def check(row):
-            t = set()
-            for ele in row:
-                if ele != "." and ele in t:
+        
+        for row in board:
+            row_set = set()
+
+            for cell in row:
+                if cell in row_set:
                     return False
-                elif ele != ".":
-                    t.add(ele)
-            return True
+                if cell != ".":
+                    row_set.add(cell)
 
-        def check_square(i, j):
-            nonlocal board
+        for col_idx in range(9):
+            col_set = set()
 
-            square = [
-                board[i][j],        board[i][j+1],      board[i][j+2],
-                board[i+1][j],      board[i+1][j+1],    board[i+1][j+2],
-                board[i+2][j],    board[i+2][j+1],    board[i+2][j+2],
+            for row in board:
+                if row[col_idx] in col_set:
+                    return False
+                if row[col_idx] != ".":
+                    col_set.add(row[col_idx])
+
+        DIRS = [
+            (0, 0), (0, 1), (0, 2),
+            (1, 0), (1, 1), (1, 2),
+            (2, 0), (2, 1), (2, 2)
             ]
-            return check(square)
 
-        for i in range(9):
-            if not check(board[i]):
-                return False
-            if not check([board[j][i] for j in range(9)]):
-                return False
-        for i in range(0, 8, 3):
-            for j in range(0, 8, 3):
-                if not check_square(i, j):
-                    return False
+        for i in range(0, 7, 3):
+            for j in range(0, 7, 3):
+                square_set = set()
+
+                for di, dj in DIRS:
+                    ni, nj = i + di, j + dj
+
+                    if board[ni][nj] in square_set:
+                        return False
+                    
+                    if board[ni][nj] != ".":
+                        square_set.add(board[ni][nj])
 
         return True
+                
+
+        
