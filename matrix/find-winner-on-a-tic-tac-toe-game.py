@@ -1,27 +1,22 @@
 class Solution:
     def tictactoe(self, moves: List[List[int]]) -> str:
-        ROW1, ROW2, ROW3 = 0, 1, 2
-        COL1, COL2, COL3 = 4, 5, 6
-        DIA1, DIA2 = 7, 8
+        n = 3
+        row = [i for i in range(n)]
+        col = [i for i in range(n, n * 2)]
+        diag = [n * 2, n * 2 + 1]
 
-        TIC_TAK_TOE_MAP = {
-            (0, 0): [ROW1, COL1, DIA1],
-            (0, 1): [ROW1, COL2],
-            (0, 2): [ROW1, COL3, DIA2],
-            (1, 0): [ROW2, COL1],
-            (1, 1): [ROW2, COL2, DIA1, DIA2],
-            (1, 2): [ROW2, COL3],
-            (2, 0): [ROW3, COL1, DIA2],
-            (2, 1): [ROW3, COL2],
-            (2, 2): [ROW3, COL3, DIA1]
-        }
+        TIC_TAK_TOE_MAP = {}
+        for i in range(n):
+            for j in range(n):
+                TIC_TAK_TOE_MAP[(i, j)] = [row[i], col[j]]
 
-        A_track = { # How many X of each
-            ROW1: 0, ROW2: 0, ROW3: 0, COL1: 0, COL2: 0, COL3: 0, DIA1: 0, DIA2: 0
-        }
-        B_track = { # How many X of each
-            ROW1: 0, ROW2: 0, ROW3: 0, COL1: 0, COL2: 0, COL3: 0, DIA1: 0, DIA2: 0
-        }
+                if i == j:
+                    TIC_TAK_TOE_MAP[(i, j)].append(diag[0])
+                if i == n - j - 1:
+                    TIC_TAK_TOE_MAP[(i, j)].append(diag[1])
+            
+        A_track = defaultdict(int)
+        B_track = defaultdict(int)
 
         is_A = True
 
@@ -38,5 +33,5 @@ class Solution:
                 
             is_A = not is_A
 
-        return "Draw"
+        return "Draw" if len(moves) == 9 else "Pending"
 
