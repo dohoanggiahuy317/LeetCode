@@ -3,6 +3,6 @@ class Solution:
         arr = []
         
         for i, num in enumerate(nums):
-            arr.append(arr[-1] + num)
+            arr.append(arr[-1] if arr else 0 + num)
 
         return arr
