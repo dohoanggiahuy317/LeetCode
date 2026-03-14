@@ -1,6 +1,10 @@
 class Solution:
     def runningSum(self, nums: List[int]) -> List[int]:
-        for i in range(len(nums)):
-            if i > 0:
-                nums[i] = nums[i] + nums[i - 1]
-        return nums
+        arr = [0]*len(nums)
+        cur_sum = 0 # Tổng từ số đầu tiên đến số thứ i
+        
+        for i, num in enumerate(nums):
+            curr_sum += num
+            arr[i] = curr_sum
+        
+        return arr
