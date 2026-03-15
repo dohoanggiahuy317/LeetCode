@@ -5,5 +5,7 @@ class Solution:
         for char in t:
             if char == s[i]:
                 i += 1
+            if i == len(s):
+                break
         
         return i == len(s)
