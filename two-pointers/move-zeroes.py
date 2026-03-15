@@ -5,16 +5,15 @@ class Solution:
         """
         n = len(nums)
 
+        first_0_idx = -1
         for i, num in enumerate(nums):
             if num == 0:
-                first_zero_idx = i
+                first_0_idx = i   
                 break
-        else:
-            return nums
-        
-        for i in range(first_zero_idx, n):
-            if nums[i] != 0:
-                nums[i], nums[first_zero_idx] = nums[first_zero_idx], nums[i]
-                first_zero_idx += 1
 
+        for j in range(first_0_idx + 1, len(nums)):
+            if nums[j] != 0:
+                nums[first_0_idx], nums[j] = nums[j], nums[first_0_idx]
+                first_0_idx += 1
+        
         return nums
