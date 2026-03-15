@@ -1,19 +1,18 @@
 class Solution:
     def reverseVowels(self, s: str) -> str:
-        
-        char_list, idx_list = [], []
-        for i, char in enumerate(s):
-            if char in "ueoaiUEOAI":
-                char_list.append(char)
-                idx_list.append(i)
+        VOWELS = "AEIOUaeiou"
 
-        vowel_map = dict(zip(idx_list, char_list[::-1]))
-
-        ans = ""
-        for i, char in enumerate(s):
-            if i not in vowel_map:
-                ans += char
+        l, r = 0, len(s) - 1
+        li_s = list(s)
+        while l < r:
+            if s[l] not in VOWELS:
+                l += 1
+            elif s[r] not in VOWELS:
+                r -= 1
             else:
-                ans += vowel_map[i]
+                li_s[l], li_s[r] = li_s[r], li_s[l]
+                r -= 1
+                l += 1
 
-        return ans
+        return "".join(li_s)
+
