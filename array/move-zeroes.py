@@ -3,6 +3,8 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
+        n = len(nums)
+
         for i, num in enumerate(nums):
             if num == 0:
                 first_zero_idx = i
@@ -10,8 +12,8 @@ class Solution:
         else:
             return nums
         
-        for i, num in enumerate(nums[first_zero_idx:]):
-            if num != 0:
+        for i in range(first_zero_idx, n):
+            if nums[i] != 0:
                 nums[i], nums[first_zero_idx] = nums[first_zero_idx], nums[i]
                 first_zero_idx += 1
 
