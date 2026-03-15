@@ -11,7 +11,7 @@ class Solution:
             elif li_s[r] not in VOWELS:
                 r -= 1
             else:
-                li_s[s], li_s[r] = li_s[r], li_s[l]
+                li_s[l], li_s[r] = li_s[r], li_s[l]
                 l += 1
                 r -= 1
         
