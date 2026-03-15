@@ -3,11 +3,16 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        curr = 0
+        for i, num in enumerate(nums):
+            if num == 0:
+                first_zero_idx = i
+                break
+        else:
+            return nums
+        
+        for i, num in enumerate(nums[first_zero_idx:]):
+            if num != 0:
+                nums[i], nums[first_zero_idx] = nums[first_zero_idx], nums[i]
+                first_zero_idx += 1
 
-        for i in range(len(nums)):
-            if nums[i] != 0:
-                temp = nums[i]
-                nums[i] = 0
-                nums[curr] = temp
-                curr += 1
+        return nums
