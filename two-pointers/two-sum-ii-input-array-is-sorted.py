@@ -6,6 +6,7 @@ class Solution:
             if numbers[i] + numbers[j] > target:
                 i += 1
             elif numbers[i] + numbers[j] < target:
-                j += 1
+                j -= 1
             else:
                 return [i + 1, j + 1]
+        
