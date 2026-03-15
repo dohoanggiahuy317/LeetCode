@@ -4,9 +4,10 @@ class Solution:
         Do not return anything, modify s in-place instead.
         """
         n = len(s)
-        j = n - 1
+        i, j = 0, n - 1
         
-        for i in range(n // 2 + 1):
+        while i < j:
             s[i], s[j] = s[j], s[i]
             j -= 1
+            i += 1
 
