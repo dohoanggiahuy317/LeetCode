@@ -10,7 +10,7 @@ class Solution:
                 l += 1
             elif not lower_s[r].isalpha() and not lower_s[r].isdigit():
                 r -= 1
-            elif ns[l] != ns[r]:
+            elif lower_s[l] != lower_s[r]:
                 return False
             else:
                 l += 1
