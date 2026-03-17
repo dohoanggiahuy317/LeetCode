@@ -3,6 +3,7 @@ class Solution:
         n = len(nums)
         nums.sort()
         triplet = []
+
         for i, num in enumerate(nums):
             if i != 0 and nums[i] == nums[i - 1]:
                 continue
@@ -11,19 +12,15 @@ class Solution:
             j, k = i + 1, len(nums) - 1
 
             while j < k:
-                if j + 1 < k and nums[j] == nums[j + 1]:
+                if nums[j] + nums[k] < target:
                     j += 1
-                elif k - 1 > j and nums[k] == nums[k - 1]:
+                elif nums[j] + nums[k] > target:
                     k -= 1
                 else:
-                    if nums[j] + nums[k] < target:
+                    triplet.append([num, nums[j], nums[k]])
+                    while j < k and nums[j] == nums[j + 1]:
                         j += 1
-                    elif nums[j] + nums[k] > target:
-                        k -= 1
-                    else:
-                        triplet.append([num, nums[j], nums[k]])
-                        j += 1
-                        k -= 1
+                    k -= 1
 
         return triplet
 
