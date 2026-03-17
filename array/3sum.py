@@ -20,6 +20,7 @@ class Solution:
                     triplet.append([num, nums[j], nums[k]])
                     while j < k and nums[j] == nums[j + 1]:
                         j += 1
+                    j += 1
                     k -= 1
 
         return triplet
