@@ -3,27 +3,27 @@ class Solution:
         n = len(nums)
         nums.sort()
         triplet = []
-
         for i, num in enumerate(nums):
             if i != 0 and nums[i] == nums[i - 1]:
                 continue
             
-            target_used = {nums[k]: False for k in range(i + 1, n)}
-            target_count = Counter(nums[i + 1:])
+            target = -num
+            j, k = i + 1, len(nums) - 1
 
-            for j in range(i + 1, n):
-                target = - nums[i] - nums[j]
-
-                if target not in target_used:
-                    continue
-                if target_used[target]:
-                    continue
-                if nums[j] == target and target_count[target] == 1:
-                    continue
-
-                triplet.append([nums[i], target, nums[j]])
-                target_used[target] = True
-                target_used[nums[j]] = True
+            while j < k:
+                if j + 1 < k and nums[j] == nums[j + 1]:
+                    j += 1
+                elif k - 1 > j and nums[k] == nums[k - 1]:
+                    k -= 1
+                else:
+                    if nums[j] + nums[k] < target:
+                        j += 1
+                    elif nums[j] + nums[k] > target:
+                        k -= 1
+                    else:
+                        triplet.append([num, nums[j], nums[k]])
+                        j += 1
+                        k -= 1
 
         return triplet
 
