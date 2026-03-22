@@ -1,24 +1,25 @@
 class Solution:
     def threeSumClosest(self, nums: List[int], target: int) -> int:
+        n = len(nums)
+        best_dist = inf
+        best_sum = -1
         nums.sort()
 
-        curr = 10**6
-        ans = 0
+        for i, num in enumerate(nums):
+            j, k = i + 1, n - 1
 
-        for i in range(len(nums)-2):
-            s = i + 1
-            l = len(nums) - 1
-
-            while s < l:
-                if abs(target - nums[i] - nums[s] - nums[l]) < curr:
-                    ans = [nums[i], nums[s], nums[l]]
-                    curr = abs(target - nums[i] - nums[s] - nums[l])
-                    ans = nums[i] + nums[s] + nums[l]
-                    # print(nums[i], nums[s], nums[l])
-
-                if nums[i] + nums[s] + nums[l] > target:
-                    l -= 1
+            while j < k:
+                dist = abs(nums[i] + nums[j] + nums[k] - target)
+                if dist < best_dist:
+                    best_dist = dist
+                    best_sum = nums[i] + nums[j] + nums[k]
+                
+                if nums[i] + nums[j] + nums[k] > target:
+                    k -= 1
                 else:
-                    s += 1
+                    j += 1
+        
+        return best_sum
+                    
 
-        return ans
+        
