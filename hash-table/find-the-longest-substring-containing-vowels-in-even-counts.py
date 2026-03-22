@@ -1,24 +1,24 @@
 class Solution:
     def findTheLongestSubstring(self, s: str) -> int:
-        VOWELS = "ueoai"
-
-        def valid_string(s, k):
-            for i in range(len(s) - k + 1):
-                freq = Counter(s[i: i + k])
-                if all(freq[c] % 2 == 0 for c in VOWELS):
-                    return True
-            
-            return False
-
-        l, r = 0, len(s)
+        track_vowles = {'a': 0, 'e': 0, 'i': 0, 'o': 0, 'u': 0}
+        
+        prev_state = {(0, 0, 0, 0, 0): -1}
         ans = 0
-        while l <= r:
-            m = (l + r) >> 1
 
-            if valid_string(s, m):
-                ans = m
-                l = m + 1
+        for i, ch in enumerate(s):
+            if ch in track_vowles:
+                track_vowles[ch] = (track_vowles[ch] + 1) % 2
+
+            state = (
+                track_vowles['a'],
+                track_vowles['e'],
+                track_vowles['i'],
+                track_vowles['o'],
+                track_vowles['u'])
+
+            if state in prev_state:
+                ans = max(ans, i - prev_state[state])
             else:
-                r = m - 1
+                prev_state[state] = i
 
         return ans
