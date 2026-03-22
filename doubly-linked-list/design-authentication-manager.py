@@ -1,6 +1,3 @@
-from collections import defaultdict
-from sortedcontainers import SortedDict
-
 class AuthenticationManager:
 
     def __init__(self, timeToLive: int):
