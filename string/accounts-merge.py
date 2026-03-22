@@ -1,47 +1,53 @@
 class DSU:
-    def __init__(self, n):
-        self.parents = [i for i in range(n)]
-    
+    def __init__(self):
+        self.parents = defaultdict(str)
+        self.name = defaultdict(str)
+
+    def add(self, email, name):
+        self.parents[email] = email
+        self.name[email] = name
+
     def find(self, x):
-        if self.parents[x] != x:
+        if self.parents[x] != x:        
             self.parents[x] = self.find(self.parents[x])
         return self.parents[x]
 
     def union(self, x, y):
         xr, yr = self.find(x), self.find(y)
+
         if xr == yr:
             return
 
-        self.parents[yr] = xr
-        return
+        if xr > yr:
+            xr, yr = yr, xr
+
+        self.parents[yr] = self.find(xr)
+        self.name[yr] = self.name[self.find(xr)]
+        return 
 
 class Solution:
     def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
-        n = len(accounts)
-        graph = DSU(n)
-        acc2idx = defaultdict(int)
-        idx2name = defaultdict(str)
+        dsu = DSU()
 
-        for i, acc in enumerate(accounts):
-            name = acc[0]
-            idx2name[i] = name
-            for mail in acc[1:]:
-                if mail not in acc2idx:
-                    acc2idx[mail] = i
-                else:
-                    j = acc2idx[mail]
-                    graph.union(i, j)
+        for account in accounts:
+            for email in account[1:]:
+                dsu.add(email, account[0])
 
-        acc_group = defaultdict(list)
-        for mail, idx in acc2idx.items():
-            root = graph.find(idx)
-            acc_group[root].append(mail)
+        for account in accounts:
+            for email in account[1:]:
+                dsu.union(account[1], email)
+
+        graph = defaultdict(set)
+
+        for account in accounts:
+            for email in account[1:]:
+                root = dsu.find(email)
+                graph[root].add(email)
 
         ans = []
-        for root, mails in acc_group.items():
-            name = idx2name[root]
-            person = [name] + sorted(mails)
-            ans.append(person)
+
+        for root, email_set in graph.items():
+            ans.append([dsu.name[root]] + sorted(list(email_set)))
         
         return ans
         
