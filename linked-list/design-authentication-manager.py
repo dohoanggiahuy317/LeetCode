@@ -14,7 +14,8 @@ class AuthenticationManager:
             return
 
         old_time = self.token2time[tokenId]
-        del self.time2token[old_time]
+        if old_time in self.time2token:
+            del self.time2token[old_time]
         self.generate(tokenId, currentTime)
 
     def countUnexpiredTokens(self, currentTime: int) -> int:
