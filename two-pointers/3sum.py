@@ -4,24 +4,20 @@ class Solution:
         nums.sort()
         triplet = []
 
-        for i, num in enumerate(nums):
-            if i != 0 and nums[i] == nums[i - 1]:
+        for i in range(n):
+            if i > 0 and nums[i] == nums[i - 1]:
                 continue
             
-            target = -num
-            j, k = i + 1, len(nums) - 1
+            k = len(nums) - 1
+            for j in range(i + 1, n):
+                if j > i + 1 and nums[j] == nums[j - 1]:
+                    continue
 
-            while j < k:
-                if nums[j] + nums[k] < target:
-                    j += 1
-                elif nums[j] + nums[k] > target:
+                while k > j + 1 and nums[i] + nums[j] + nums[k] > 0:
                     k -= 1
-                else:
-                    triplet.append([num, nums[j], nums[k]])
-                    while j < k and nums[j] == nums[j + 1]:
-                        j += 1
-                    j += 1
-                    k -= 1
+                
+                if k > j and nums[i] + nums[j] + nums[k] == 0:
+                    triplet.append([nums[i], nums[j], nums[k]])   
 
         return triplet
 
