@@ -2,7 +2,7 @@ class Solution:
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
         n = len(nums)
         nums.sort()
-        ans = []
+        ans = set()
 
         for a in range(n):
             for b in range(a + 1, n):
@@ -15,13 +15,11 @@ class Solution:
                     elif nums[a] + nums[b] + nums[c] + nums[d] < target:
                         c += 1
                     else:
-                        if not (
-                            ans and 
-                            all(x == y for x, y in zip(ans[-1], [nums[a], nums[b], nums[c], nums[d]]))
-                            ):
-                            ans.append([nums[a], nums[b], nums[c], nums[d]])
+                        quad = tuple(sorted([nums[a], nums[b], nums[c], nums[d]]))
+                        if quad not in ans:
+                            ans.add(quad)
                         c += 1
                         d -= 1
 
-        return ans
+        return [list(quad) for quad in ans]
                     
