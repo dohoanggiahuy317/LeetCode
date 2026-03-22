@@ -1,11 +1,13 @@
 class Solution:
     def findContentChildren(self, g: List[int], s: List[int]) -> int:
-        s.sort(reverse=True)
-        g.sort(reverse=True)
-        curr = 0
+        j = 0
+        num_child = 0
 
         for child in g:
-            if curr < len(s) and s[curr] >= child:
-                curr += 1
+            while j < len(s) and s[j] < child:
+                j += 1
+            
+            if j < len(s) and s[j] >= child:
+                num_child += 1
 
-        return curr 
+        return num_child
