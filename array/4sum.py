@@ -1,34 +1,27 @@
 class Solution:
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
-
-        if len(nums) < 4:
-            return []
+        n = len(nums)
         nums.sort()
+        ans = []
 
-        ans = set()
-        for x1 in range(len(nums) - 3):
-            for x2 in range(x1 + 1, len(nums) - 2):
-                l = x2 + 1
-                r = len(nums) - 1
-                loc_target = target - nums[x1] - nums[x2]
+        for a in range(n):
+            for b in range(a + 1, n):
+                
+                c = b + 1
+                d = n - 1
+                while c < d:
+                    if nums[a] + nums[b] + nums[c] + nums[d] > target:
+                        d -= 1
+                    elif nums[a] + nums[b] + nums[c] + nums[d] < target:
+                        c += 1
+                    else:
+                        if not (
+                            ans and 
+                            all(x == y for x, y in zip(ans[-1], [nums[a], nums[b], nums[c], nums[d]]))
+                            ):
+                            ans.append([nums[a], nums[b], nums[c], nums[d]])
+                        c += 1
+                        d -= 1
 
-                while l < r:
-                    if nums[l] + nums[r] == loc_target:
-                        ans.add( tuple(sorted([nums[x1], nums[x2], nums[l], nums[r]]) ))
-                        l += 1
-                        r -= 1
-
-                    elif nums[l] + nums[r] < loc_target:
-                        l += 1
+        return ans
                     
-                    elif nums[l] + nums[r] > loc_target:
-                        r -= 1 
-
-
-        rans = []
-
-        for x in ans:
-            rans.append(list(x))
-
-
-        return rans
