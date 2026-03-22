@@ -1,23 +1,19 @@
 class Solution:
     def validPalindrome(self, s: str) -> bool:
-        l, r = 0, len(s) - 1
-        deleted = False
-
-        while l < r:
-            if s[l] == s[r]:
-                l += 1
-                r -= 1
-            elif not deleted:
-                if s[l] == s[r - 1]:
-                    r -= 1
-                elif s[l + 1] == s[r]:
+        
+        def check_palindrome(s, l, r, deleted):
+            while l < r:
+                if s[l] == s[r]:
                     l += 1
+                    r -= 1
+                elif not deleted:
+                    if check_palindrome(s, l + 1, r, True) or check_palindrome(s, l, r - 1, True):
+                        return True
+                    return False
                 else:
                     return False
 
-                deleted = True
-            else:
-                return False
+            return True
 
-        return True
+        return check_palindrome(s, 0, len(s) - 1, False)
                 
