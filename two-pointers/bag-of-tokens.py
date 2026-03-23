@@ -4,8 +4,7 @@ class Solution:
         n = len(tokens)
         score = 0
         max_score = 0
-        left = 0
-        right = n - 1
+        left, right = 0, n - 1
         
         while left <= right:
             if power >= tokens[left]:
