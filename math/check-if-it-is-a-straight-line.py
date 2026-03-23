@@ -3,13 +3,7 @@ class Solution:
         x1, y1 = coordinates[0]
         x2, y2 = coordinates[1]
 
-        for x, y in coordinates:
-            if y == y1:
-                if x != x1:
-                    return False
-                continue
+        a = (x2 - x1)/(y2 - y1) if y2 != y1 else 0
+        b = y1 - a * x1
 
-            if (x2 - x1)/(y2 - y1) != (x - x1)/(y - y1):
-                return False
-
-        return True
+        return all(a * x + b == y for x, y in coordinates)
