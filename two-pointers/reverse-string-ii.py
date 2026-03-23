@@ -1,27 +1,20 @@
 class Solution:
     def reverseStr(self, s: str, k: int) -> str:
-        s = list(s)
-        start = 0
-        end = k-1
-        bo = True
+        n = len(s)
+        li_s = list(s)
+        
+        chunk_l, chunk_r = 0, min(k, n) - 1
 
-        while bo:
-            if start >= len(s):
-                bo = False
-                break
-            elif end >= len(s):
-                end = len(s) - 1
-            
-            l = start
-            r = end
+        while chunk_l < len(s):
+            l, r = chunk_l, min(chunk_r, n - 1)
 
             while l < r:
-                s[l], s[r] = s[r], s[l]
+                li_s[l], li_s[r] = li_s[r], li_s[l]
                 l += 1
                 r -= 1
             
-            end += 2*k
-            start += 2*k
-        
-        return "".join(s)
+            chunk_l += 2 * k
+            chunk_r += 2 * k
+
+        return "".join(li_s)
 
