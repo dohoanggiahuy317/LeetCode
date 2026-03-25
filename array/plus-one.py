@@ -1,13 +1,19 @@
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
-        n = len(digits)
-        val = 0
-        for i in range(len(digits)):
-            val += digits[i] * (10 ** (n - 1 - i))
-        val += 1
-        tempt = list(str(val))
+        carry = 1
+        digits.reverse()
 
-        res = []
-        for i in tempt:
-            res.append(int(i)) 
-        return res
+        for i, digit in enumerate(digits):
+            digits[i] += carry
+            if digits[i] >= 10:
+                digits[i] %= 10
+                carry = 1
+            else:
+                carry = 0
+
+        if carry == 1:
+            digits.append(1)
+
+        digits.reverse()
+
+        return digits
