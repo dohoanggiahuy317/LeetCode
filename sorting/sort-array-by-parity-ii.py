@@ -2,12 +2,14 @@ class Solution:
     def sortArrayByParityII(self, nums: List[int]) -> List[int]:
         even, odd = 0, 1
 
-        for i, num in enumerate(nums):
-            if num % 2 == 0 and i % 2 != 0:
-                nums[i], nums[even] = nums[even], nums[i]
+        while even < len(nums) and odd < len(nums):
+            if nums[even] % 2 == 0:
                 even += 2
-            elif num % 2 != 0 and i % 2 == 0:
-                nums[i], nums[odd] = nums[odd], nums[i]
+            elif nums[odd] % 2 == 1:
+                odd += 2
+            else:
+                nums[even], nums[odd] = nums[odd], nums[even]
+                even += 2
                 odd += 2
 
         return nums
