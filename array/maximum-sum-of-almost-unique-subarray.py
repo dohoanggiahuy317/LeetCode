@@ -3,7 +3,7 @@ class Solution:
         
         freq = Counter(nums[:k])
         curr_sum = sum(nums[:k])
-        max_sum = curr_sum if if len(freq) >= m else 0
+        max_sum = curr_sum if len(freq) >= m else 0
 
         for i in range(k, len(nums)):
             freq[nums[i]] += 1
