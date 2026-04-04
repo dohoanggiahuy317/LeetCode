@@ -12,11 +12,9 @@ class Solution:
                 score += 1
                 left += 1
                 max_score = max(max_score, score)
-            elif score > 0:
+            elif score >= 0:
                 power += tokens[right]
                 score -= 1
                 right -= 1
-            else:
-                break
                 
         return max_score
