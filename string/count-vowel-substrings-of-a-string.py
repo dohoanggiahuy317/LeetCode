@@ -12,5 +12,6 @@ class Solution:
                     ans += min(freq.values()) - l + 1
             else:
                 l = r + 1
+                freq = {}
             
         return ans
