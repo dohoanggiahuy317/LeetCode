@@ -1,15 +1,20 @@
 class Solution:
     def maximumUniqueSubarray(self, nums: List[int]) -> int:
-        visited, curr, ans = set(), 0, 0
         l = 0
-        for num in nums:
-            while num in visited:
-                visited.remove(nums[l])
-                curr -= nums[l]
-                l += 1
-            
-            visited.add(num)
-            curr += num
-            ans = max(ans, curr)
+        seen = set()
+        curr_sum = 0
+        max_sum = 0
 
-        return ans
+        for r, num in enumerate(nums):
+            while num in seen:
+                seen.remove(nums[l])
+                curr_sum -= nums[l]
+                l += 1
+                
+            seen.add(num)
+            curr_sum += num
+
+            max_sum = max(max_sum, curr_sum)
+
+        return max_sum
+
