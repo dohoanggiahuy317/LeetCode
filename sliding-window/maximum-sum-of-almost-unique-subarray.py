@@ -1,32 +1,21 @@
 class Solution:
     def maxSum(self, nums: List[int], m: int, k: int) -> int:
         
-        if len(set(nums[:k])) >= m:
-            curr_sum = sum(nums[:k])
-        else:
-            curr_sum = 0
-        ans = curr_sum
-        
-        
-        for s in range(1, len(nums) + 1 - k):
-            sub_li = set(nums[s: s + k])
-            
-            if curr_sum == 0:
-                curr_sum = sum(nums[s: s + k])
-            else:
-                curr_sum = curr_sum + nums[s+k-1] - nums[s-1]
-            
-            if len(sub_li) >= m:
-                ans = max(ans, curr_sum)
-                
-        # print(curr_sum)
-                
-        return ans
-            
-            
-            
-            
-            
-            
-            
-            
+        freq = Counter(nums[:k])
+        curr_sum = sum(nums[:k]) if len(freq) >= m else 0 
+        max_sum = curr_sum
+
+        for i in range(k, len(nums)):
+            freq[nums[i]] += 1
+            freq[nums[i - k]] -= 1
+
+            curr_sum += nums[i]
+            curr_sum -= nums[i - k]
+
+            if freq[nums[i - k]] == 0:
+                del freq[nums[i - k]]
+
+            if len(freq) >= m:
+                max_sum = max(max_sum, curr_sum)
+
+        return max_sum
