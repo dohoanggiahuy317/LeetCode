@@ -1,28 +1,21 @@
 class Solution:
     def wordPattern(self, pattern: str, s: str) -> bool:
-        d = {}
-        d1 = {}
-
-        s = s.split(" ")
-
-        if len(s) != len(pattern):
+        
+        s_li = s.split(" ")
+        if len(s_li) != len(pattern):
             return False
 
-        for i in range(len(pattern)):
-            word = pattern[i]
-            term = s[i]
+        word_patt = {}
+        patt_word = {}
 
-            if word not in d:
-                d[word] = term
-            else:
-                if d[word] != term:
-                    return False
-            
-            
-            if term not in d1:
-                d1[term] = word
-            else:
-                if d1[term] != word:
-                    return False
+        for char, word in zip(pattern, s_li):
+            if char in patt_word and patt_word[char] != word:
+                return False
+            if word in word_patt and word_patt[word] != char:
+                return False
 
+            patt_word[char] = word
+            word_patt[word] = char
+
+            
         return True
