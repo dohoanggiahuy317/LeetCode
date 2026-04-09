@@ -1,27 +1,23 @@
 class Solution:
     def minSwaps(self, s: str) -> int:
-        li = list(s)
-        close_brack = 0
-        ite = len(s) - 1
-        ans = 0
+        stack = []
+        li_s = list(s)
+        last_open = len(s) - 1
+        count = 0
 
+        for i, bracket in enumerate(li_s):
+            if bracket == "[":
+                stack.append(bracket)
+            elif stack:
+                stack.pop()
+            else:
+                while li_s[last_open] != "[":
+                    last_open -= 1
 
-        for i in range(len(s)):
-            #print(li, close_brack)
-            
-            if li[i] == "[":
-                close_brack -= 1
-            elif li[i] == "]":
-                close_brack += 1
-            
-                if close_brack > 0:
-                    while li[ite] != "[":
-                        ite -= 1
-                    
-                    li[i], li[ite] = li[ite], li[i]
-                    ans += 1
+                count += 1
+                li_s[i], li_s[last_open] = li_s[last_open], li_s[i]
+                stack.append(bracket)
+
+        return count
+
                 
-                    close_brack -= 2
-            
-        return ans
-        
