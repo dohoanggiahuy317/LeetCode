@@ -9,11 +9,7 @@ class Solution:
 
             for letter_ord in range(26):
                 letter = chr(ord("A") + letter_ord)
-
-                if letter == char:
-                    continue
-
-                swap_used[letter] += 1
+                swap_used[letter] += int(letter != char)
                 
                 while swap_used[letter] > k:
                     if s[lefts[letter]] != letter:
