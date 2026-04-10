@@ -1,14 +1,17 @@
 class Solution:
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
-        n, m = len(words) * len(words[0]), len(words[0])
-        cw = Counter(words)
+        w = len(words[0])
+        len_s, len_words = len(s), len(words) * w
+        
+        w_counter = Counter(words)
         ans = []
 
-        for i in range(len(s) - n + 1):
-            chunk = s[i: i + n]
-            l = len(chunk)
-            # print(list(chunk[j:j + m] for j in range(0, l, m)))
-            if cw == Counter( list(chunk[j:j + m] for j in range(0, l, m)) ):
+        for i in range(len_s):
+            sub_s = s[i:i + len_words]
+            sub_s_counter = Counter(sub_s[j: j + w] for j in range(0, len_words, w))
+
+            if w_counter == sub_s_counter:
                 ans.append(i)
-        
+
         return ans
+        
