@@ -21,10 +21,6 @@ class Solution:
 
                     lefts[letter] += 1
 
-            ans = max(ans, r - min(lefts.values() if lefts else [0]) + 1)
-
-            # print(lefts)
-            # print(swap_used)
-            # print(ans)
+            ans = max(ans, r - min(lefts.values()) + 1)
 
         return ans
