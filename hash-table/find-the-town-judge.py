@@ -1,7 +1,7 @@
 class Solution:
     def findJudge(self, n: int, trust: List[List[int]]) -> int:
-        trust_other = defaultdict(int)
-        other_trust = defaultdict(int)
+        trust_other = [0] * (n + 1)
+        other_trust = [0] * (n + 1)
 
         for a, b in trust:
             trust_other[a] += 1
