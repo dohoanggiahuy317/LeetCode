@@ -1,27 +1,19 @@
 class Solution:
     def minimumRecolors(self, blocks: str, k: int) -> int:
-        left = 0
-        num_whites = 0
-        num_recolors = float("inf")
+        l = 0
+        swap_used = blocks[:k].count("W")
+        ans = swap_used
 
-        # Move right pointer
-        for right in range(len(blocks)):
+        for r in range(k, len(blocks)):
 
-            # Increment num_whites if block at right pointer is white
-            if blocks[right] == "W":
-                num_whites += 1
+            swap_used += int(blocks[r] != "B")
 
-            # k consecutive elements are found
-            if right - left + 1 == k:
+            if r - l + 1 > k:
+                if blocks[l] == "W":
+                    swap_used -= 1
+                l += 1
+            
+            if r - l + 1 >= k:
+                ans = min(ans, swap_used)
 
-                # Update minimum
-                num_recolors = min(num_recolors, num_whites)
-
-                # Decrement num_whites if block at left pointer is white
-                if blocks[left] == "W":
-                    num_whites -= 1
-
-                # Move left pointer
-                left += 1
-
-        return num_recolors
+        return ans
