@@ -3,6 +3,9 @@ class Solution:
         
         BIT_MAP = {"A": 0, "C": 1, "G": 2, "T": 3}
         
+        if len(s) < 10:
+            return []
+        
         curr_window = 0
         for i in range(10):
             curr_window = curr_window * 4 + BIT_MAP[s[i]]
