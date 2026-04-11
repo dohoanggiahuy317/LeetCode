@@ -8,4 +8,4 @@ class Solution:
         for id_, num in nums2:
             d[id_] += num
 
-        return sorted(list(map(list, d.items())))
+        return sorted(list([list(ele) for ele in d.items()]))
