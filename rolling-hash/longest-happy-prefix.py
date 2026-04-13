@@ -15,6 +15,6 @@ class Solution:
             power = (power * 26) % MOD
 
             if prefix == suffix:
-                ans = i
+                ans = i + 1
 
-        return s[:ans + 1]
+        return s[:ans]
