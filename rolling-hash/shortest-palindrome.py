@@ -1,21 +1,22 @@
 class Solution:
     def shortestPalindrome(self, s: str) -> str:
-        count = self.kmp(s[::-1], s)
-        return s[count:][::-1] + s
-    def kmp(self, txt: str, patt: str) -> int:
-        new_string = patt + '#' + txt
-        pi = [0] * len(new_string)
-        i = 1
-        k = 0
-        while i < len(new_string):
-            if new_string[i] == new_string[k]:
-                k += 1
-                pi[i] = k
-                i += 1
-            else:
-                if k > 0:
-                    k = pi[k - 1]
-                else:
-                    pi[i] = 0
-                    i += 1
-        return pi[-1]
+        n = len(s)
+        if n <= 1:
+            return s
+
+        DICT_MAP = {chr(i + ord("a")): i for i in range(26)}
+
+        forward = 0
+        backward, power = 0, 1
+        longest = 0
+
+        for i, ch in enumerate(s):
+            forward = forward * 26 + DICT_MAP[ch]
+            backward = DICT_MAP[ch] * power + backward
+            power = power * 26
+
+            if forward == backward:
+                longest = i + 1    
+
+        suffix = s[longest:]
+        return suffix[::-1] + s
