@@ -7,11 +7,11 @@ class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         res = None
 
-        if list1 == None and list2 == None:
+        if not list1 and not list2:
             return None
-        if list1 == None:
+        if not list1:
             return list2
-        if list2 == None:
+        if not list2:
             return list1
 
         if list1.val < list2.val:
