@@ -5,6 +5,7 @@ class Solution:
     
         def bfs(i, j):
             queue = deque([(i, j)])
+            visited.add((i, j))
 
             while queue:
                 x, y = queue.popleft()
