@@ -1,10 +1,11 @@
 class Solution:
     def isAcronym(self, words: List[str], s: str) -> bool:
         
-        arr = []
-        for word in words:
-            arr.append(word[0])
-        
-        if s == ''.join(arr):
-            return True    
-        return False
+        if len(words) != len(s):
+            return False
+
+        for word, char in zip(words, s):
+            if word[0] != char:
+                return False
+
+        return True
