@@ -1,11 +1,11 @@
 class Solution:
     def relativeSortArray(self, arr1: List[int], arr2: List[int]) -> List[int]:
-        arr_1 = Counter(arr1)
+        arr1_c = Counter(arr1)
         result = []
         for num in arr2:
-            result.extend([num] * arr_1[num])
-            del arr_1[num]
+            result.extend([num] * arr1_c[num])
+            del arr1_c[num]
 
-        remain = sorted(arr_1.elements())
+        remain = sorted(arr1_c.elements())
         result.extend(remain)
         return result
