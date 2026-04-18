@@ -1,11 +1,12 @@
-class Solution:
-    def countMatches(self, items: List[List[str]], ruleKey: str, ruleValue: str) -> int:
-        RULE_KEY_MAP = {
+RULE_KEY_MAP = {
             "type": 0, 
             "color": 1,
             "name": 2
         }
 
+class Solution:
+    def countMatches(self, items: List[List[str]], ruleKey: str, ruleValue: str) -> int:
+        
         rule_value_idx = RULE_KEY_MAP[ruleKey]
         ans = 0
 
@@ -14,3 +15,4 @@ class Solution:
                 ans += 1
 
         return ans
+
