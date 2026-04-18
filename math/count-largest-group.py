@@ -4,8 +4,8 @@ class Solution:
         max_len = 0
 
         for i in range(1, n + 1):
-            digits = list(str(i))
-            sum_digits = sum(list(map(int, digits)))
+            digits = str(i)
+            sum_digits = sum(map(int, digits))
 
             groups[sum_digits] += 1
             max_len = max(max_len, groups[sum_digits])
