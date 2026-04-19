@@ -4,7 +4,7 @@ class Solution:
         pref, ans = 0, 0
 
         for j, num in enumerate(nums):
-            pref += int(num)
+            pref += 1 if num == 1 else -1
             ans = max(ans, j - freq[pref])
             freq[pref] = min(j, freq[pref])
 
