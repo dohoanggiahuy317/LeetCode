@@ -1,7 +1,7 @@
 class Solution:
     def checkSubarraySum(self, nums: List[int], k: int) -> bool:
         pref_sum = list(accumulate(nums))
-        remainder = defaultdict(int)
+        remainder = defaultdict(int, {0: -1})
 
         for i, pref in enumerate(pref_sum):
             rem = pref % k
@@ -10,5 +10,5 @@ class Solution:
                     return True
             else:
                 remainder[rem] = i
-
+                
         return False
