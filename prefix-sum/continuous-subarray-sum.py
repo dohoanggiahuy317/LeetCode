@@ -1,14 +1,14 @@
 class Solution:
     def checkSubarraySum(self, nums: List[int], k: int) -> bool:
-        
-        freq = defaultdict(lambda: len(nums), {0:-1})
-        pref = 0
+        pref_sum = list(accumulate(nums))
+        remainder = defaultdict(int)
 
-        for i, num in enumerate(nums):
-            pref = (pref + num) % k
-            if pref in freq and i - freq[pref] > 1:
-                return True
-            freq[pref] = min(i, freq[pref])
-        
+        for i, pref in enumerate(pref_sum):
+            rem = pref % k
+            if rem in remainder:
+                if i > remainder[rem] + 1:
+                    return True
+            else:
+                remainder[rem] = i
+
         return False
-            
