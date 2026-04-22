@@ -1,14 +1,12 @@
 class Solution:
-    ans = 0
     def maxScore(self, cardPoints: List[int], k: int) -> int:
-        prefSum = sum(cardPoints[:k])
-        ans = prefSum
         n = len(cardPoints)
 
+        curr = sum(cardPoints[:k])
+        ans = curr
+        
         for i in range(k):
-            prefSum = prefSum - cardPoints[k-1-i] + cardPoints[n-1-i]
-
-            if prefSum > ans:
-                ans = prefSum
+            curr = curr - cardPoints[k-1-i] + cardPoints[n-1-i]
+            ans = max(ans, curr)
 
         return ans
