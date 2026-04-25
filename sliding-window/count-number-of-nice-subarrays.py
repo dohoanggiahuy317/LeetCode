@@ -5,8 +5,9 @@ class Solution:
 
         for num in nums:
             curr += num % 2
-            count += pref[curr - k]
             pref[curr] += 1
+            count += pref[curr - k]
+            
 
         return count
 
