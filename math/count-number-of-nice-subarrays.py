@@ -8,7 +8,6 @@ class Solution:
             pref[curr] += 1
             count += pref[curr - k]
             
-
         return count
 
 
