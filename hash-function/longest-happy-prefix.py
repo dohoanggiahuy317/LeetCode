@@ -11,9 +11,9 @@ class Solution:
         ans = 0
 
         for i in range(n - 1):
-            prefix = (prefix * BASE + DICT_MAP[s[i]])
-            suffix = (DICT_MAP[s[n - 1 - i]] * power + suffix)
-            power = power * BASE
+            prefix = (prefix * BASE + DICT_MAP[s[i]]) % MOD
+            suffix = (DICT_MAP[s[n - 1 - i]] * power + suffix) % MOD
+            power = (power * BASE) % MOD
 
             if prefix == suffix:
                 ans = i + 1
