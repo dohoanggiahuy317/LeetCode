@@ -1,12 +1,17 @@
 class Solution:
     def pivotIndex(self, nums: List[int]) -> int:
-        pref_sum = 0
-        sum_nums = sum(nums)
+        n = len(nums)
+        left_sum = defaultdict(int)
+        right_sum = defaultdict(int)
 
-        for i, num in enumerate(nums):
-            suff_sum = sum_nums - pref_sum - num
-            if suff_sum == pref_sum:
-                return i
-            pref_sum += num
+        for i in range(n):
+            left_sum[i+1] = (left_sum[i]) + nums[i]
+        
+        for i in range(n-1, -1, -1):
+            right_sum[i] = (right_sum[i+1]) + nums[i + 1]
+        
+        for i in range(n):
+            if left_sum[i-1] == right_sum[i+1]:
+                return i 
 
         return -1
