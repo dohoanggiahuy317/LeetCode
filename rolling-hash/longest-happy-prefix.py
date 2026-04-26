@@ -3,7 +3,7 @@ class Solution:
         n = len(s)
 
         MOD = 10 ** 9 + 7
-        BASE = 31
+        BASE = 27
         DICT_MAP = {chr(ord("a") + i): i + 1 for i in range(BASE)}
         
         prefix = 0
