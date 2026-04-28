@@ -1,10 +1,10 @@
 class Solution:
     def waysToSplitArray(self, nums: List[int]) -> int:
-        prefix_sum = list(accumulate(nums))
-        suffix_sum = list(accumulate(nums[::-1]))[::-1]
-        ans = 0
+        pref_sum = list(accumulate(nums))
+        total = pref_sum[-1]
+        count = 0
 
-        for i in range(len(nums) - 1):
-            ans += 1 if prefix_sum[i] >= suffix_sum[i + 1] else 0
+        for pref in pref_sum[:-1]:
+            count += int(pref >= total - pref)
 
-        return ans
+        return count
