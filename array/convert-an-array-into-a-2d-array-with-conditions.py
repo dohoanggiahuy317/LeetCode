@@ -2,26 +2,15 @@ class Solution:
     def findMatrix(self, nums: List[int]) -> List[List[int]]:
         nums.sort()    
         
-        d = {}
-        maxf = 0
+        freq = Counter(nums)
+        max_freq = max(freq.values())
+        ans = [[] for _ in range(max_freq)]
         
-        for x in nums:
-            if x in d:
-                d[x] += 1
-            else:
-                d[x] = 1
-            
-            maxf = max(maxf, d[x])
-        
-        ans = []
-        for i in range(maxf):
-            ans.append([])
-        
-        for x, appr in d.items():
-            start = 0
-            while start < appr:
-                ans[start].append(x)
-                start += 1
+        for x, f in freq.items():
+            count = 0
+            while start < f:
+                ans[count].append(x)
+                count += 1
         
         return ans
         
