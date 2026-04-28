@@ -8,7 +8,7 @@ class Solution:
         
         for x, f in freq.items():
             count = 0
-            while start < f:
+            while count < f:
                 ans[count].append(x)
                 count += 1
         
