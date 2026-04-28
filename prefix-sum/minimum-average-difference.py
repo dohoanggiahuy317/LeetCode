@@ -9,10 +9,10 @@ class Solution:
 
         for i, (pref, num) in enumerate(zip(pref_sum, nums)):
             suff = total - pref
-            diff = abs(int(
-                            pref/(i + 1) - 
-                            (suff/(n - i - 1) if i < n - 1 else 0)
-                        ))
+            diff = abs(
+                        pref//(i + 1) - 
+                        (suff//(n - i - 1) if i < n - 1 else 0)
+                        )
 
             if diff < best_diff:
                 best_diff = diff
