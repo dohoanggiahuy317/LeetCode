@@ -5,7 +5,6 @@ class Solution:
         triplet = 0
 
         for num in nums:
-            if num + diff in snums and num - diff in snums:
-                triplet += 1
+            triplet += int(num + diff in snums and num - diff in snums)
 
         return triplet 
