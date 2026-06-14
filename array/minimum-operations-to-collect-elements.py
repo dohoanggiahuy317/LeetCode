@@ -1,6 +1,6 @@
 class Solution:
     def minOperations(self, nums: List[int], k: int) -> int:
-        target = set([i for i in range(1, k)])
+        target = set([i for i in range(1, k + 1)])
         ans = 0
 
         while len(target) > 0:
