@@ -6,4 +6,4 @@ class Solution:
             if num != i:
                 ans = ans & i
 
-        return ans
+        return ans if ans != 2 ** (len(nums) + 1) - 1 else 0
