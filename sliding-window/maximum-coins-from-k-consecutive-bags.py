@@ -38,7 +38,7 @@ class Solution:
             rw = l + k - 1
             ans = max(ans, cal_coins(rw) - cal_coins(lw - 1))
 
-            rl = r
+            rw = r
             lw = r - k + 1
             ans = max(ans, cal_coins(rw) - cal_coins(lw - 1))
 
