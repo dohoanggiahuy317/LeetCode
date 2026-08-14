@@ -6,29 +6,9 @@
 #         self.right = right
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        r1, r2 = [], []
-        def transversal(root, r):
-            nonlocal r1, r2
+        if not (p or q):
+            return True
+        if not (p and q):
+            return False
 
-            if root == None:
-                if r == "1":
-                    r1.append(root)
-                else:
-                    r2.append(root)
-                return
-
-            if r == "1":
-                r1.append(root.val)
-            else:
-                r2.append(root.val)
-            
-            transversal(root.left, r)
-
-            transversal(root.right, r)
-
-        transversal(p, "1")
-        transversal(q, "2")
-
-        # print(r1, r2)
-
-        return r1 == r2
+        return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
