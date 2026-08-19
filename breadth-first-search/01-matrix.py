@@ -23,7 +23,7 @@ class Solution:
 
                 if (nx, ny) in visited:
                     continue
-                if not (0 <= nx < n and 0 <= ny < m):
+                if not (0 <= nx < m and 0 <= ny < n):
                     continue
                 
                 if mat[nx][ny] == 0:
