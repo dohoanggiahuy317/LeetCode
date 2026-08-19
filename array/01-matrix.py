@@ -1,19 +1,17 @@
 class Solution:
     def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        DIRS = [(0, 1), (1, 0), (0, -1), (-1, 0)]
         m, n = len(mat), len(mat[0])
+
         ans = [[inf] * n for _ in range(m)]
 
-        sx, sy = 0, 0
+        queue = deque()
         for i in range(m):
             for j in range(n):
-                if mat[i][j] == 0:
-                    sx, sy = i, j
-                    ans[i][j] = 0
-                    break
-        
-        DIRS = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-        
-        queue = deque([(sx, sy)])
+                if mat[i][j] != 0:
+                    continue
+                queue.append((i, j))
+                ans[i][j] = 0
         visited = set(queue)
 
         while queue:
