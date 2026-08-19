@@ -1,7 +1,7 @@
 class Solution:
     def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
         m, n = len(mat), len(mat[0])
-        ans = [[inf] * m for _ in range(n)]
+        ans = [[inf] * n for _ in range(m)]
 
         sx, sy = 0, 0
         for i in range(m):
