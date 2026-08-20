@@ -1,11 +1,12 @@
 class Solution:
     def timeRequiredToBuy(self, tickets: List[int], k: int) -> int:
+        
         total = 0
 
-        for i, x in enumerate(tickets):
-            if i <= k:
-                total += min(tickets[i], tickets[k])
+        for ticket in tickets:
+            if ticket < tickets[k]:
+                total += ticket
             else:
-                total += min(tickets[i], tickets[k] - 1)
+                total += tickets[k]
 
         return total
