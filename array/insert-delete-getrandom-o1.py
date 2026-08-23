@@ -25,7 +25,7 @@ class RandomizedSet:
         return True
 
     def getRandom(self) -> int:
-        return random.choice(self.vals)
+        return random.choice(self.li)
 
 
 
