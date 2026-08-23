@@ -16,11 +16,11 @@ class RandomizedSet:
             return False
         
         idx = self.val2idx[val]
-        last_val = self.vals[-1]
+        last_val = self.li[-1]
         
-        self.vals[idx], self.val2idx[last_val] = last_val, idx
+        self.li[idx], self.val2idx[last_val] = last_val, idx
         
-        self.vals.pop()
+        self.li.pop()
         del self.val2idx[val]
         return True
 
