@@ -13,4 +13,5 @@ class Solution:
                 filename, content = f.split("(")
                 content2path[content].append(file_dir + "/" + filename)
 
-        return list(content2path.values())
+
+        return list(k for k in content2path.values() if len(k) > 1)
