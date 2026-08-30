@@ -3,18 +3,17 @@ class Solution:
         stack = []
         ans = [1] * len(heights)
 
-        for i, h in enumerate(heights):
-            count = 1
-
-            while stack and stack[-1][1] < h:
-                cur_i, cur_h = stack.pop()
+        for i in range(len(heights) - 1, -1, -1):
+            count = 0
             
-                if stack:
-                    ans[stack[-1][0]] += 1
-
-            stack.append((i, h))
-
-        for idx, (i, h) in enumerate(stack):
-            ans[i] = len(stack) - idx - 1
+            while stack and stack[-1] < heights[i]:
+                stack.pop()
+                count += 1
+            
+            if stack:
+                count += 1
+                
+            ans[i] = count
+            stack.append(heights[i])
 
         return ans
