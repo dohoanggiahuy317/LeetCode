@@ -9,7 +9,7 @@ class Solution:
             if target == nums[m]:
                 return m
 
-            if nums[l] < nums[m]:
+            if nums[l] <= nums[m]:
                 if nums[m] > target >= nums[l]:
                     r = m - 1
                 else:
