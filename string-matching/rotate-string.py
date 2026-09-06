@@ -1,13 +1,7 @@
 class Solution:
     def rotateString(self, s: str, goal: str) -> bool:
-
-        goal_li = deque(list(goal))
-        s_li = list(s)
-        for i in range(len(goal_li)):
-            # print(goal_li, s_li)
-            if list(goal_li) == s_li:
+        for i in range(len(s)):
+            if goal == s[i:] + s[i:]:
                 return True
-            goal_li.append(goal_li.popleft())
-
 
         return False
